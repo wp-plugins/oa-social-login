@@ -3,7 +3,7 @@ Contributors: ClaudeSchlesser
 Tags: facebook, linkedin, google, yahoo, twitter, openid, wordpress.com, vkontakte, hyves, social connect, social login
 Requires at least: 3.0
 Tested up to: 3.2.1
-Stable tag: 1.0
+Stable tag: 1.3.2
 
 Allow your visitors to comment and login with social networks like Twitter, Facebook, LinkedIn, Hyves, OpenID, Вконтакте, Google, Yahoo
 
@@ -81,4 +81,14 @@ http://www.oneall.com/company/contact-us/
 == Changelog ==
 
 = 1.0 =
-* Initial release. 
+* Initial release
+
+= 1.0.1 =
+* Hook oa_social_login fixed
+* Plugin description changed
+
+= 1.0.2 = 
+* Version numbers fixed
+
+= 1.3.2 =
+* Stable Version
