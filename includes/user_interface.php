@@ -155,6 +155,8 @@ function oa_social_login_render_login_form ($args = null)
 
 		if (count ($providers) > 0)
 		{
+			//Random integer
+			$rand = mt_rand(99999, 9999999);
 			?>
 				<div class="oneall_social_login">
 					<?php
@@ -165,9 +167,9 @@ function oa_social_login_render_login_form ($args = null)
 							<?php
 						}
 					?>
-					<div class="oneall_social_login_providers"></div>
+					<div class="oneall_social_login_providers" id="oneall_social_login_providers_<?php echo $rand; ?>"></div>
 					<script type="text/javascript">
-					 oneall.api.plugins.social_login.build("oneall_social_login_providers", {
+					 oneall.api.plugins.social_login.build("oneall_social_login_providers_<?php echo $rand; ?>", {
 					  'providers' :  ['<?php echo implode ("','", $providers); ?>'],
 					  'callback_uri': <?php echo $redirect_url; ?>,
 					  'css_theme_uri' : '<?php echo $css_theme_uri; ?>'
