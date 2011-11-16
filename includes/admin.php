@@ -33,7 +33,7 @@ function oa_social_login_check_api_settings()
 {
 	check_ajax_referer('oa_social_login_ajax_nonce');
 
-	$api_domain = $_POST['api_subdomain'].'.api.oneall.com';
+	$api_domain = strtolower($_POST['api_subdomain']).'.api.oneall.com';
 	$api_key = $_POST['api_key'];
 	$api_secret = $_POST['api_secret'];
 
@@ -152,6 +152,13 @@ function oa_social_login_settings_validate ($settings)
 			$sanitzed_settings [$key] = trim ($settings [$key]);
 		}
 	}
+
+	//Subdomain is always lowercase
+	if (isset ($sanitzed_settings['api_subdomain']))
+	{
+		$sanitzed_settings['api_subdomain'] = strtolower ($sanitzed_settings['api_subdomain']);
+	}
+
 
 	//Enabled providers
 	if (isset ($settings ['providers']) AND is_array ($settings ['providers']))
