@@ -9,9 +9,9 @@ Allow your visitors to comment and login with social networks like Twitter, Face
 
 == Description ==
 
-The Social Login Plugin is a professional though free plugin that allows your<br />
-visitors to comment, login and register with social networks like Twitter, Facebook,<br />
-LinkedIn, Hyves, Вконтакте, Google or Yahoo. <br /><br />
+The Social Login Plugin is a professional though free plugin that allows your visitors to comment, 
+login and register with social networks like Twitter, Facebook, LinkedIn, Hyves, Вконтакте, Google or 
+Yahoo. <br />
 
 <strong>Choose where to add the social login feature:</strong>
 <ul>
