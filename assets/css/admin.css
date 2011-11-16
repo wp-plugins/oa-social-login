@@ -1,0 +1,129 @@
+.oa_container {
+ border: 1px solid #ccc;
+ padding: 10px;
+ clear: both;
+ margin-bottom: 10px;
+ overflow: hidden;
+ width: 628px;
+}
+
+.oa_container.oa_container_welcome {
+ background-color: #E1EDFF
+}
+
+.oa_container .oa_container_title {
+ border-bottom: 1px solid #A8A8A8;
+ clear: both;
+ color: #000000;
+ font-size: 16px;
+ font-weight: bold;
+ line-height: 26px;
+ margin: 0 0 10px;
+ padding-bottom: 5px;
+}
+
+.oa_form_table {
+ background-color: #efefef;
+ border: 1px solid #ccc;
+ width: 650px;
+ margin-bottom: 10px;
+}
+
+.oa_form_table .head {
+ font-weight: bold;
+ font-size: 13px;
+ font-weight: bold;
+ background-color: #ddd;
+}
+
+.oa_form_table .foot td {
+ height: 40px;
+ background-color: #ddd;
+ text-align: center;
+}
+
+.oa_form_table  .foot .error_message{
+ color:red;
+ font-weight:bold;
+}
+
+.oa_form_table  .foot .success_message{
+ color:green;
+ font-weight:bold;
+}
+
+.oa_form_table .row_even {
+ background-color: #fff;
+}
+
+.oa_form_table .row_provider {
+ line-height: 35px;
+}
+
+.oa_form_table .row_provider .oa_provider {
+ margin: 0 10px 0 0
+}
+
+.oa_provider {
+ background-image: url("../img/provider_sprite_35_35.png");
+ text-indent: -9999px;
+ height: 35px;
+ width: 35px;
+ display: inline-block;
+}
+
+.oa_provider.oa_provider_aol {
+ background-position: -2px -1px;
+}
+
+.oa_provider.oa_provider_blogger {
+ background-position: -39px -1px;
+}
+
+.oa_provider.oa_provider_facebook {
+ background-position: -76px -1px;
+}
+
+.oa_provider.oa_provider_foursquare {
+ background-position: 629px -1px;
+}
+
+.oa_provider.oa_provider_google {
+ background-position: 592px -1px;
+}
+
+.oa_provider.oa_provider_hyves {
+ background-position: 555px -1px;
+}
+
+.oa_provider.oa_provider_linkedin {
+ background-position: 518px -1px;
+}
+
+.oa_provider.oa_provider_livejournal {
+ background-position: 444px -1px;
+}
+
+.oa_provider.oa_provider_myspace {
+ background-position: 370px -1px;
+}
+
+.oa_provider.oa_provider_twitter {
+ background-position: 222px -1px;
+}
+
+.oa_provider.oa_provider_yahoo {
+ background-position: 37px -1px;
+}
+
+.oa_provider.oa_provider_openid {
+ background-position: 333px -1px;
+}
+
+.oa_provider.oa_provider_wordpress {
+ background-position: 74px -1px;
+}
+
+.oa_provider.oa_provider_vkontakte {
+ background-position: 111px -1px;
+}
