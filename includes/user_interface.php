@@ -75,6 +75,16 @@ add_action ('login_form', 'oa_social_login_render_login_form_login');
 
 
 /**
+ * Display a custom grid for login
+ */
+function oa_social_login_render_custom_form_login ()
+{
+	oa_social_login_render_login_form ();
+}
+add_action ('oa_social_login', 'oa_social_login_render_custom_form_login');
+
+
+/**
  * Display the provider grid
  */
 function oa_social_login_render_login_form ($args = null)
