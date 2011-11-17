@@ -197,7 +197,7 @@ function oa_display_social_login_settings ()
 						</h3>
 						<div class="oa_container_body">
 							<p>
-								Allow your visitors to comment, login and register with social networks like Twitter, Facebook, LinkedIn, Hyves, Ð’ÐºÐ¾Ð½Ñ‚Ð°ÐºÑ‚Ðµ, Google or Yahoo.
+								Allow your visitors to comment, login and register with social networks like Twitter, Facebook, LinkedIn, Hyves, Вконтакте, Google or Yahoo.
 								<strong>Draw a larger audience and increase user engagement in a  few simple steps.</strong>
 							</p>
 							<p>
