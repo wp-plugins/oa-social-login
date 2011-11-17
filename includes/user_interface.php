@@ -167,7 +167,7 @@ function oa_social_login_render_login_form ($source)
 							<?php
 						}
 					?>
-					<div class="oneall_social_login_providers" id="oneall_social_login_providers_<?php echo $rand; ?>" style="margin-top:5px;margin-botom:5px"></div>
+					<div class="oneall_social_login_providers" id="oneall_social_login_providers_<?php echo $rand; ?>" style="margin-top:5px;margin-bottom:5px"></div>
 					<script type="text/javascript">
 					 oneall.api.plugins.social_login.build("oneall_social_login_providers_<?php echo $rand; ?>", {
 					  'providers':  ['<?php echo implode ("','", $providers); ?>'],
