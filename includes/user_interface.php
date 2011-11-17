@@ -123,6 +123,10 @@ function oa_social_login_render_login_form ($source)
 			}
 		}
 
+		//Grid Size
+		$grid_size_x = 99;
+		$grid_size_y = 99;
+
 		//Widget
 		if ($source == 'widget')
 		{
@@ -136,10 +140,15 @@ function oa_social_login_render_login_form ($source)
 			$css_theme_uri = 'http://oneallcdn.com/css/api/socialize/themes/wp_inline.css';
 			$show_title = (empty($plugin_caption ) ? false : true);
 
-			//Anchor to comments
+			//Comments
 			if ($source == 'comments')
 			{
 				$source .= '#comments';
+			}
+			elseif (in_array($source, array ('login', 'registration')))
+			{
+				$grid_size_x = 5;
+				$grid_size_y = 1;
 			}
 		}
 
@@ -158,12 +167,14 @@ function oa_social_login_render_login_form ($source)
 							<?php
 						}
 					?>
-					<div class="oneall_social_login_providers" id="oneall_social_login_providers_<?php echo $rand; ?>"></div>
+					<div class="oneall_social_login_providers" id="oneall_social_login_providers_<?php echo $rand; ?>" style="margin-top:5px;margin-botom:5px"></div>
 					<script type="text/javascript">
 					 oneall.api.plugins.social_login.build("oneall_social_login_providers_<?php echo $rand; ?>", {
-					  'providers' :  ['<?php echo implode ("','", $providers); ?>'],
+					  'providers':  ['<?php echo implode ("','", $providers); ?>'],
 					  'callback_uri': (window.location.href + ((window.location.href.split('?')[1] ? '&':'?') + 'oa_social_login_source=<?php echo $source; ?>')),
-					  'css_theme_uri' : '<?php echo $css_theme_uri; ?>'
+					  'css_theme_uri': '<?php echo $css_theme_uri; ?>',
+					  'grid_size_x': '<?php echo $grid_size_x; ?>',
+					 	'grid_size_y': '<?php echo $grid_size_y; ?>'
 					 });
 					</script>
 				</div>
