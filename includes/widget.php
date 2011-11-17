@@ -39,9 +39,7 @@ class oa_social_login_widget extends WP_Widget
 			}
 
 			//Content
-			oa_social_login_render_login_form (array (
-				'target' => 'widget'
-			));
+			oa_social_login_render_login_form ('widget');
 
 			//After Content
 			if ( !empty ($instance ['widget_content_after']))

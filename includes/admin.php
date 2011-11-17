@@ -197,12 +197,16 @@ function oa_display_social_login_settings ()
 						</h3>
 						<div class="oa_container_body">
 							<p>
-								Allow your visitors to comment, login and register with social networks like Twitter, Facebook, LinkedIn, Hyves, Вконтакте, Google or Yahoo.
+								Allow your visitors to comment, login and register with social networks like Twitter, Facebook, LinkedIn, Hyves, Ð’ÐºÐ¾Ð½Ñ‚Ð°ÐºÑ‚Ðµ, Google or Yahoo.
 								<strong>Draw a larger audience and increase user engagement in a  few simple steps.</strong>
 							</p>
 							<p>
 								To be able to use this plugin you first of all need to create a free account at  <a href="https://app.oneall.com/signup/" target="_blank">http://www.oneall.com</a>
 								and create a new Site. After having created your account and setup your Site, please enter the Site Settings in the form below.
+							</p>
+							<p>
+								Feel free to <a href="http://www.oneall.com/company/contact-us/" target="_blank">contact us</a> if you need any help with the integration of this plugin!
+								We are devoted to creating a positive experience for our users. If anything is unclear, please get in touch!
 							</p>
 							<h3>The basic account creation is free and the setup is easy!</h3>
 							<p>
@@ -222,7 +226,11 @@ function oa_display_social_login_settings ()
 						<div class="oa_container_body">
 							<p>
 								Login to your account to manage your providers and access your <a href="http://www.oneall.com/services/social-insights/"  target="_blank">Social Insights</a>.
-								Determine which social networks are popular amongst your users and tailor your registration experience increase user engagement
+								Determine which social networks are popular amongst your users and tailor your registration experience to increase your users' engagement
+							</p>
+							<p>
+								Feel free to <a href="http://www.oneall.com/company/contact-us/" target="_blank">contact us</a> if you need any help with the integration of this plugin!
+								We are devoted to creating a positive experience for our users. If anything is unclear, please get in touch!
 							</p>
 							<p>
 								<a class="button-secondary" href="https://app.oneall.com/signin/" target="_blank"><strong>Signin to my account</strong></a>

@@ -12,6 +12,18 @@ function oa_social_login_get_user_by_token ($user_token)
 	return $wpdb->get_var ($wpdb->prepare ($sql, $user_token));
 }
 
+/**
+ * Create a random email
+ */
+function oa_social_login_create_rand_email()
+{
+	do
+	{
+		$email = md5(uniqid(wp_rand(10000,99000)))."@example.com";
+	}	while(email_exists($email));
+
+	return $email;
+}
 
 /**
  * Handle the callback
@@ -52,7 +64,6 @@ function oa_social_login_callback ()
 			//User Data
 			if (is_object ($social_data) AND $social_data->response->result->status->code == 200)
 			{
-
 				$identity = $social_data->response->result->data->user->identity;
 				$user_token = $social_data->response->result->data->user->user_token;
 
@@ -67,6 +78,7 @@ function oa_social_login_callback ()
 				$user_last_name = $identity->name->familyName;
 
 				//Fullname
+				$user_full_name = '';
 				if ( ! empty ($identity->name->formatted))
 				{
 					$user_full_name = $identity->name->formatted;
@@ -89,7 +101,9 @@ function oa_social_login_callback ()
 						$user_email = $email->value;
 					}
 				}
+
 				//User Website
+				$user_website = '';
 				if ( ! empty ($identity->profileUrl))
 				{
 					$user_website = $identity->profileUrl;
@@ -98,12 +112,9 @@ function oa_social_login_callback ()
 				{
 					$user_website = $identity->urls [0]->value;
 				}
-				else
-				{
-					$user_website = '';
-				}
 
 				//Preferred Username
+				$user_login = '';
 				if ( ! empty ($identity->preferredUsername))
 				{
 					$user_login = $identity->preferredUsername;
@@ -116,31 +127,38 @@ function oa_social_login_callback ()
 				{
 					$user_login = $identity->name->formatted;
 				}
-				else
-				{
-					$user_login = 'user_' . rand (99999, 999999);
-				}
 
 				// Get user by token
 				$user_id = oa_social_login_get_user_by_token ($user_token);
 
-				//User found
-				if ($user_id)
+				//New User
+				if ( ! is_numeric ($user_id))
 				{
-					$user_data = get_userdata ($user_id);
-					$user_login = $user_data->user_login;
-				}
-				else
-				{
-					// Create new user and associate token
-					$user_login_raw = $user_login;
-					$i = 1;
-					while (username_exists ($user_login))
+					//Username is mandatory
+					if ( ! isset ($user_login) OR strlen(trim($user_login)) == 0)
 					{
-						$user_login = $user_login_raw . '-'.($i++);
+						$user_login = $user_identity_provider.'User';
 					}
 
-					$userdata = array (
+					//Username must be unique
+					if (username_exists ($user_login))
+					{
+						$i = 1;
+						$user_login_tmp = $user_login;
+						do
+						{
+							$user_login_tmp = $user_login.($i++);
+						} 	while (username_exists ($user_login_tmp));
+						$user_login = $user_login_tmp;
+					}
+
+					//Email must be unique
+					if ( ! isset ($user_email) OR ! is_email($user_email) OR email_exists ($user_email))
+					{
+						$user_email = oa_social_login_create_rand_email();
+					}
+
+					$user_data = array (
 						'user_login' => $user_login,
 						'user_email' => $user_email,
 						'first_name' => $user_first_name,
@@ -150,8 +168,8 @@ function oa_social_login_callback ()
 					);
 
 					// Create a new user
-					$user_id = wp_insert_user ($userdata);
-					if ( ! empty ($user_id))
+					$user_id = wp_insert_user ($user_data);
+					if (is_numeric($user_id))
 					{
 						delete_metadata('user', null, 'oa_social_login_user_token', $user_token, true);
 						update_user_meta ($user_id, 'oa_social_login_user_token', $user_token);
@@ -160,8 +178,24 @@ function oa_social_login_callback ()
 					}
 				}
 
-				wp_set_auth_cookie ($user_id);
-				wp_set_current_user($user_id);
+				//Sucess
+				if (is_object(get_userdata($user_id)))
+				{
+					//Setup Cookie
+					wp_set_auth_cookie($user_id);
+
+					//Redirect to administration area
+					if (! empty ($_REQUEST['oa_social_login_source']) AND in_array ($_REQUEST['oa_social_login_source'], array ('login', 'registration')))
+					{
+						wp_safe_redirect(admin_url());
+						exit();
+					}
+					//Set current user
+					else
+					{
+						wp_set_current_user($user_id);
+					}
+				}
 			}
 		}
 	}

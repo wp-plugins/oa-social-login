@@ -29,7 +29,7 @@ function oa_social_login_shortcode_handler ($args)
 {
 	if (!is_user_logged_in ())
 	{
-		oa_social_login_render_login_form ();
+		oa_social_login_render_login_form ('shortcode');
 	}
 }
 add_shortcode ('oa_social_login', 'oa_social_login_shortcode_handler');
@@ -43,7 +43,7 @@ function oa_social_login_render_login_form_comments ()
 {
 	if (comments_open () && !is_user_logged_in ())
 	{
-		oa_social_login_render_login_form ();
+		oa_social_login_render_login_form ('comments');
 	}
 }
 add_action ('comment_form_top', 'oa_social_login_render_login_form_comments');
@@ -57,7 +57,7 @@ function oa_social_login_render_login_form_registration ()
 {
 	if (get_option('users_can_register') === '1')
 	{
-		oa_social_login_render_login_form ();
+		oa_social_login_render_login_form ('registration');
 	}
 }
 add_action ('register_form', 'oa_social_login_render_login_form_registration');
@@ -69,7 +69,10 @@ add_action ('register_form', 'oa_social_login_render_login_form_registration');
  */
 function oa_social_login_render_login_form_login ()
 {
-	oa_social_login_render_login_form ();
+	if (!is_user_logged_in ())
+	{
+		oa_social_login_render_login_form ('login');
+	}
 }
 add_action ('login_form', 'oa_social_login_render_login_form_login');
 
@@ -79,7 +82,10 @@ add_action ('login_form', 'oa_social_login_render_login_form_login');
  */
 function oa_social_login_render_custom_form_login ()
 {
-	oa_social_login_render_login_form ();
+	if (!is_user_logged_in ())
+	{
+		oa_social_login_render_login_form ('custom');
+	}
 }
 add_action ('oa_social_login', 'oa_social_login_render_custom_form_login');
 
@@ -87,23 +93,10 @@ add_action ('oa_social_login', 'oa_social_login_render_custom_form_login');
 /**
  * Display the provider grid
  */
-function oa_social_login_render_login_form ($args = null)
+function oa_social_login_render_login_form ($source)
 {
 	//Import providers
 	GLOBAL $oa_social_login_providers;
-
-	//Arguments
-	$target = 'inline';
-	if (is_array ($args))
-	{
-		if (isset ($args['target']))
-		{
-			if ($args['target'] == 'widget')
-			{
-				$target = 'widget';
-			}
-		}
-	}
 
 	//Read settings
 	$settings = get_option ('oa_social_login_settings');
@@ -131,7 +124,7 @@ function oa_social_login_render_login_form ($args = null)
 		}
 
 		//Widget
-		if ($target == 'widget')
+		if ($source == 'widget')
 		{
 			$css_theme_uri = 'http://oneallcdn.com/css/api/socialize/themes/wp_widget.css';
 			$show_title = false;
@@ -139,20 +132,18 @@ function oa_social_login_render_login_form ($args = null)
 		//Inline
 		else
 		{
+			//For all page, except the Widget
 			$css_theme_uri = 'http://oneallcdn.com/css/api/socialize/themes/wp_inline.css';
 			$show_title = (empty($plugin_caption ) ? false : true);
+
+			//Anchor to comments
+			if ($source == 'comments')
+			{
+				$source .= '#comments';
+			}
 		}
 
-		//Build Redirection URL
-		if (in_the_loop())
-		{
-			$redirect_url = "'".get_permalink()."'";
-		}
-		else
-		{
-			$redirect_url = "window.location.href";
-		}
-
+		//Providers selected?
 		if (count ($providers) > 0)
 		{
 			//Random integer
@@ -171,7 +162,7 @@ function oa_social_login_render_login_form ($args = null)
 					<script type="text/javascript">
 					 oneall.api.plugins.social_login.build("oneall_social_login_providers_<?php echo $rand; ?>", {
 					  'providers' :  ['<?php echo implode ("','", $providers); ?>'],
-					  'callback_uri': <?php echo $redirect_url; ?>,
+					  'callback_uri': (window.location.href + ((window.location.href.split('?')[1] ? '&':'?') + 'oa_social_login_source=<?php echo $source; ?>')),
 					  'css_theme_uri' : '<?php echo $css_theme_uri; ?>'
 					 });
 					</script>
