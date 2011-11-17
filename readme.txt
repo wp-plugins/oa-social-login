@@ -3,7 +3,7 @@ Contributors: ClaudeSchlesser
 Tags: facebook, linkedin, google, yahoo, twitter, openid, wordpress.com, vkontakte, hyves, social connect, social login
 Requires at least: 3.0
 Tested up to: 3.2.1
-Stable tag: 1.3.2
+Stable tag: 1.3.5
 
 Allow your visitors to comment and login with social networks like Twitter, Facebook, LinkedIn, Hyves, OpenID, Вконтакте, Google, Yahoo
 
@@ -40,8 +40,9 @@ Yahoo. <br />
 
 <strong>Increase your user engagement in a few simple steps with this plugin.</strong><br />
 
-The plugin is maintained by <a href="http://www.oneall.com">OneAll</a>, a technology company offering a set of web-delivered
-tools and services for establishing and optimizing a site's connection with many social providers such as Facebook, Twitter, Yahoo! and LinkedIn.
+The Social Login Plugin is maintained by <a href="http://www.oneall.com">OneAll</a>, a technology company offering a set of web-delivered
+tools and services for establishing and optimizing a site's connection with social providers such as Facebook, Twitter, Google, Yahoo!,
+LinkedIn amongst others.
 
 
 == Installation ==
@@ -57,14 +58,18 @@ tools and services for establishing and optimizing a site's connection with many
 You should not have to change your templates. 
 The Social Login seamlessly integrates into your blog by using predefined hooks.
 
-If you encounter nevertheless any problems, you can add the social login or registration forms to another location in 
-your theme by inserting the following code in that location:
+= I have a custom template and the plugin is not displayed correctly =
 
-`<?php do_action( 'oa_social_login' ); ?>`
+The plugin uses predefined hooks. If your theme does not support these hooks,
+you can add the Social Login form manually to your theme by inserting the following code 
+in your template (at the location where it should be displayed, i.e. above the comments).
+
+`<?php do_action('oa_social_login'); ?>`
 
 = Do I have to change my Rewrite Settings? =
 
 The plugins does not rely on mod_rewrite and does not need any additional rules.
+It should work out of the box.
 
 = Where can I report bugs & get support? =
 
@@ -92,3 +97,11 @@ http://www.oneall.com/company/contact-us/
 
 = 1.3.2 =
 * Stable Version
+
+= 1.3.4 =
+* Multisite issues with Widget fixed
+
+= 1.3.5 =
+* Administration area redirection fixed
+* Automatic email creation added
+* Email verification added

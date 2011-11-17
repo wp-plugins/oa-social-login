@@ -33,7 +33,7 @@ function oa_social_login_check_api_settings()
 {
 	check_ajax_referer('oa_social_login_ajax_nonce');
 
-	$api_domain = $_POST['api_subdomain'].'.api.oneall.com';
+	$api_domain = strtolower($_POST['api_subdomain']).'.api.oneall.com';
 	$api_key = $_POST['api_key'];
 	$api_secret = $_POST['api_secret'];
 
@@ -153,6 +153,13 @@ function oa_social_login_settings_validate ($settings)
 		}
 	}
 
+	//Subdomain is always lowercase
+	if (isset ($sanitzed_settings['api_subdomain']))
+	{
+		$sanitzed_settings['api_subdomain'] = strtolower ($sanitzed_settings['api_subdomain']);
+	}
+
+
 	//Enabled providers
 	if (isset ($settings ['providers']) AND is_array ($settings ['providers']))
 	{
@@ -197,6 +204,10 @@ function oa_display_social_login_settings ()
 								To be able to use this plugin you first of all need to create a free account at  <a href="https://app.oneall.com/signup/" target="_blank">http://www.oneall.com</a>
 								and create a new Site. After having created your account and setup your Site, please enter the Site Settings in the form below.
 							</p>
+							<p>
+								Feel free to <a href="http://www.oneall.com/company/contact-us/" target="_blank">contact us</a> if you need any help with the integration of this plugin!
+								We are devoted to creating a positive experience for our users. If anything is unclear, please get in touch!
+							</p>
 							<h3>The basic account creation is free and the setup is easy!</h3>
 							<p>
 								<a class="button-secondary" href="https://app.oneall.com/signup/" target="_blank"><strong>Setup my account now</strong></a>
@@ -215,7 +226,11 @@ function oa_display_social_login_settings ()
 						<div class="oa_container_body">
 							<p>
 								Login to your account to manage your providers and access your <a href="http://www.oneall.com/services/social-insights/"  target="_blank">Social Insights</a>.
-								Determine which social networks are popular amongst your users and tailor your registration experience increase user engagement
+								Determine which social networks are popular amongst your users and tailor your registration experience to increase your users' engagement
+							</p>
+							<p>
+								Feel free to <a href="http://www.oneall.com/company/contact-us/" target="_blank">contact us</a> if you need any help with the integration of this plugin!
+								We are devoted to creating a positive experience for our users. If anything is unclear, please get in touch!
 							</p>
 							<p>
 								<a class="button-secondary" href="https://app.oneall.com/signin/" target="_blank"><strong>Signin to my account</strong></a>
