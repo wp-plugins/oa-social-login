@@ -3,7 +3,7 @@ Contributors: ClaudeSchlesser
 Tags: facebook, linkedin, google, yahoo, twitter, openid, wordpress.com, vkontakte, hyves, social connect, social login
 Requires at least: 3.0
 Tested up to: 3.2.1
-Stable tag: 1.3.4
+Stable tag: 1.3.5
 
 Allow your visitors to comment and login with social networks like Twitter, Facebook, LinkedIn, Hyves, OpenID, Вконтакте, Google, Yahoo
 
