@@ -99,8 +99,18 @@ function oa_social_login_callback ()
 					foreach ($identity->emails AS $email)
 					{
 						$user_email = $email->value;
+						$user_email_is_verified = ($email->is_verified == '1');
 					}
 				}
+
+				//Thumbnail
+				$user_thumbnail = '';
+				if ( ! empty ($identity->thumbnailUrl))
+				{
+					$user_thumbnail = trim ($identity->thumbnailUrl);
+				}
+
+
 
 				//User Website
 				$user_website = '';
@@ -131,6 +141,37 @@ function oa_social_login_callback ()
 				// Get user by token
 				$user_id = oa_social_login_get_user_by_token ($user_token);
 
+				//Try to link to existing account
+				if ( ! is_numeric ($user_id))
+				{
+					//Linked enabled?
+					if ( ! isset($settings['plugin_link_verified_accounts']) OR $settings['plugin_link_verified_accounts'] == '1')
+					{
+						//Only of email is verified
+						if ( ! empty ($user_email) AND $user_email_is_verified === true)
+						{
+							//Read existing user
+							if (($user_id_tmp = email_exists($user_email)) !== false)
+							{
+								if (is_numeric ($user_id_tmp))
+								{
+									$user_id = $user_id_tmp;
+									delete_metadata('user', null, 'oa_social_login_user_token', $user_token, true);
+									update_user_meta ($user_id, 'oa_social_login_user_token', $user_token);
+									update_user_meta ($user_id, 'oa_social_login_identity_id', $user_identity_id);
+									update_user_meta ($user_id, 'oa_social_login_identity_provider', $user_identity_provider);
+
+									if ( ! empty ($user_thumbnail))
+									{
+										update_user_meta ($user_id, 'oa_social_login_user_thumbnail', $user_thumbnail);
+									}
+								}
+							}
+						}
+					}
+				}
+
+
 				//New User
 				if ( ! is_numeric ($user_id))
 				{
@@ -148,7 +189,7 @@ function oa_social_login_callback ()
 						do
 						{
 							$user_login_tmp = $user_login.($i++);
-						} 	while (username_exists ($user_login_tmp));
+						} while (username_exists ($user_login_tmp));
 						$user_login = $user_login_tmp;
 					}
 
@@ -175,6 +216,11 @@ function oa_social_login_callback ()
 						update_user_meta ($user_id, 'oa_social_login_user_token', $user_token);
 						update_user_meta ($user_id, 'oa_social_login_identity_id', $user_identity_id);
 						update_user_meta ($user_id, 'oa_social_login_identity_provider', $user_identity_provider);
+
+						if ( ! empty ($user_thumbnail))
+						{
+							update_user_meta ($user_id, 'oa_social_login_user_thumbnail', $user_thumbnail);
+						}
 					}
 				}
 
@@ -187,7 +233,91 @@ function oa_social_login_callback ()
 					//Redirect to administration area
 					if (! empty ($_REQUEST['oa_social_login_source']) AND in_array ($_REQUEST['oa_social_login_source'], array ('login', 'registration')))
 					{
-						wp_safe_redirect(admin_url());
+						//Registration
+						if ($_REQUEST['oa_social_login_source'] == 'registration')
+						{
+							//Default redirection
+							$redirect_to = admin_url();
+							$redirect_to_safe = false;
+
+							//Redirection customized
+							if (isset ($settings ['plugin_registration_form_redirect']))
+							{
+								switch (strtolower($settings ['plugin_registration_form_redirect']))
+								{
+										//Homepage
+										case 'homepage':
+											$redirect_to = site_url();
+										break;
+
+										//Custom
+										case 'custom':
+											if ( isset ($settings ['plugin_registration_form_redirect_custom_url']) AND strlen(trim($settings ['plugin_registration_form_redirect_custom_url'])) > 0)
+											{
+												$redirect_to = trim($settings ['plugin_registration_form_redirect_custom_url']);
+											}
+										break;
+
+										//Default/Dashboard
+										default:
+										case 'dashboard':
+											$redirect_to = admin_url();
+										break;
+								}
+							}
+						}
+						//Login
+						elseif ($_REQUEST['oa_social_login_source'] == 'login')
+						{
+							//Default redirection
+							$redirect_to = site_url();
+							$redirect_to_safe = false;
+
+							//Redirection in URL
+							if ( ! empty ($_GET['redirect_to']))
+							{
+								$redirect_to = $_GET['redirect_to'];
+								$redirect_to_safe = true;
+							}
+							else
+							{
+								//Redirection customized
+								if (isset ($settings ['plugin_login_form_redirect']))
+								{
+									switch (strtolower($settings ['plugin_login_form_redirect']))
+									{
+											//Dashboard
+											case 'dashboard':
+												$redirect_to = admin_url();
+											break;
+
+											//Custom
+											case 'custom':
+												if ( isset ($settings ['plugin_login_form_redirect_custom_url']) AND strlen(trim($settings ['plugin_login_form_redirect_custom_url'])) > 0)
+												{
+													$redirect_to = trim($settings ['plugin_login_form_redirect_custom_url']);
+												}
+											break;
+
+											//Default/Homepage
+											default:
+											case 'homepage':
+												$redirect_to = site_url();
+											break;
+									}
+								}
+							}
+						}
+
+						if ($redirect_to_safe)
+						{
+							wp_redirect($redirect_to);
+						}
+						else
+						{
+							wp_safe_redirect($redirect_to);
+						}
+
 						exit();
 					}
 					//Set current user
