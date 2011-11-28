@@ -42,30 +42,26 @@ function oa_social_login_custom_avatar ()
 	$args = func_get_args ();
 
 	//Check if we are in a comment
-	if (!is_null ($comment))
+	if (!is_null ($comment) AND !empty ($comment->user_id) AND !empty ($args [0]))
 	{
-		//Check required args and get author details
-		if (!empty ($args [0]) AND function_exists ('get_the_author_meta'))
+		//Read settings
+		$settings = get_option ('oa_social_login_settings');
+		if (isset ($settings ['plugin_show_avatars_in_comments']) AND $settings ['plugin_show_avatars_in_comments'] == '1')
 		{
-			//Read settings
-			$settings = get_option ('oa_social_login_settings');
-			if (isset($settings['plugin_show_avatars_in_comments']) AND $settings['plugin_show_avatars_in_comments'] == '1')
+			//Read Thumbnail
+			if (($user_thumbnail = get_user_meta ($comment->user_id, 'oa_social_login_user_thumbnail', true)) !== false)
 			{
-				//Read Thumbnail
-				if (($user_thumbnail = get_the_author_meta ('oa_social_login_user_thumbnail')) !== null)
+				if (strlen (trim ($user_thumbnail)) > 0)
 				{
-					if (strlen (trim ($user_thumbnail)) > 0)
-					{
-						$user_thumbnail = preg_replace ('#src=([\'"])([^\\1]+)\\1#Ui', "src=\\1" . $user_thumbnail . "\\1", $args [0]);
-						$user_thumbnail = preg_replace ('#height=([\'"])([^\\1]+)\\1#Ui', "", $user_thumbnail);
-						$user_thumbnail = preg_replace ('#width=([\'"])([^\\1]+)\\1#Ui', "", $user_thumbnail);
-						return $user_thumbnail;
-					}
+					$user_thumbnail = preg_replace ('#src=([\'"])([^\\1]+)\\1#Ui', "src=\\1" . $user_thumbnail . "\\1", $args [0]);
+					$user_thumbnail = preg_replace ('#height=([\'"])([^\\1]+)\\1#Ui', "", $user_thumbnail);
+					$user_thumbnail = preg_replace ('#width=([\'"])([^\\1]+)\\1#Ui', "", $user_thumbnail);
+					return $user_thumbnail;
 				}
 			}
 		}
 	}
-	return $args[0];
+	return $args [0];
 }
 add_filter ('get_avatar', 'oa_social_login_custom_avatar');
 
@@ -189,16 +185,16 @@ function oa_social_login_render_login_form ($source)
 		{
 			//Random integer
 			$rand = mt_rand (99999, 9999999);
-			?>
+?>
 				<div class="oneall_social_login">
 					<?php
-						if ($show_title)
-						{
-							?>
+								if ($show_title)
+								{
+					?>
 								<div style="margin-bottom: 3px;"><label><?php _e ($plugin_caption, 'oa_social_login'); ?></label></div>
 							<?php
-						}
-					?>
+										}
+							?>
 					<div class="oneall_social_login_providers" id="oneall_social_login_providers_<?php echo $rand; ?>"></div>
 					<script type="text/javascript">
 					 oneall.api.plugins.social_login.build("oneall_social_login_providers_<?php echo $rand; ?>", {
@@ -209,6 +205,6 @@ function oa_social_login_render_login_form ($source)
 					</script>
 				</div>
 			<?php
-		}
-	}
-}
+					}
+				}
+			}
