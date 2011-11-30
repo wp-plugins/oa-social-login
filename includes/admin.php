@@ -26,6 +26,7 @@ function oa_social_login_admin_message ()
 	}
 }
 
+
 /**
  * Check API Settings trough an Ajax Call
  */
@@ -33,47 +34,83 @@ function oa_social_login_check_api_settings()
 {
 	check_ajax_referer('oa_social_login_ajax_nonce');
 
-	$api_domain = strtolower($_POST['api_subdomain']).'.api.oneall.com';
+	//Check if all fields filled out
+	if ( empty ($_POST['api_subdomain']) OR empty ($_POST['api_key']) OR empty ($_POST['api_secret']))
+	{
+		echo 'error_not_all_fields_filled_out';
+		delete_option ('oa_social_login_api_settings_verified');
+		die();
+	}
+
+	//Subdomain
+	$api_subdomain = trim(strtolower($_POST['api_subdomain']));
+
+	//Full domain entered
+	if (preg_match ("/([a-z0-9\-]+)\.api\.oneall\.com/i", $api_subdomain, $matches))
+	{
+		$api_subdomain = $matches[1];
+	}
+
+	//Check subdomain format
+	if ( ! preg_match ("/^[a-z0-9\-]+$/i", $api_subdomain))
+	{
+		echo 'error_subdomain_wrong_syntax';
+		delete_option ('oa_social_login_api_settings_verified');
+		die();
+	}
+
+	//Domain
+	$api_domain = $api_subdomain.'.api.oneall.com';
+
+	//Key
 	$api_key = $_POST['api_key'];
+
+	//Secret
 	$api_secret = $_POST['api_secret'];
 
+	//Ping
 	$curl = curl_init();
 	curl_setopt($curl, CURLOPT_URL, 'https://'.$api_domain.'/tools/ping.json');
 	curl_setopt($curl, CURLOPT_HEADER, 0);
 	curl_setopt($curl, CURLOPT_USERPWD, $api_key . ":" . $api_secret);
-	curl_setopt($curl, CURLOPT_TIMEOUT, 5);
+	curl_setopt($curl, CURLOPT_TIMEOUT, 15);
 	curl_setopt($curl, CURLOPT_VERBOSE, 0);
 	curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
 	curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
 	curl_setopt($curl, CURLOPT_FAILONERROR, 0);
+
 	if ( ($json = curl_exec($curl)) === false)
 	{
-				echo 'Curl error: ' . curl_error($curl);
+		curl_close($curl);
+
+		echo 'error_communication';
+		delete_option ('oa_social_login_api_settings_verified');
+		die();
 	}
+
 	//Success
-	else
+	$http_code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+	curl_close($curl);
+
+	//Authentication Error
+	if ($http_code == 401)
 	{
-		$http_code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
-
-		//Authentication Error
-		if ($http_code == 401)
-		{
-			echo 'error_authentication_credentials_wrong';
-			delete_option ('oa_social_login_api_settings_verified');
-		}
-		elseif ($http_code == 404)
-		{
-			echo 'error_subdomain_wrong';
-			delete_option ('oa_social_login_api_settings_verified');
-		}
-		elseif ($http_code == 200)
-		{
-			echo 'success';
-			update_option ('oa_social_login_api_settings_verified', '1');
-		}
+		echo 'error_authentication_credentials_wrong';
+		delete_option ('oa_social_login_api_settings_verified');
+		die();
 	}
-
-	die();
+	elseif ($http_code == 404)
+	{
+		echo 'error_subdomain_wrong';
+		delete_option ('oa_social_login_api_settings_verified');
+		die();
+	}
+	elseif ($http_code == 200)
+	{
+		echo 'success';
+		update_option ('oa_social_login_api_settings_verified', '1');
+		die();
+	}
 }
 add_action('wp_ajax_check_api_settings', 'oa_social_login_check_api_settings');
 
@@ -167,7 +204,15 @@ function oa_social_login_settings_validate ($settings)
 	//Subdomain is always lowercase
 	if (isset ($sanitzed_settings['api_subdomain']))
 	{
-		$sanitzed_settings['api_subdomain'] = strtolower ($sanitzed_settings['api_subdomain']);
+		$api_subdomain = strtolower($sanitzed_settings['api_subdomain']);
+
+		//Full domain entered
+		if (preg_match ("/([a-z0-9\-]+)\.api\.oneall\.com/i", $api_subdomain, $matches))
+		{
+			$api_subdomain = $matches[1];
+		}
+
+		$sanitzed_settings['api_subdomain'] = $api_subdomain;
 	}
 
 
@@ -263,7 +308,7 @@ function oa_display_social_login_settings ()
 				?>
 					<div class="oa_container oa_container_welcome">
 						<h3>
-							Your API Account is setup correctly
+							<?php _e('Your API Account is setup correctly'); ?>
 						</h3>
 						<div class="oa_container_body">
 							<p>
@@ -280,7 +325,7 @@ function oa_display_social_login_settings ()
 		?>
 		<div class="oa_container oa_container_links">
 			<h3>
-				Help, Updates &amp; Documentation
+				<?php _e('Help, Updates &amp; Documentation'); ?>
 			</h3>
 			<ul>
 				<li><a target="_blank" href="http://www.twitter.com/oneall">Follow us on Twitter</a> to stay informed about updates;</li>
@@ -295,8 +340,11 @@ function oa_display_social_login_settings ()
 				?>
 			  <table class="form-table oa_form_table">
 			  	<tr>
-			  		<th class="head" colspan="2">
+			  		<th class="head">
 			  			<?php _e('API Settings', 'oa_social_login'); ?>
+			  		</th>
+			  		<th class="head">
+			  		<a href="https://app.oneall.com/applications/" target="_blank">Click here to create and view your API Credentials</a>
 			  		</th>
 			  	</tr>
 					<tr>

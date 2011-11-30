@@ -122,7 +122,10 @@ add_action ('login_form', 'oa_social_login_render_login_form_login');
  */
 function oa_social_login_render_custom_form_login ()
 {
-	oa_social_login_render_login_form ('custom');
+	if (!is_user_logged_in ())
+	{
+		oa_social_login_render_login_form ('custom');
+	}
 }
 add_action ('oa_social_login', 'oa_social_login_render_custom_form_login');
 

@@ -3,7 +3,7 @@
 Plugin Name: Social Login
 Plugin URI: http://www.oneall.com/
 Description: Allow your visitors to <strong>comment, login and register with 20+ social networks</strong> like Twitter, Facebook, LinkedIn, Hyves, Вконтакте, Google or Yahoo.
-Version: 1.4
+Version: 1.5
 Author: Claude Schlesser
 Author URI: http://www.oneall.com/
 License: GPL2
@@ -36,7 +36,7 @@ function oa_social_login_activate ()
 register_activation_hook (__FILE__, 'oa_social_login_activate');
 
 /**
- * This file only need to be included for versions before 3.1.
+ * This file only has to be included for versions before 3.1.
  * Deprecated since version 3.1, the functions are included by default
  */
 if (!function_exists ('email_exists'))
