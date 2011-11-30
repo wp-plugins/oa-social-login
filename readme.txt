@@ -1,9 +1,9 @@
 === Social Login ===
 Contributors: ClaudeSchlesser
-Tags: facebook, linkedin, google, yahoo, twitter, openid, wordpress.com, vkontakte, hyves, social connect, social login
+Tags: social login, social connect, facebook, linkedin, google, yahoo, twitter, openid, wordpress.com, vkontakte, hyves, widget, plugin, social network login
 Requires at least: 3.0
 Tested up to: 3.2.1
-Stable tag: 1.3.5
+Stable tag: 1.5
 
 Allow your visitors to comment and login with social networks like Twitter, Facebook, LinkedIn, Hyves, OpenID, Вконтакте, Google, Yahoo
 
@@ -20,7 +20,7 @@ Yahoo. <br />
  <li>On the registration page</li>
 </ul>
 
-<strong>Optionally add the widget:</strong>
+<strong>Optionally add the Social Login widget:</strong>
 <ul>
  	<li>A login widget that you can easily attach to your sidebar is provided</li>
  </ul>
@@ -76,6 +76,9 @@ It should work out of the box.
 Our team answers your request at:
 http://www.oneall.com/company/contact-us/
 
+The plugin documentation is available at:
+http://docs.oneall.com/plugins/guide/social-login-wordpress/
+
 == Screenshots ==
 
 1. **Comment** - Comment formular (Social Network Buttons are includes)
@@ -105,3 +108,16 @@ http://www.oneall.com/company/contact-us/
 * Administration area redirection fixed
 * Automatic email creation added
 * Email verification added
+
+= 1.4 =
+* Social Network Avatars can be displayed in comments
+* Social Login can be disabled below the login form
+* Social Login can be disabled below the registration form
+* Select redirection target after login
+* Select redirection target after registration
+* Enable account linking
+
+= 1.5 =
+* Social Network Avatars fixed
+* Social Buttons no longer displayed for customs hooks if logged in
+* KISS for API Settings Setup 

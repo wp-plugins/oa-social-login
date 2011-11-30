@@ -17,11 +17,18 @@ jQuery(document).ready(function($) {
 		jQuery.post(ajaxurl,data, function(response) {	
 			var message;		
 			var success;
-
-			
-			if (response == 'error_subdomain_wrong'){
+	
+			if (response == 'error_not_all_fields_filled_out'){
+				success = false;
+				message = 'Please fill out each of the fields above'
+			}
+			else if (response == 'error_subdomain_wrong'){
 				success = false;
 				message = 'The subdomain does not exist. Have you filled it out correctly?'
+			}
+			else if (response == 'error_subdomain_wrong_syntax' || response == 'error_communication'){
+				success = false;
+				message = 'The subdomain has a wrong syntax!'				
 			}
 			else if (response == 'error_authentication_credentials_wrong'){
 				success = false;
@@ -29,7 +36,7 @@ jQuery(document).ready(function($) {
 			}
 			else {
 				success = true;
-				message = 'The API Settings are correct!';
+				message = 'The settings are correct - do not forget to save your changes!';
 			}
 		
 			jQuery('#oa_social_login_api_test_result').html(message);
