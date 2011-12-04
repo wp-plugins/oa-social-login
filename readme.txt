@@ -1,17 +1,16 @@
 === Social Login ===
 Contributors: ClaudeSchlesser
-Tags: social login, social connect, facebook, linkedin, google, yahoo, twitter, openid, wordpress.com, vkontakte, hyves, widget, plugin, social network login
+Tags: social login, social connect, facebook login, linkedin, google, yahoo, twitter, openid, paypal, wordpress.com, vkontakte, hyves, widget, plugin, social network login
 Requires at least: 3.0
-Tested up to: 3.2.1
+Tested up to: 3.3
 Stable tag: 1.5
 
-Allow your visitors to comment and login with social networks like Twitter, Facebook, LinkedIn, Hyves, OpenID, Вконтакте, Google, Yahoo
+Allow your visitors to comment and login with social networks like Twitter, Facebook, Paypal, LinkedIn, Hyves, OpenID, VKontakte, Google, Yahoo
 
 == Description ==
 
 The Social Login Plugin is a professional though free plugin that allows your visitors to comment, 
-login and register with social networks like Twitter, Facebook, LinkedIn, Hyves, Вконтакте, Google or 
-Yahoo. <br />
+login and register with social networks like Twitter, Facebook, LinkedIn, Paypal, Hyves, Вконтакте, Google or Yahoo. <br />
 
 <strong>Choose where to add the social login feature:</strong>
 <ul>
@@ -31,6 +30,7 @@ Yahoo. <br />
  <li>Twitter</li>
  <li>Google</li>
  <li>LinkedIn</li>
+ <li>Paypal</li>
  <li>Yahoo</li>
  <li>OpenID</li>
  <li>Wordpress.com</li>
