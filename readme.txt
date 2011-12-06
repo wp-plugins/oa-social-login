@@ -1,17 +1,16 @@
 === Social Login ===
 Contributors: ClaudeSchlesser
-Tags: social login, social connect, facebook, linkedin, google, yahoo, twitter, openid, wordpress.com, vkontakte, hyves, widget, plugin, social network login
+Tags: social login, social connect, facebook login, linkedin, google, yahoo, twitter login, openid, paypal, vkontakte, hyves, widget, plugin, social network login, comments
 Requires at least: 3.0
-Tested up to: 3.2.1
+Tested up to: 3.3
 Stable tag: 1.5
 
-Allow your visitors to comment and login with social networks like Twitter, Facebook, LinkedIn, Hyves, OpenID, Вконтакте, Google, Yahoo
+Allow your visitors to comment and login with social networks like Twitter, Facebook, Paypal, LinkedIn, Hyves, OpenID, VKontakte, Google, Yahoo
 
 == Description ==
 
 The Social Login Plugin is a professional though free plugin that allows your visitors to comment, 
-login and register with social networks like Twitter, Facebook, LinkedIn, Hyves, Вконтакте, Google or 
-Yahoo. <br />
+login and register with social networks like Twitter, Facebook, LinkedIn, Paypal, Hyves, Вконтакте, Google or Yahoo. <br />
 
 <strong>Choose where to add the social login feature:</strong>
 <ul>
@@ -31,6 +30,7 @@ Yahoo. <br />
  <li>Twitter</li>
  <li>Google</li>
  <li>LinkedIn</li>
+ <li>Paypal</li>
  <li>Yahoo</li>
  <li>OpenID</li>
  <li>Wordpress.com</li>
@@ -41,8 +41,8 @@ Yahoo. <br />
 <strong>Increase your user engagement in a few simple steps with this plugin.</strong><br />
 
 The Social Login Plugin is maintained by <a href="http://www.oneall.com">OneAll</a>, a technology company offering a set of web-delivered
-tools and services for establishing and optimizing a site's connection with social providers such as Facebook, Twitter, Google, Yahoo!,
-LinkedIn amongst others.
+tools and services for establishing and optimizing a site's connection with social network providers such as Facebook, Twitter, Google, Yahoo!,
+LinkedIn, Paypal amongst others.
 
 
 == Installation ==
@@ -58,6 +58,7 @@ LinkedIn amongst others.
 You should not have to change your templates. 
 The Social Login seamlessly integrates into your blog by using predefined hooks.
 
+
 = I have a custom template and the plugin is not displayed correctly =
 
 The plugin uses predefined hooks. If your theme does not support these hooks,
@@ -66,10 +67,12 @@ in your template (at the location where it should be displayed, i.e. above the c
 
 `<?php do_action('oa_social_login'); ?>`
 
+
 = Do I have to change my Rewrite Settings? =
 
 The plugins does not rely on mod_rewrite and does not need any additional rules.
 It should work out of the box.
+
 
 = Where can I report bugs & get support? =
 
