@@ -12,11 +12,12 @@ Allow your visitors to comment and login with social networks like Twitter, Face
 The Social Login Plugin is a professional though free plugin that allows your visitors to comment, 
 login and register with social networks like Twitter, Facebook, LinkedIn, Paypal, Hyves, Вконтакте, Google or Yahoo. <br />
 
-<strong>Choose where to add the social login feature:</strong>
+<strong>Choose where to add the Social Login Plugin:</strong>
 <ul>
  <li>On the comment formular</li>
  <li>On the login page</li>
  <li>On the registration page</li>
+ <li>In your sidebar</li>
 </ul>
 
 <strong>Optionally add the Social Login widget:</strong>
@@ -41,8 +42,8 @@ login and register with social networks like Twitter, Facebook, LinkedIn, Paypal
 <strong>Increase your user engagement in a few simple steps with this plugin.</strong><br />
 
 The Social Login Plugin is maintained by <a href="http://www.oneall.com">OneAll</a>, a technology company offering a set of web-delivered
-tools and services for establishing and optimizing a site's connection with social network providers such as Facebook, Twitter, Google, Yahoo!,
-LinkedIn, Paypal amongst others.
+tools and services for establishing and optimizing a site's connection with social networks and identity providers such as Facebook, Twitter, 
+Google, Yahoo!, LinkedIn, Paypal, Hyves amongst others.
 
 
 == Installation ==
