@@ -68,6 +68,8 @@ in your template (at the location where it should be displayed, i.e. above the c
 
 `<?php do_action('oa_social_login'); ?>`
 
+Do not hesitate to contact us if you need further assistance. 
+
 
 = Do I have to change my Rewrite Settings? =
 
@@ -75,9 +77,9 @@ The plugins does not rely on mod_rewrite and does not need any additional rules.
 It should work out of the box.
 
 
-= Where can I report bugs & get support? =
+= Where can I report bugs, leave my feedbak and get support? =
 
-Our team answers your request at:
+Our team answers your questions at:
 http://www.oneall.com/company/contact-us/
 
 The plugin documentation is available at:
@@ -85,8 +87,8 @@ http://docs.oneall.com/plugins/guide/social-login-wordpress/
 
 == Screenshots ==
 
-1. **Comment** - Comment formular (Social Network Buttons are includes)
-2. **Login** - Login formular (Social Network Buttons are includes)
+1. **Comment** - Comment formular (Social Network Buttons are included)
+2. **Login** - Login formular (Social Network Buttons are included)
 3. **Plugin Settings** - Plugin Settings in the Wordpress Administration Area
 4. **Widget Settings** - Widget Settings in the Wordpress Administration Area
 
