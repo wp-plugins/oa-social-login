@@ -70,6 +70,12 @@ in your template (at the location where it should be displayed, i.e. above the c
 
 Do not hesitate to contact us if you need further assistance. 
 
+= My users cannot login or leave comment with VKontakte (Вконтакте) =
+
+Per default WordPress does not allow to use special characters in usernames.
+If you encounter any problems with users having cyrillic characters in their
+usernames, please consider installing the following plugin to fix the problem:
+<a href="http://wordpress.org/extend/plugins/wordpress-special-characters-in-usernames/">Wordpress Special Characters In Usernames</a>
 
 = Do I have to change my Rewrite Settings? =
 
