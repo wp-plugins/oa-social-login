@@ -11,14 +11,13 @@ License: GPL2
 
 define ('OA_SOCIAL_LOGIN_PLUGIN_URL', plugins_url () . '/' . basename (dirname (__FILE__)));
 
+
 /**
- * Check technical requirements before activating the plugin.
- * Wordpress 3.0 or newer required
- * CURL Required
+ * Check technical requirements before activating the plugin
+ * Wordpress >3.0 & PHP CURL required
  */
 function oa_social_login_activate ()
 {
-	//Wordpress 3.0 or newer required
 	if (!function_exists ('register_post_status'))
 	{
 		deactivate_plugins (basename (dirname (__FILE__)) . '/' . basename (__FILE__));
@@ -35,6 +34,7 @@ function oa_social_login_activate ()
 }
 register_activation_hook (__FILE__, 'oa_social_login_activate');
 
+
 /**
  * This file only has to be included for versions before 3.1.
  * Deprecated since version 3.1, the functions are included by default
@@ -45,17 +45,19 @@ if (!function_exists ('email_exists'))
 }
 
 
-
 /**
  * Include required files
- **/
+ */
 require_once(dirname (__FILE__) . '/includes/settings.php');
 require_once(dirname (__FILE__) . '/includes/toolbox.php');
 require_once(dirname (__FILE__) . '/includes/admin.php');
 require_once(dirname (__FILE__) . '/includes/user_interface.php');
 require_once(dirname (__FILE__) . '/includes/widget.php');
 
-//Callback Handler
+
+/**
+ * Callback Handler
+ */
 if (isset ($_POST) AND !empty ($_POST ['oa_action']) AND $_POST ['oa_action'] == 'social_login' AND !empty ($_POST ['connection_token']))
 {
 	add_action ('init', 'oa_social_login_callback', 2000);
