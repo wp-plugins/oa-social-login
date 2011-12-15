@@ -60,7 +60,7 @@ You should not have to change your templates.
 The Social Login seamlessly integrates into your blog by using predefined hooks.
 
 
-= I have a custom template and the plugin is not displayed correctly =
+= I have a custom template and the plugin is not displayed at all! =
 
 The plugin uses predefined hooks. If your theme does not support these hooks,
 you can add the Social Login form manually to your theme by inserting the following code 
@@ -70,26 +70,27 @@ in your template (at the location where it should be displayed, i.e. above the c
 
 Do not hesitate to contact us if you need further assistance. 
 
-= My users cannot login or leave comment with VKontakte (Вконтакте) =
+= Leaving comments with VKontakte (Вконтакте) does not work! =
 
 Per default WordPress does not allow to use special characters in usernames.
 If you encounter any problems with users having cyrillic characters in their
 usernames, please consider installing the following plugin to fix the problem:
 <a href="http://wordpress.org/extend/plugins/wordpress-special-characters-in-usernames/">Wordpress Special Characters In Usernames</a>
 
-= Do I have to change my Rewrite Settings? =
+= Do I have to change my URL Rewrite Settings? =
 
 The plugins does not rely on mod_rewrite and does not need any additional rules.
 It should work out of the box.
 
 
-= Where can I report bugs, leave my feedbak and get support? =
+= Where can I report bugs, leave feedback and get support? =
 
-Our team answers your questions at:
+Our team answers your questions at:<br />
 http://www.oneall.com/company/contact-us/
 
-The plugin documentation is available at:
+The plugin documentation is available at:<br />
 http://docs.oneall.com/plugins/guide/social-login-wordpress/
+
 
 == Screenshots ==
 
