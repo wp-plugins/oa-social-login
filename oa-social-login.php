@@ -30,7 +30,7 @@ function oa_social_login_activate ()
 		echo sprintf (__ ("This plugin requires the <a href='http://www.php.net/manual/en/intro.curl.php'>PHP libcurl extension</a> be installed. Please contact your web host and request libcurl be <a href='http://www.php.net/manual/en/intro.curl.php'>installed</a>."));
 		exit;
 	}
-	update_option('oa_social_login_activation_message', 0);
+	update_option ('oa_social_login_activation_message', 0);
 }
 register_activation_hook (__FILE__, 'oa_social_login_activate');
 
