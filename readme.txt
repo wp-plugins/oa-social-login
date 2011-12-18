@@ -1,26 +1,26 @@
 === Social Login ===
 Contributors: ClaudeSchlesser
-Tags: facebook, linkedin, google, yahoo, twitter, openid, wordpress.com, vkontakte, hyves, social connect, social login
+Tags: social login, social connect, facebook login, linkedin, livejournal, google, yahoo, twitter login, openid, paypal, vkontakte, hyves, widget, plugin, social network login, comments
 Requires at least: 3.0
-Tested up to: 3.2.1
-Stable tag: 1.3.5
+Tested up to: 3.3
+Stable tag: 1.6
 
-Allow your visitors to comment and login with social networks like Twitter, Facebook, LinkedIn, Hyves, OpenID, Вконтакте, Google, Yahoo
+Allow your visitors to comment and login with social networks like Twitter, Facebook, Paypal, LinkedIn, LiveJournal, OpenID, VKontakte, Google, Yahoo
 
 == Description ==
 
-The Social Login Plugin is a professional though free plugin that allows your visitors to comment, 
-login and register with social networks like Twitter, Facebook, LinkedIn, Hyves, Вконтакте, Google or 
-Yahoo. <br />
+The Social Login Plugin is a professional though free Wordpress plugin that allows your visitors to comment, 
+login and register with social networks like Twitter, Facebook, LinkedIn, Paypal, LiveJournal, Hyves, Вконтакте, Google or Yahoo. <br />
 
-<strong>Choose where to add the social login feature:</strong>
+<strong>Choose where to add the Social Login Plugin:</strong>
 <ul>
  <li>On the comment formular</li>
  <li>On the login page</li>
  <li>On the registration page</li>
+ <li>In your sidebar</li>
 </ul>
 
-<strong>Optionally add the widget:</strong>
+<strong>Optionally add the Social Login widget:</strong>
 <ul>
  	<li>A login widget that you can easily attach to your sidebar is provided</li>
  </ul>
@@ -31,18 +31,20 @@ Yahoo. <br />
  <li>Twitter</li>
  <li>Google</li>
  <li>LinkedIn</li>
+ <li>Paypal</li>
  <li>Yahoo</li>
  <li>OpenID</li>
+ <li>LiveJournal</li>
  <li>Wordpress.com</li>
  <li>Hyves</li>
  <li>VKontakte (Вконтакте)</li>
  </ul>
 
-<strong>Increase your user engagement in a few simple steps with this plugin.</strong><br />
+<strong>Increase your wordpress user engagement in a few simple steps with this plugin.</strong><br />
 
 The Social Login Plugin is maintained by <a href="http://www.oneall.com">OneAll</a>, a technology company offering a set of web-delivered
-tools and services for establishing and optimizing a site's connection with social providers such as Facebook, Twitter, Google, Yahoo!,
-LinkedIn amongst others.
+tools and services for establishing and optimizing a site's connection with social networks and identity providers such as Facebook, Twitter, 
+Google, Yahoo!, LinkedIn, Paypal, Hyves amongst others.
 
 
 == Installation ==
@@ -58,6 +60,7 @@ LinkedIn amongst others.
 You should not have to change your templates. 
 The Social Login seamlessly integrates into your blog by using predefined hooks.
 
+
 = I have a custom template and the plugin is not displayed correctly =
 
 The plugin uses predefined hooks. If your theme does not support these hooks,
@@ -66,20 +69,33 @@ in your template (at the location where it should be displayed, i.e. above the c
 
 `<?php do_action('oa_social_login'); ?>`
 
+Do not hesitate to contact us if you need further assistance. 
+
+= My users cannot login or leave comment with VKontakte (Вконтакте) =
+
+Per default WordPress does not allow to use special characters in usernames.
+If you encounter any problems with users having cyrillic characters in their
+usernames, please consider installing the following plugin to fix the problem:
+<a href="http://wordpress.org/extend/plugins/wordpress-special-characters-in-usernames/">Wordpress Special Characters In Usernames</a>
+
 = Do I have to change my Rewrite Settings? =
 
 The plugins does not rely on mod_rewrite and does not need any additional rules.
 It should work out of the box.
 
-= Where can I report bugs & get support? =
 
-Our team answers your request at:
+= Where can I report bugs, leave my feedbak and get support? =
+
+Our team answers your questions at:
 http://www.oneall.com/company/contact-us/
+
+The plugin documentation is available at:
+http://docs.oneall.com/plugins/guide/social-login-wordpress/
 
 == Screenshots ==
 
-1. **Comment** - Comment formular (Social Network Buttons are includes)
-2. **Login** - Login formular (Social Network Buttons are includes)
+1. **Comment** - Comment formular (Social Network Buttons are included)
+2. **Login** - Login formular (Social Network Buttons are included)
 3. **Plugin Settings** - Plugin Settings in the Wordpress Administration Area
 4. **Widget Settings** - Widget Settings in the Wordpress Administration Area
 
@@ -105,3 +121,23 @@ http://www.oneall.com/company/contact-us/
 * Administration area redirection fixed
 * Automatic email creation added
 * Email verification added
+
+= 1.4 =
+* Social Network Avatars can be displayed in comments
+* Social Login can be disabled below the login form
+* Social Login can be disabled below the registration form
+* Select redirection target after login
+* Select redirection target after registration
+* Enable account linking
+
+= 1.5 =
+* Social Network Avatars fixed
+* Social Buttons no longer displayed for customs hooks if logged in
+* KISS for API Settings Setup 
+
+= 1.6 = 
+* LiveJournal added
+* PayPal added
+* Settings link added
+* API Communication Check added
+* Cyrillic character support
