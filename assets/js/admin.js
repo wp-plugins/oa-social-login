@@ -26,9 +26,13 @@ jQuery(document).ready(function($) {
 				success = false;
 				message = 'The subdomain does not exist. Have you filled it out correctly?'
 			}
-			else if (response == 'error_subdomain_wrong_syntax' || response == 'error_communication'){
+			else if (response == 'error_subdomain_wrong_syntax'){
 				success = false;
 				message = 'The subdomain has a wrong syntax!'				
+			}
+			else if (response == 'error_communication'){
+				success = false;
+				message = 'Could not contact API. Are outoing CURL requests allowed?'				
 			}
 			else if (response == 'error_authentication_credentials_wrong'){
 				success = false;

@@ -3,7 +3,7 @@
 Plugin Name: Social Login
 Plugin URI: http://www.oneall.com/
 Description: Allow your visitors to <strong>comment, login and register with 20+ social networks</strong> like Twitter, Facebook, LinkedIn, Hyves, Вконтакте, Google or Yahoo.
-Version: 1.5
+Version: 1.6
 Author: Claude Schlesser
 Author URI: http://www.oneall.com/
 License: GPL2
@@ -31,9 +31,32 @@ function oa_social_login_activate ()
 		echo sprintf (__ ("This plugin requires the <a href='http://www.php.net/manual/en/intro.curl.php'>PHP libcurl extension</a> be installed. Please contact your web host and request libcurl be <a href='http://www.php.net/manual/en/intro.curl.php'>installed</a>."));
 		exit;
 	}
-	update_option('oa_social_login_activation_message', 0);
+	update_option ('oa_social_login_activation_message', 0);
 }
 register_activation_hook (__FILE__, 'oa_social_login_activate');
+
+
+/**
+ * Add Settings Link
+ **/
+function add_settings_link ($links, $file)
+{
+	static $oa_social_login_plugin = null;
+
+	if (is_null ($oa_social_login_plugin))
+	{
+		$oa_social_login_plugin = plugin_basename (__FILE__);
+	}
+
+	if ($file == $oa_social_login_plugin)
+	{
+		$settings_link = '<a href="options-general.php?page=oa_social_login">' . __ ("Settings", "oa_social_login") . '</a>';
+		array_unshift ($links, $settings_link);
+	}
+	return $links;
+}
+add_filter ('plugin_action_links', 'add_settings_link', 10, 2);
+
 
 /**
  * This file only has to be included for versions before 3.1.
@@ -44,18 +67,19 @@ if (!function_exists ('email_exists'))
 	require_once(ABSPATH . WPINC . '/registration.php');
 }
 
-
-
 /**
  * Include required files
- **/
+ */
 require_once(dirname (__FILE__) . '/includes/settings.php');
 require_once(dirname (__FILE__) . '/includes/toolbox.php');
 require_once(dirname (__FILE__) . '/includes/admin.php');
 require_once(dirname (__FILE__) . '/includes/user_interface.php');
 require_once(dirname (__FILE__) . '/includes/widget.php');
 
-//Callback Handler
+
+/**
+ * Callback Handler
+ */
 if (isset ($_POST) AND !empty ($_POST ['oa_action']) AND $_POST ['oa_action'] == 'social_login' AND !empty ($_POST ['connection_token']))
 {
 	add_action ('init', 'oa_social_login_callback', 2000);
