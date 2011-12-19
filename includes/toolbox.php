@@ -138,6 +138,9 @@ function oa_social_login_callback ()
 					$user_login = $identity->name->formatted;
 				}
 
+				//Sanitize Login
+				$user_login = sanitize_user ($user_login, true);
+
 				// Get user by token
 				$user_id = oa_social_login_get_user_by_token ($user_token);
 
