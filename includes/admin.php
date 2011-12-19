@@ -389,10 +389,6 @@ function oa_display_social_login_settings ()
 					  $i = 0;
 					  foreach ($oa_social_login_providers AS $key => $provider_data)
 					  {
-					  	if ( ! isset ($settings ['providers'] [$key]))
-					  	{
-					  		$settings ['providers'] [$key] = ($provider_data['default_enabled'] == true ? 1 : 0);
-					  	}
 				  		?>
 				  			<tr class="<?php echo ((($i++) % 2) == 0) ? 'row_even' : 'row_odd' ?> row_provider">
 					    	  <td class="row">
