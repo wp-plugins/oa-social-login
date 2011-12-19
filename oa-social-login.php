@@ -39,7 +39,7 @@ register_activation_hook (__FILE__, 'oa_social_login_activate');
 /**
  * Add Settings Link
  **/
-function add_settings_link ($links, $file)
+function oa_social_login_add_settings_link ($links, $file)
 {
 	static $oa_social_login_plugin = null;
 
@@ -55,7 +55,7 @@ function add_settings_link ($links, $file)
 	}
 	return $links;
 }
-add_filter ('plugin_action_links', 'add_settings_link', 10, 2);
+add_filter ('plugin_action_links', 'oa_social_login_add_settings_link', 10, 2);
 
 
 /**
