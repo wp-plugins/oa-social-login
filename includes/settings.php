@@ -46,7 +46,7 @@ $oa_social_login_providers = array (
 	'vkontakte' => array (
 		'name' => 'VKontakte (Вконтакте)',
 		'default_enabled' => false,
-		'note' => 'To enable cyrillic characters, you might need <a target="_blank" href="http://wordpress.org/extend/plugins/wordpress-special-characters-in-usernames/">this plugin</a>'
+		'note' => 'To enable cyrillic usernames, you might need <a target="_blank" href="http://wordpress.org/extend/plugins/wordpress-special-characters-in-usernames/">this plugin</a>'
 	)
 );
 
