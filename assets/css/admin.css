@@ -7,6 +7,28 @@
  width: 628px;
 }
 
+.oa_container h3 {
+ margin: 0 0 10px 0;
+}
+
+.oa_container ul {
+ list-style-type: disc;
+ padding-left: 20px;
+}
+
+.oa_container.oa_container_links {
+ background-color: #FFFFE0;
+ border-color: #E6DB55;
+}
+
+.oa_container.oa_container_links a {
+ color: #111;
+}
+
+.oa_container.oa_container_links a:hover {
+ color: #d54e21;
+}
+
 .oa_container.oa_container_welcome {
  background-color: #E1EDFF
 }
@@ -29,6 +51,10 @@
  margin-bottom: 10px;
 }
 
+.oa_form_table input {
+ border-color: #aaa;
+}
+
 .oa_form_table .head {
  font-weight: bold;
  font-size: 13px;
@@ -42,14 +68,22 @@
  text-align: center;
 }
 
-.oa_form_table  .foot .error_message{
- color:red;
- font-weight:bold;
+.oa_form_table  .foot .error_message {
+ color: red;
+ font-weight: bold;
 }
 
-.oa_form_table  .foot .success_message{
- color:green;
- font-weight:bold;
+.oa_form_table  .foot .success_message {
+ color: green;
+ font-weight: bold;
+}
+
+.oa_form_table tr td.row {
+ line-height: 36px;
+}
+
+.oa_form_table tr.description td {
+ color: #0D5995;
 }
 
 .oa_form_table .row_even {
@@ -85,45 +119,59 @@
 }
 
 .oa_provider.oa_provider_foursquare {
- background-position: 629px -1px;
+ background-position: -113px -1px;
 }
 
 .oa_provider.oa_provider_google {
- background-position: 592px -1px;
+ background-position: -150px -1px;
 }
 
 .oa_provider.oa_provider_hyves {
- background-position: 555px -1px;
+ background-position: -187px -1px;
 }
 
 .oa_provider.oa_provider_linkedin {
- background-position: 518px -1px;
+ background-position: -224px -1px;
 }
 
 .oa_provider.oa_provider_livejournal {
- background-position: 444px -1px;
+ background-position: -298px -1px;
 }
 
 .oa_provider.oa_provider_myspace {
- background-position: 370px -1px;
-}
-
-.oa_provider.oa_provider_twitter {
- background-position: 222px -1px;
-}
-
-.oa_provider.oa_provider_yahoo {
- background-position: 37px -1px;
+ background-position: -372px -1px;
 }
 
 .oa_provider.oa_provider_openid {
- background-position: 333px -1px;
+ background-position: -409px -1px;
 }
 
-.oa_provider.oa_provider_wordpress {
- background-position: 74px -1px;
+.oa_provider.oa_provider_twitter {
+ background-position: -520px -1px;
 }
 
 .oa_provider.oa_provider_vkontakte {
- background-position: 111px -1px;
+ background-position: -631px -1px;
+}
+
+.oa_provider.oa_provider_wordpress {
+ background-position: -668px -1px;
+}
+
+.oa_provider.oa_provider_yahoo {
+ background-position: -705px -1px;
+}
+
+.oa_provider.oa_provider_paypal {
+ background-position: -742px -1px;
+}
+
+.oa_form_table_settings tr.row_odd,.oa_form_table_settings tr.row_odd td {
+ background-color: #e7e7e7;
+ color: #222;
+ font-weight: bold;
+}
+
+.oa_form_table_settings .row_even {
+ border-bottom: 1px dotted #BBBBBB;
 }
