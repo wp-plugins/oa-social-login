@@ -144,5 +144,5 @@ http://docs.oneall.com/plugins/guide/social-login-wordpress/
 
 = 1.6.1 =
 * Provider unselect bug fixed
-* Sanitze user strict added
+* Sanitize user strict added
 * Custom namespace for add_settings_link
