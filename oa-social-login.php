@@ -18,7 +18,6 @@ define ('OA_SOCIAL_LOGIN_PLUGIN_URL', plugins_url () . '/' . basename (dirname (
  */
 function oa_social_login_activate ()
 {
-	//Wordpress 3.0 or newer required
 	if (!function_exists ('register_post_status'))
 	{
 		deactivate_plugins (basename (dirname (__FILE__)) . '/' . basename (__FILE__));
