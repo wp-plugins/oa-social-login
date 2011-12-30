@@ -66,6 +66,7 @@ if (!function_exists ('email_exists'))
 	require_once(ABSPATH . WPINC . '/registration.php');
 }
 
+
 /**
  * Include required files
  */
