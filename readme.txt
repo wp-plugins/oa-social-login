@@ -146,3 +146,50 @@ http://docs.oneall.com/plugins/guide/social-login-wordpress/
 * Provider unselect bug fixed
 * Sanitize user strict added
 * Custom namespace for add_settings_link
+
+== Testimonials ==
+
+<strong>Used by thousands of users around the world!</strong>
+
+<em>This service is simply remarkable, I've tried integrating logins before and it has never been this easy!</em><br />
+Andrew C.
+
+<em>I found it extremely straightforward. I just figured it out easily and make my website capable of connecting 
+to many social networks by your plugin.</em><br />
+Deha K.
+
+<em>Just wanted to let you know how happy i am that i stumbled onto your service. This was the 6 Facebook/Twitter integration 
+i tried and was starting to loose hope that i could actually find one that worked for me.</em><br />
+Kyle L.
+
+<em>I would like to thank YOU! Seriously, the WordPress plugin has been a huge life saver for me.</em><br />
+Piero B.
+
+<em>Thank you for the wonderful plugin</em><br />
+Martin P.
+
+<em>The service is excellent for what i need, simple to set up. All situations about seting up are well explained, so 
+there are no difficulties</em><br />
+Facundo S.
+
+<em>I really like the plugin, the capabilities you provide for management and your prompt reply for support.</em><br />
+Tom B.
+
+<em>It was extremely easy to set up and use.  The documentation to set up the FB and twitter API
+was easy to follow and implement. I was struggling with a couple of other plugins till I stumbled on this one.</em><br />
+Deepa V.
+
+<em>Works like a charm!</em><br />
+Fredrik L.
+
+<em>Not sure how you can improve it's a Damn! Good product. 100% User friendly easy to setup.. Thanks</em><br />
+Cody L. 
+
+<em>So far oneall.com is the perfect solution for my site and works flawlessly.  I am extremely impressed and grateful.</em><br />
+Terry P.
+
+<em>I've gone in and tweaked it, tested it and it's good to go now! Wonderful, I feel like a grown up blogger now.</em><br />
+Brian J.
+
+<em>I am really impressed with your product! Its very dynamic and its gives me the flexibility I need for integration into my own business.</em><br />
+Braxton D.
