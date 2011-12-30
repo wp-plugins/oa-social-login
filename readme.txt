@@ -84,12 +84,12 @@ The plugins does not rely on mod_rewrite and does not need any additional rules.
 It should work out of the box.
 
 
-= Where can I report bugs, leave my feedbak and get support? =
+= Where can I report bugs, leave my feedback and get support? =
 
-Our team answers your questions at:
+Our team answers your questions at:<br />
 http://www.oneall.com/company/contact-us/
 
-The plugin documentation is available at:
+The plugin documentation is available at:<br />
 http://docs.oneall.com/plugins/guide/social-login-wordpress/
 
 == Screenshots ==
