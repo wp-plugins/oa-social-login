@@ -182,7 +182,7 @@ was easy to follow and implement. I was struggling with a couple of other plugin
 <em>Works like a charm!</em>
 <strong>Fredrik L.</strong>
 
-<em>Not sure how you can improve it's a Damn! Good product. 100% User friendly easy to setup.. Thanks</em>
+<em>Not sure how you can improve it's a Damn! Good product. 100% User friendly easy to setup. Thanks!</em>
 <strong>Cody L.</strong>
 
 <em>So far oneall.com is the perfect solution for my site and works flawlessly.  I am extremely impressed and grateful.</em>
@@ -193,3 +193,6 @@ was easy to follow and implement. I was struggling with a couple of other plugin
 
 <em>I am really impressed with your product! Its very dynamic and its gives me the flexibility I need for integration into my own business.</em>
 <strong>Braxton D.</strong>
+
+<em>Your delivery is superb. You should change your name to WONall because you won it all with me. You are awesome, stay that way please.</em>
+<strong>Nicholas L.</strong>
