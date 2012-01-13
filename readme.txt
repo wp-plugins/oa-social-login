@@ -196,3 +196,7 @@ was easy to follow and implement. I was struggling with a couple of other plugin
 
 <em>Your delivery is superb. You should change your name to WONall because you won it all with me. You are awesome, stay that way please.</em>
 <strong>Nicholas L.</strong>
+
+<em>I especially enjoy the step by step process that guides you through the Social website App creation process. In the end I would like to thank you 
+for putting together such a great product that so many can implement with ease.</em>
+<strong>Stefan C.</strong>
