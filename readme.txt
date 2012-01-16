@@ -198,5 +198,5 @@ was easy to follow and implement. I was struggling with a couple of other plugin
 <strong>Nicholas L.</strong>
 
 <em>I especially enjoy the step by step process that guides you through the Social website App creation process. In the end I would like to thank you 
-for putting together such a great product that so many can implement with ease.</em>
+for putting together such a great product that so many users can implement with ease.</em>
 <strong>Stefan C.</strong>
