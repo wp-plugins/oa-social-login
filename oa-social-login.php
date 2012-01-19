@@ -3,32 +3,31 @@
 Plugin Name: Social Login
 Plugin URI: http://www.oneall.com/
 Description: Allow your visitors to <strong>comment, login and register with 20+ social networks</strong> like Twitter, Facebook, LinkedIn, Hyves, Вконтакте, Google or Yahoo.
-Version: 1.6.1
+Version: 2.0
 Author: Claude Schlesser
 Author URI: http://www.oneall.com/
 License: GPL2
  */
 
 define ('OA_SOCIAL_LOGIN_PLUGIN_URL', plugins_url () . '/' . basename (dirname (__FILE__)));
+define ('OA_SOCIAL_LOGIN_BASE_PATH', dirname (plugin_basename (__FILE__)));
 
 /**
  * Check technical requirements before activating the plugin.
- * Wordpress 3.0 or newer required
- * CURL Required
+ * Wordpress 3.0 or newer + CURL required
  */
 function oa_social_login_activate ()
 {
-	//Wordpress 3.0 or newer required
 	if (!function_exists ('register_post_status'))
 	{
 		deactivate_plugins (basename (dirname (__FILE__)) . '/' . basename (__FILE__));
-		echo sprintf (__ ("This plugin requires WordPress 3.0 or newer. Please update your WordPress installation to activate this plugin."));
+		echo sprintf (__ ("This plugin requires WordPress %s or newer. Please update your WordPress installation to activate this plugin.", "3.0"));
 		exit;
 	}
 	elseif (!function_exists ('curl_version'))
 	{
 		deactivate_plugins (basename (dirname (__FILE__)) . '/' . basename (__FILE__));
-		echo sprintf (__ ("This plugin requires the <a href='http://www.php.net/manual/en/intro.curl.php'>PHP libcurl extension</a> be installed. Please contact your web host and request libcurl be <a href='http://www.php.net/manual/en/intro.curl.php'>installed</a>."));
+		echo sprintf (__ ("This plugin requires the PHP libcurl extension be installed. Please contact your web host and request libcurl be <a href='http://www.php.net/manual/en/intro.curl.php'>installed</a>."));
 		exit;
 	}
 	update_option ('oa_social_login_activation_message', 0);
@@ -50,7 +49,7 @@ function oa_social_login_add_settings_link ($links, $file)
 
 	if ($file == $oa_social_login_plugin)
 	{
-		$settings_link = '<a href="options-general.php?page=oa_social_login">' . __ ("Settings", "oa_social_login") . '</a>';
+		$settings_link = '<a href="options-general.php?page=oa_social_login">' . __ ('Settings') . '</a>';
 		array_unshift ($links, $settings_link);
 	}
 	return $links;
@@ -79,9 +78,6 @@ require_once(dirname (__FILE__) . '/includes/widget.php');
 
 
 /**
- * Callback Handler
+ * Initialise
  */
-if (isset ($_POST) AND !empty ($_POST ['oa_action']) AND $_POST ['oa_action'] == 'social_login' AND !empty ($_POST ['connection_token']))
-{
-	add_action ('init', 'oa_social_login_callback', 2000);
-}
+add_action ('init', 'oa_social_login_init', 2000);

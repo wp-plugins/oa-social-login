@@ -2,15 +2,16 @@
 Contributors: ClaudeSchlesser
 Tags: social login, social connect, facebook login, linkedin, livejournal, google, yahoo, twitter login, openid, paypal, vkontakte, hyves, widget, plugin, social network login, comments
 Requires at least: 3.0
-Tested up to: 3.3
-Stable tag: 1.6.1
+Tested up to: 3.3.1
+Stable tag: 2.0
 
 Allow your visitors to comment and login with social networks like Twitter, Facebook, Paypal, LinkedIn, LiveJournal, OpenID, VKontakte, Google, Yahoo
 
 == Description ==
 
-The Social Login Plugin is a professional though free Wordpress plugin that allows your visitors to comment, 
-login and register with social networks like Twitter, Facebook, LinkedIn, Paypal, LiveJournal, Hyves, Вконтакте, Google or Yahoo. <br />
+The Social Login Plugin is a professional though free Wordpress (BuddyPress compatible) Plugin in English/German that allows your visitors to comment, 
+login and register with social networks like Twitter, Facebook, LinkedIn, Paypal, LiveJournal, Hyves, Вконтакте, Google or Yahoo. 
+<strong>Make your blog social!</strong><br />
 
 <strong>Choose where to add the Social Login Plugin:</strong>
 <ul>
@@ -39,8 +40,9 @@ login and register with social networks like Twitter, Facebook, LinkedIn, Paypal
  <li>Hyves</li>
  <li>VKontakte (Вконтакте)</li>
  </ul>
+ 
 
-<strong>Increase your wordpress user engagement in a few simple steps with this plugin.</strong><br />
+<strong>Increase your wordpress user engagement in a few simple steps with the Social Login Plugin!</strong><br />
 
 The Social Login Plugin is maintained by <a href="http://www.oneall.com">OneAll</a>, a technology company offering a set of web-delivered
 tools and services for establishing and optimizing a site's connection with social networks and identity providers such as Facebook, Twitter, 
@@ -98,6 +100,7 @@ http://docs.oneall.com/plugins/guide/social-login-wordpress/
 2. **Login** - Login formular (Social Network Buttons are included)
 3. **Plugin Settings** - Plugin Settings in the Wordpress Administration Area
 4. **Widget Settings** - Widget Settings in the Wordpress Administration Area
+5. **Login** - Login formular with small buttons (Social Network Buttons are included)
 
 == Changelog ==
 
@@ -146,6 +149,20 @@ http://docs.oneall.com/plugins/guide/social-login-wordpress/
 * Provider unselect bug fixed
 * Sanitize user strict added
 * Custom namespace for add_settings_link
+
+= 2.0 =
+* WC3 Compliant callback uri
+* HTTP/HTTPS Check for CSS files
+* Shortcode handler fixed
+* Wordpress Cookie now set for 14 days
+* Wordpress display_name is now populated
+* Redirection improved
+* Now Buddypress compatible
+* Link to settings page after installation
+* Caching for socialize library improved
+* Small buttons added as option
+* Localization added
+* German translation
 
 == Testimonials ==
 
@@ -198,5 +215,5 @@ was easy to follow and implement. I was struggling with a couple of other plugin
 <strong>Nicholas L.</strong>
 
 <em>I especially enjoy the step by step process that guides you through the Social website App creation process. In the end I would like to thank you 
-for putting together such a great product that so many can implement with ease.</em>
+for putting together such a great product that so many users can implement with ease.</em>
 <strong>Stefan C.</strong>
