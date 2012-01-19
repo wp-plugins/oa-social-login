@@ -1,52 +1,41 @@
 <?php
+
 /**
  * Providers that are currently enabled
  */
 $oa_social_login_providers = array (
 	'facebook' => array (
-		'name' => 'Facebook',
-		'default_enabled' => true
+		'name' => 'Facebook'
 	),
 	'twitter' => array (
-		'name' => 'Twitter',
-		'default_enabled' => true
+		'name' => 'Twitter'
 	),
 	'google' => array (
-		'name' => 'Google',
-		'default_enabled' => true
+		'name' => 'Google'
 	),
 	'linkedin' => array (
-		'name' => 'LinkedIn',
-		'default_enabled' => true
+		'name' => 'LinkedIn'
 	),
 	'yahoo' => array (
-		'name' => 'Yahoo',
-		'default_enabled' => true
+		'name' => 'Yahoo'
 	),
 	'openid' => array (
-		'name' => 'OpenID',
-		'default_enabled' => true
+		'name' => 'OpenID'
 	),
 	'wordpress' => array (
-		'name' => 'Wordpress.com',
-		'default_enabled' => true
+		'name' => 'Wordpress.com'
 	),
 	'hyves' => array (
-		'name' => 'Hyves',
-		'default_enabled' => false
+		'name' => 'Hyves'
 	),
 	'paypal' => array (
-		'name' => 'PayPal',
-		'default_enabled' => false
+		'name' => 'PayPal'
 	),
 	'livejournal' => array (
-		'name' => 'LiveJournal',
-		'default_enabled' => false
+		'name' => 'LiveJournal'
 	),
 	'vkontakte' => array (
-		'name' => 'VKontakte (Вконтакте)',
-		'default_enabled' => false,
-		'note' => 'To enable cyrillic usernames, you might need <a target="_blank" href="http://wordpress.org/extend/plugins/wordpress-special-characters-in-usernames/">this plugin</a>'
+		'name' => 'VKontakte (Вконтакте)'
 	)
 );
 

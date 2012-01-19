@@ -20,27 +20,27 @@ jQuery(document).ready(function($) {
 	
 			if (response == 'error_not_all_fields_filled_out'){
 				success = false;
-				message = 'Please fill out each of the fields above'
+				message = objectL10n.oa_admin_js_1;
 			}
 			else if (response == 'error_subdomain_wrong'){
 				success = false;
-				message = 'The subdomain does not exist. Have you filled it out correctly?'
+				message = objectL10n.oa_admin_js_2;
 			}
 			else if (response == 'error_subdomain_wrong_syntax'){
 				success = false;
-				message = 'The subdomain has a wrong syntax!'				
+				message = objectL10n.oa_admin_js_3;	
 			}
 			else if (response == 'error_communication'){
 				success = false;
-				message = 'Could not contact API. Are outoing CURL requests allowed?'				
+				message = objectL10n.oa_admin_js_4;					
 			}
 			else if (response == 'error_authentication_credentials_wrong'){
 				success = false;
-				message = 'The API credentials are wrong';
+				message = objectL10n.oa_admin_js_5;		
 			}
 			else {
 				success = true;
-				message = 'The settings are correct - do not forget to save your changes!';
+				message = objectL10n.oa_admin_js_6;		
 			}
 		
 			jQuery('#oa_social_login_api_test_result').html(message);

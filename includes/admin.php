@@ -21,7 +21,7 @@ function oa_social_login_admin_message ()
 {
 	if (get_option ('oa_social_login_activation_message') !== '1')
 	{
-		echo '<div class="updated"><p><strong>Thank you for using the Social Login Plugin!</strong> Please go to the <strong>Settings\Social Login</strong> page to setup the plugin.</p></div>';
+		echo '<div class="updated"><p><strong>'.__('Thank you for using the Social Login Plugin!', 'oa_social_login').'</strong> '.sprintf(__('Please go to the <strong><a href="%s">Settings\Social Login</a></strong> page to setup the plugin.', 'oa_social_login'), 'options-general.php?page=oa_social_login').'</p></div>';
 		update_option ('oa_social_login_activation_message', '1');
 	}
 }
@@ -130,6 +130,15 @@ function oa_social_login_admin_js ($hook)
 		wp_enqueue_script ('oa_social_login_admin_js');
 		wp_enqueue_script ('jquery');
 
+		wp_localize_script ('oa_social_login_admin_js', 'objectL10n', array (
+			'oa_admin_js_1' => __ ('Please fill out each of the fields above.', 'oa_social_login'),
+			'oa_admin_js_2' => __ ('The subdomain does not exist. Have you filled it out correctly?', 'oa_social_login'),
+			'oa_admin_js_3' => __ ('The subdomain has a wrong syntax!', 'oa_social_login'),
+			'oa_admin_js_4' => __ ('Could not contact API. Are outoing CURL requests allowed?', 'oa_social_login'),
+			'oa_admin_js_5' => __ ('The API credentials are wrong', 'oa_social_login'),
+			'oa_admin_js_6' => __ ('The settings are correct - do not forget to save your changes!', 'oa_social_login')
+		));
+
 		$oa_social_login_ajax_nonce = wp_create_nonce ('oa_social_login_ajax_nonce');
 		wp_localize_script ('oa_social_login_admin_js', 'oa_social_login_ajax_nonce', array (
 			'value' => $oa_social_login_ajax_nonce
@@ -186,6 +195,7 @@ function oa_social_login_settings_validate ($settings)
 		'plugin_caption',
 		'plugin_link_verified_accounts',
 		'plugin_show_avatars_in_comments',
+		'plugin_use_small_buttons',
 		'plugin_display_in_login_form',
 		'plugin_login_form_redirect',
 		'plugin_login_form_redirect_custom_url',
@@ -227,12 +237,20 @@ function oa_social_login_settings_validate ($settings)
 		}
 	}
 
-
 	//Flag settings
+	$sanitzed_settings ['plugin_use_small_buttons'] == ((isset ($sanitzed_settings ['plugin_use_small_buttons']) AND $sanitzed_settings ['plugin_use_small_buttons'] == '1') ? 1 : 0);
 	$sanitzed_settings ['plugin_show_avatars_in_comments'] == ((isset ($sanitzed_settings ['plugin_show_avatars_in_comments']) AND $sanitzed_settings ['plugin_show_avatars_in_comments'] == '1') ? 1 : 0);
 	$sanitzed_settings ['plugin_link_verified_accounts'] == ((isset ($sanitzed_settings ['plugin_link_verified_accounts']) AND $sanitzed_settings ['plugin_link_verified_accounts'] == '0') ? 0 : 1);
-	$sanitzed_settings ['plugin_login_form_redirect'] = ((isset ($sanitzed_settings ['plugin_login_form_redirect']) AND in_array ($sanitzed_settings ['plugin_login_form_redirect'], array ('dashboard', 'homepage', 'custom'))) ? $sanitzed_settings ['plugin_login_form_redirect'] : 'homepage');
-	$sanitzed_settings ['plugin_registration_form_redirect'] = ((isset ($sanitzed_settings ['plugin_registration_form_redirect']) AND in_array ($sanitzed_settings ['plugin_registration_form_redirect'], array ('dashboard', 'homepage', 'custom'))) ? $sanitzed_settings ['plugin_registration_form_redirect'] : 'dashboard');
+	$sanitzed_settings ['plugin_login_form_redirect'] = ((isset ($sanitzed_settings ['plugin_login_form_redirect']) AND in_array ($sanitzed_settings ['plugin_login_form_redirect'], array (
+		'dashboard',
+		'homepage',
+		'custom'
+	))) ? $sanitzed_settings ['plugin_login_form_redirect'] : 'homepage');
+	$sanitzed_settings ['plugin_registration_form_redirect'] = ((isset ($sanitzed_settings ['plugin_registration_form_redirect']) AND in_array ($sanitzed_settings ['plugin_registration_form_redirect'], array (
+		'dashboard',
+		'homepage',
+		'custom'
+	))) ? $sanitzed_settings ['plugin_registration_form_redirect'] : 'dashboard');
 	$sanitzed_settings ['plugin_display_in_login_form'] == ((isset ($sanitzed_settings ['plugin_display_in_login_form']) AND $sanitzed_settings ['plugin_display_in_login_form'] == '0') ? 0 : 1);
 
 	//Check Login Redirection Settings
@@ -274,76 +292,78 @@ function oa_display_social_login_settings ()
 {
 	//Import providers
 	GLOBAL $oa_social_login_providers;
-	?>
+?>
 	<div class="wrap">
 		<h2><?php _e ('Social Login Settings', 'oa_social_login'); ?></h2>
 		<?php
 			if (get_option ('oa_social_login_api_settings_verified') !== '1')
 			{
-				?>
-					<div class="oa_container oa_container_welcome">
-						<h3>
-							Make your blog social!
-						</h3>
-						<div class="oa_container_body">
-							<p>
-								Allow your visitors to comment, login and register with social networks like Twitter, Facebook, LinkedIn, Hyves, Вконтакте, Google or Yahoo.
-								<strong>Draw a larger audience and increase user engagement in a  few simple steps.</strong>
-							</p>
-							<p>
-								To be able to use this plugin you first of all need to create a free account at <a href="https://app.oneall.com/signup/" target="_blank">http://www.oneall.com</a>
-								and setup a Site. After having created your account and setup your Site, please enter the Site settings in the form below.
-							</p>
-							<h3>You are in good company, 10000+ websites already trust us!</h3>
-							<p>
-								<a class="button-secondary" href="https://app.oneall.com/signup/" target="_blank"><strong>Create your free account now!</strong></a>
-							</p>
-						</div>
-					</div>
-				<?php
-			}
-			else
-			{
-				?>
-					<div class="oa_container oa_container_welcome">
-						<h3>
-							<?php _e ('Your API Account is setup correctly'); ?>
-						</h3>
-						<div class="oa_container_body">
-							<p>
-								<a href="https://app.oneall.com/signin/" target="_blank">Login to your account</a> to manage your providers and access your <a href="https://app.oneall.com/insights/"  target="_blank">Social Insights</a>.
-								Determine which social networks are popular amongst your users and tailor your registration experience to increase your users' engagement.
-							</p>
-							<p>
-								<a class="button-secondary" href="https://app.oneall.com/signin/" target="_blank"><strong>Signin to your account</strong></a>
-							</p>
-						</div>
-					</div>
-				<?php
-			}
 		?>
+					<div class="oa_container oa_container_welcome">
+						<h3>
+							<?php _e ('Make your blog social!', 'oa_social_login'); ?>
+						</h3>
+						<div class="oa_container_body">
+							<p>
+								<?php _e ('Allow your visitors to comment, login and register with social networks like Twitter, Facebook, LinkedIn, Hyves, VKontakte, Google or Yahoo.', 'oa_social_login'); ?>
+								<strong><?php _e ('Draw a larger audience and increase user engagement in a  few simple steps.', 'oa_social_login'); ?></strong>
+							</p>
+							<p>
+								<?php
+										printf (__ ('To be able to use this plugin you first of all need to create a free account at %s and setup a Site', 'oa_social_login'), '<a href="https://app.oneall.com/signup/" target="_blank">http://www.oneall.com</a>');
+										_e ('After having created your account and setup your Site, please enter the Site settings in the form below.', 'oa_social_login');
+								?>
+							</p>
+							<h3><?php printf (__ ('You are in good company! This plugin is used on more than %s websites!', 'oa_social_login'), '25000+'); ?></h3>
+							<p>
+								<a class="button-secondary" href="https://app.oneall.com/signup/" target="_blank"><strong><?php _e ('Setup my free account', 'oa_social_login'); ?></strong></a>
+							</p>
+						</div>
+					</div>
+				<?php
+					}
+					else
+					{
+				?>
+					<div class="oa_container oa_container_welcome">
+						<h3>
+							<?php _e ('Your API Account is setup correctly', 'oa_social_login'); ?>
+						</h3>
+						<div class="oa_container_body">
+							<p>
+								<?php _e ('Login to your account to manage your providers and access your Social Insights', 'oa_social_login'); ?>.
+								<?php _e ("Determine which social networks are popular amongst your users and tailor your registration experience to increase your users' engagement.", 'oa_social_login'); ?>
+							</p>
+							<p>
+								<a class="button-secondary" href="https://app.oneall.com/signin/" target="_blank"><strong><?php _e ('Login to my account', 'oa_social_login'); ?></strong></a>
+							</p>
+						</div>
+					</div>
+				<?php
+					}
+				?>
 		<div class="oa_container oa_container_links">
 			<h3>
-				<?php _e ('Help, Updates &amp; Documentation'); ?>
+				<?php _e ('Help, Updates &amp; Documentation', 'oa_social_login'); ?>
 			</h3>
 			<ul>
-				<li><a target="_blank" href="http://www.twitter.com/oneall">Follow us on Twitter</a> to stay informed about updates;</li>
-				<li><a target="_blank" href="http://docs.oneall.com/plugins/guide/social-login-wordpress/">Read the online documentation</a> for more information about this plugin;</li>
-				<li><a target="_blank" href="http://www.oneall.com/company/contact-us/">Contact us</a> if you have feedback or need assistance.</li>
+				<li><?php printf (__('<a target="_blank" href="%s">Follow us on Twitter</a> to stay informed about updates', 'oa_social_login'), 'http://www.twitter.com/oneall');?>;</li>
+				<li><?php printf (__('<a target="_blank" href="%s">Read the online documentation</a> for more information about this plugin', 'oa_social_login'), 'http://docs.oneall.com/plugins/guide/social-login-wordpress/');?>;</li>
+				<li><?php printf (__('<a target="_blank" href="%a">Contact us</a> if you have feedback or need assistance', 'oa_social_login'), 'http://www.oneall.com/company/contact-us/');?></li>
 			</ul>
 		</div>
 		<form method="post" action="options.php">
 			<?php
 				settings_fields ('oa_social_login_settings_group');
 				$settings = get_option ('oa_social_login_settings');
-				?>
+			?>
 			  <table class="form-table oa_form_table">
 			  	<tr>
 			  		<th class="head">
 			  			<?php _e ('API Settings', 'oa_social_login'); ?>
 			  		</th>
 			  		<th class="head">
-			  		<a href="https://app.oneall.com/applications/" target="_blank">Click here to create and view your API Credentials</a>
+			  		<a href="https://app.oneall.com/applications/" target="_blank"><?php _e ('Click here to create and view your API Credentials', 'oa_social_login'); ?></a>
 			  		</th>
 			  	</tr>
 					<tr>
@@ -382,7 +402,7 @@ function oa_display_social_login_settings ()
 				<table class="form-table oa_form_table">
 			  	<tr>
 			  		<th class="head" colspan="2">
-			  			<?php _e ('Enable the social networks/identity providers of your choice');?>
+			  			<?php _e ('Enable the social networks/identity providers of your choice', 'oa_social_login'); ?>
 			  		</th>
 			  	</tr>
 			  	<?php
@@ -392,15 +412,20 @@ function oa_display_social_login_settings ()
 				  		?>
 				  			<tr class="<?php echo ((($i++) % 2) == 0) ? 'row_even' : 'row_odd' ?> row_provider">
 					    	  <td class="row">
-					    	  	<label for="oneall_social_login_provider_<?php echo $key; ?>"><span class="oa_provider oa_provider_<?php echo $key; ?>" title="<?php echo htmlspecialchars ($provider_data['name']); ?>"><?php echo htmlspecialchars ($provider_data['name']); ?></span></label>
+					    	  	<label for="oneall_social_login_provider_<?php echo $key; ?>"><span class="oa_provider oa_provider_<?php echo $key; ?>" title="<?php echo htmlspecialchars ($provider_data ['name']); ?>"><?php echo htmlspecialchars ($provider_data ['name']); ?></span></label>
 					    	  	<input type="checkbox" id="oneall_social_login_provider_<?php echo $key; ?>" name="oa_social_login_settings[providers][<?php echo $key; ?>]" value="1"  <?php checked ('1', $settings ['providers'] [$key]); ?> />
-					      		<label for="oneall_social_login_provider_<?php echo $key; ?>"><?php echo htmlspecialchars ($provider_data['name']); ?></label>
-					      		<?php echo (isset($provider_data['note']) ? ('&nbsp;('.$provider_data['note'].')') : ''); ?>
+					      		<label for="oneall_social_login_provider_<?php echo $key; ?>"><?php echo htmlspecialchars ($provider_data ['name']); ?></label>
+					      		<?php
+					      			if ($key == 'vkontakte')
+					      			{
+					      				echo ' - '.sprintf (__('To enable cyrillic usernames, you might need <a target="_blank" href="%s">this plugin</a>', 'oa_social_login'), 'http://wordpress.org/extend/plugins/wordpress-special-characters-in-usernames/');
+					      			}
+					      		?>
 					      	</td>
 					      </tr>
 			  			<?php
-						 }
-					 ?>
+							  }
+						  ?>
 				</table>
 				<table class="form-table oa_form_table oa_form_table_settings">
 			  	<tr>
@@ -410,12 +435,12 @@ function oa_display_social_login_settings ()
 			  	</tr>
 			  	<tr class="row_odd">
 			  		<td>
-			  			<?php _e ('Enter the caption to be displayed above the social network login buttons:', 'oa_social_login'); ?>
+			  			<?php _e ('Enter the description to be displayed above the social network login buttons (leave empty for none):', 'oa_social_login'); ?>
 			  		</td>
 			  	</tr>
 					<tr class="row_even">
 						<td>
-							<input type="text"  name="oa_social_login_settings[plugin_caption]" size="118" value="<?php echo (isset ($settings ['plugin_caption']) ? htmlspecialchars ($settings ['plugin_caption']) : _e ('Connect with:')); ?>" />
+							<input type="text"  name="oa_social_login_settings[plugin_caption]" size="118" value="<?php echo (isset ($settings ['plugin_caption']) ? htmlspecialchars ($settings ['plugin_caption']) : _e ('Connect with:', 'oa_social_login')); ?>" />
 						</td>
 					</tr>
 					<tr class="row_odd">
@@ -428,8 +453,22 @@ function oa_display_social_login_settings ()
 							<?php
 								$plugin_show_avatars_in_comments = (isset ($settings ['plugin_show_avatars_in_comments']) AND $settings ['plugin_show_avatars_in_comments'] == '1');
 							?>
-							<input type="radio" name="oa_social_login_settings[plugin_show_avatars_in_comments]"  value="1" <?php echo ($plugin_show_avatars_in_comments ? 'checked="checked"' : ''); ?> /> <?php _e ('Yes, show user avatars from social networks if available'); ?><br />
-							<input type="radio" name="oa_social_login_settings[plugin_show_avatars_in_comments]"  value="0" <?php echo (!$plugin_show_avatars_in_comments ? 'checked="checked"' : ''); ?> /> <?php _e ('No, display the default avatars'); ?> <strong>(<?php _e ('Default') ?>)</strong>
+							<input type="radio" name="oa_social_login_settings[plugin_show_avatars_in_comments]"  value="1" <?php echo ($plugin_show_avatars_in_comments ? 'checked="checked"' : ''); ?> /> <?php _e ('Yes, show user avatars from social networks if available', 'oa_social_login'); ?><br />
+							<input type="radio" name="oa_social_login_settings[plugin_show_avatars_in_comments]"  value="0" <?php echo (!$plugin_show_avatars_in_comments ? 'checked="checked"' : ''); ?> /> <?php _e ('No, display the default avatars', 'oa_social_login'); ?> <strong>(<?php _e ('Default', 'oa_social_login') ?>)</strong>
+						</td>
+					</tr>
+					<tr class="row_odd">
+			  		<td>
+			  			<?php _e ("Do you want to use the default or the small social network buttons?", 'oa_social_login'); ?>
+			  		</td>
+			  	</tr>
+					<tr class="row_even">
+						<td>
+							<?php
+								$plugin_use_small_buttons = (isset ($settings ['plugin_use_small_buttons']) AND $settings ['plugin_use_small_buttons'] == '1');
+							?>
+							<input type="radio" name="oa_social_login_settings[plugin_use_small_buttons]"  value="0" <?php echo (!$plugin_use_small_buttons ? 'checked="checked"' : ''); ?> /> <?php printf (__ ('Use the default social network buttons (%s)', 'oa_social_login'), '32x32 px'); ?> <strong>(<?php _e ('Default', 'oa_social_login') ?>)</strong><br />
+							<input type="radio" name="oa_social_login_settings[plugin_use_small_buttons]"  value="1" <?php echo ($plugin_use_small_buttons ? 'checked="checked"' : ''); ?> /> <?php printf (__ ('Use the small social network buttons (%s)', 'oa_social_login'), '16x16 px'); ?>
 						</td>
 					</tr>
 				</table>
@@ -449,8 +488,8 @@ function oa_display_social_login_settings ()
 							<?php
 								$plugin_display_in_login_form = (!isset ($settings ['plugin_display_in_login_form']) OR $settings ['plugin_display_in_login_form'] == '1');
 							?>
-							<input type="radio" name="oa_social_login_settings[plugin_display_in_login_form]" value="1" <?php echo ($plugin_display_in_login_form ? 'checked="checked"' : ''); ?> /> <?php _e ('Yes, display the social network buttons below the login form'); ?> <strong>(<?php _e ('Default') ?>)</strong><br />
-							<input type="radio" name="oa_social_login_settings[plugin_display_in_login_form]" value="0" <?php echo (!$plugin_display_in_login_form ? 'checked="checked"' : ''); ?> /> <?php _e ('No, disable social network buttons in the login form'); ?>
+							<input type="radio" name="oa_social_login_settings[plugin_display_in_login_form]" value="1" <?php echo ($plugin_display_in_login_form ? 'checked="checked"' : ''); ?> /> <?php _e ('Yes, display the social network buttons below the login form', 'oa_social_login'); ?> <strong>(<?php _e ('Default', 'oa_social_login') ?>)</strong><br />
+							<input type="radio" name="oa_social_login_settings[plugin_display_in_login_form]" value="0" <?php echo (!$plugin_display_in_login_form ? 'checked="checked"' : ''); ?> /> <?php _e ('No, disable social network buttons in the login form', 'oa_social_login'); ?>
 						</td>
 					</tr>
 					<tr class="row_odd">
@@ -467,9 +506,9 @@ function oa_display_social_login_settings ()
 									'custom'
 								))) ? 'homepage' : $settings ['plugin_login_form_redirect']);
 							?>
-							<input type="radio" name="oa_social_login_settings[plugin_login_form_redirect]" value="homepage" <?php echo ($plugin_login_form_redirect == 'homepage' ? 'checked="checked"' : ''); ?> /> <?php _e ('Redirect users to the homepage of my blog'); ?> <strong>(<?php _e ('Default') ?>)</strong><br />
-							<input type="radio" name="oa_social_login_settings[plugin_login_form_redirect]" value="dashboard" <?php echo ($plugin_login_form_redirect == 'dashboard' ? 'checked="checked"' : ''); ?> /> <?php _e ('Redirect users to their account dashboard'); ?><br />
-							<input type="radio" name="oa_social_login_settings[plugin_login_form_redirect]" value="custom" <?php echo ($plugin_login_form_redirect == 'custom' ? 'checked="checked"' : ''); ?> /> <?php _e ('Redirect users to the following url:'); ?><br />
+							<input type="radio" name="oa_social_login_settings[plugin_login_form_redirect]" value="homepage" <?php echo ($plugin_login_form_redirect == 'homepage' ? 'checked="checked"' : ''); ?> /> <?php _e ('Redirect users to the homepage of my blog', 'oa_social_login'); ?> <strong>(<?php _e ('Default', 'oa_social_login') ?>)</strong><br />
+							<input type="radio" name="oa_social_login_settings[plugin_login_form_redirect]" value="dashboard" <?php echo ($plugin_login_form_redirect == 'dashboard' ? 'checked="checked"' : ''); ?> /> <?php _e ('Redirect users to their account dashboard', 'oa_social_login'); ?><br />
+							<input type="radio" name="oa_social_login_settings[plugin_login_form_redirect]" value="custom" <?php echo ($plugin_login_form_redirect == 'custom' ? 'checked="checked"' : ''); ?> /> <?php _e ('Redirect users to the following url', 'oa_social_login'); ?>:<br />
 							<input type="text"  name="oa_social_login_settings[plugin_login_form_redirect_custom_url]" size="118" value="<?php echo (isset ($settings ['plugin_login_form_redirect_custom_url']) ? htmlspecialchars ($settings ['plugin_login_form_redirect_custom_url']) : ''); ?>" />
 						</td>
 					</tr>
@@ -490,8 +529,8 @@ function oa_display_social_login_settings ()
 							<?php
 								$plugin_link_verified_accounts = (!isset ($settings ['plugin_link_verified_accounts']) OR $settings ['plugin_link_verified_accounts'] == '1');
 							?>
-							<input type="radio" name="oa_social_login_settings[plugin_link_verified_accounts]"  value="1" <?php echo ($plugin_link_verified_accounts ? 'checked="checked"' : ''); ?> /> <?php _e ('Yes, try to link verified social network profiles to existing blog accounts'); ?> <strong>(<?php _e ('Default') ?>)</strong><br />
-							<input type="radio" name="oa_social_login_settings[plugin_link_verified_accounts]"  value="0" <?php echo (!$plugin_link_verified_accounts ? 'checked="checked"' : ''); ?> />  <?php _e ('No, disable account linking'); ?>
+							<input type="radio" name="oa_social_login_settings[plugin_link_verified_accounts]"  value="1" <?php echo ($plugin_link_verified_accounts ? 'checked="checked"' : ''); ?> /> <?php _e ('Yes, try to link verified social network profiles to existing blog accounts', 'oa_social_login'); ?> <strong>(<?php _e ('Default', 'oa_social_login') ?>)</strong><br />
+							<input type="radio" name="oa_social_login_settings[plugin_link_verified_accounts]"  value="0" <?php echo (!$plugin_link_verified_accounts ? 'checked="checked"' : ''); ?> />  <?php _e ('No, disable account linking', 'oa_social_login'); ?>
 						</td>
 					</tr>
 					<tr class="row_odd">
@@ -504,8 +543,8 @@ function oa_display_social_login_settings ()
 							<?php
 								$plugin_display_in_registration_form = (!isset ($settings ['plugin_display_in_registration_form']) OR $settings ['plugin_display_in_registration_form'] == '1');
 							?>
-							<input type="radio" name="oa_social_login_settings[plugin_display_in_registration_form]" value="1" <?php echo ($plugin_display_in_registration_form ? 'checked="checked"' : ''); ?> /> <?php _e ('Yes, display the social network buttons below the registration form'); ?> <strong>(<?php _e ('Default') ?>)</strong><br />
-							<input type="radio" name="oa_social_login_settings[plugin_display_in_registration_form]" value="0" <?php echo (!$plugin_display_in_registration_form ? 'checked="checked"' : ''); ?> /> <?php _e ('No, disable social network buttons in the registration form'); ?>
+							<input type="radio" name="oa_social_login_settings[plugin_display_in_registration_form]" value="1" <?php echo ($plugin_display_in_registration_form ? 'checked="checked"' : ''); ?> /> <?php _e ('Yes, display the social network buttons below the registration form', 'oa_social_login'); ?> <strong>(<?php _e ('Default', 'oa_social_login') ?>)</strong><br />
+							<input type="radio" name="oa_social_login_settings[plugin_display_in_registration_form]" value="0" <?php echo (!$plugin_display_in_registration_form ? 'checked="checked"' : ''); ?> /> <?php _e ('No, disable social network buttons in the registration form', 'oa_social_login'); ?>
 						</td>
 					</tr>
 
@@ -523,15 +562,15 @@ function oa_display_social_login_settings ()
 									'custom'
 								))) ? 'dashboard' : $settings ['plugin_registration_form_redirect']);
 							?>
-							<input type="radio" name="oa_social_login_settings[plugin_registration_form_redirect]" value="homepage" <?php echo ($plugin_registration_form_redirect == 'homepage' ? 'checked="checked"' : ''); ?> /> <?php _e ('Redirect users to the homepage of my blog'); ?><br />
-							<input type="radio" name="oa_social_login_settings[plugin_registration_form_redirect]" value="dashboard" <?php echo ($plugin_registration_form_redirect == 'dashboard' ? 'checked="checked"' : ''); ?> /> <?php _e ('Redirect users to their account dashboard'); ?> <strong>(<?php _e ('Default') ?>)</strong><br />
-							<input type="radio" name="oa_social_login_settings[plugin_registration_form_redirect]" value="custom" <?php echo ($plugin_registration_form_redirect == 'custom' ? 'checked="checked"' : ''); ?> /> <?php _e ('Redirect users to the following url:'); ?><br />
+							<input type="radio" name="oa_social_login_settings[plugin_registration_form_redirect]" value="homepage" <?php echo ($plugin_registration_form_redirect == 'homepage' ? 'checked="checked"' : ''); ?> /> <?php _e ('Redirect users to the homepage of my blog', 'oa_social_login'); ?><br />
+							<input type="radio" name="oa_social_login_settings[plugin_registration_form_redirect]" value="dashboard" <?php echo ($plugin_registration_form_redirect == 'dashboard' ? 'checked="checked"' : ''); ?> /> <?php _e ('Redirect users to their account dashboard', 'oa_social_login'); ?> <strong>(<?php _e ('Default', 'oa_social_login') ?>)</strong><br />
+							<input type="radio" name="oa_social_login_settings[plugin_registration_form_redirect]" value="custom" <?php echo ($plugin_registration_form_redirect == 'custom' ? 'checked="checked"' : ''); ?> /> <?php _e ('Redirect users to the following url', 'oa_social_login'); ?>:<br />
 							<input type="text"  name="oa_social_login_settings[plugin_registration_form_redirect_custom_url]" size="118" value="<?php echo (isset ($settings ['plugin_registration_form_redirect_custom_url']) ? htmlspecialchars ($settings ['plugin_registration_form_redirect_custom_url']) : ''); ?>" />
 						</td>
 					</tr>
 				</table>
 				<p class="submit">
-					<input type="submit" class="button-primary" value="<?php _e ('Save Changes') ?>" />
+					<input type="submit" class="button-primary" value="<?php _e ('Save Changes', 'oa_social_login') ?>" />
 				</p>
 			</form>
 		</div>
