@@ -48,7 +48,6 @@ The Social Login Plugin is maintained by <a href="http://www.oneall.com">OneAll<
 tools and services for establishing and optimizing a site's connection with social networks and identity providers such as Facebook, Twitter, 
 Google, Yahoo!, LinkedIn, Paypal, Hyves amongst others.
 
-
 == Installation ==
 
 1. Upload the plugin folder to the "/wp-content/plugins/" directory of your WordPress site,
@@ -104,52 +103,6 @@ http://docs.oneall.com/plugins/guide/social-login-wordpress/
 
 == Changelog ==
 
-= 1.0 =
-* Initial release
-
-= 1.0.1 =
-* Hook oa_social_login fixed
-* Plugin description changed
-
-= 1.0.2 = 
-* Version numbers fixed
-
-= 1.3.2 =
-* Stable Version
-
-= 1.3.4 =
-* Multisite issues with Widget fixed
-
-= 1.3.5 =
-* Administration area redirection fixed
-* Automatic email creation added
-* Email verification added
-
-= 1.4 =
-* Social Network Avatars can be displayed in comments
-* Social Login can be disabled below the login form
-* Social Login can be disabled below the registration form
-* Select redirection target after login
-* Select redirection target after registration
-* Enable account linking
-
-= 1.5 =
-* Social Network Avatars fixed
-* Social Buttons no longer displayed for customs hooks if logged in
-* KISS for API Settings Setup 
-
-= 1.6 = 
-* LiveJournal added
-* PayPal added
-* Settings link added
-* API Communication Check added
-* Cyrillic character support
-
-= 1.6.1 =
-* Provider unselect bug fixed
-* Sanitize user strict added
-* Custom namespace for add_settings_link
-
 = 2.0 =
 * WC3 Compliant callback uri
 * HTTP/HTTPS Check for CSS files
@@ -163,6 +116,52 @@ http://docs.oneall.com/plugins/guide/social-login-wordpress/
 * Small buttons added as option
 * Localization added
 * German translation
+
+= 1.6.1 =
+* Provider unselect bug fixed
+* Sanitize user strict added
+* Custom namespace for add_settings_link
+
+= 1.6 = 
+* LiveJournal added
+* PayPal added
+* Settings link added
+* API Communication Check added
+* Cyrillic character support
+
+= 1.5 =
+* Social Network Avatars fixed
+* Social Buttons no longer displayed for customs hooks if logged in
+* KISS for API Settings Setup 
+
+= 1.4 =
+* Social Network Avatars can be displayed in comments
+* Social Login can be disabled below the login form
+* Social Login can be disabled below the registration form
+* Select redirection target after login
+* Select redirection target after registration
+* Enable account linking
+
+= 1.3.5 =
+* Administration area redirection fixed
+* Automatic email creation added
+* Email verification added
+
+= 1.3.4 =
+* Multisite issues with Widget fixed
+
+= 1.3.2 =
+* Stable Version
+
+= 1.0.2 = 
+* Version numbers fixed
+
+= 1.0.1 =
+* Hook oa_social_login fixed
+* Plugin description changed
+
+= 1.0 =
+* Initial release
 
 == Testimonials ==
 
