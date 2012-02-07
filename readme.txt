@@ -219,3 +219,7 @@ for putting together such a great product that so many users can implement with 
 
 <em>Thanks for a such a great plugin! I was really impressed with the simplicity of the installation directions and the clean design.</em>
 <strong>Janae S.</strong>
+
+<em>You have no idea how it THRILLED me to integrate oneall. It was SO amazingly easy, your team has simplified the whole process of signing up for 
+authorization on multiple social media sites. I HAD NO QUESTIONS/STEPS THAT YOU HADN'T ALREADY ANTICIPATED. It saved me HOURS of work!</em>
+<strong>Kelly C.</strong>
