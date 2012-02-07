@@ -61,6 +61,11 @@ Google, Yahoo!, LinkedIn, Paypal, Hyves amongst others.
 You should not have to change your templates. 
 The Social Login seamlessly integrates into your blog by using predefined hooks.
 
+= Does Social Login can be embedded through a shortcode? =
+
+The Social Login shortcode `[oa_social_login]` can be used in any page or post within your blog.
+The shortcode will automatically be replaced by the icons of the chosen
+social network providers.
 
 = I have a custom template and the plugin is not displayed correctly =
 
