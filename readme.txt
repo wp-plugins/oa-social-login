@@ -223,3 +223,6 @@ for putting together such a great product that so many users can implement with 
 <em>You have no idea how it THRILLED me to integrate oneall. It was SO amazingly easy, your team has simplified the whole process of signing up for 
 authorization on multiple social media sites. I HAD NO QUESTIONS/STEPS THAT YOU HADN'T ALREADY ANTICIPATED. It saved me HOURS of work!</em>
 <strong>Kelly C.</strong>
+
+<em>I love your service the way it is, Its amazing how easy the logging-in-via-social-network is integrated into a wordpress website!</em>
+<strong>Martin S.</strong>
