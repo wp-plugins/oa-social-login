@@ -42,7 +42,8 @@ login and register with social networks like Twitter, Facebook, LinkedIn, Paypal
  </ul>
  
 
-<strong>Increase your wordpress user engagement in a few simple steps with the Social Login Plugin!</strong><br />
+<strong>Increase your wordpress user engagement in a few simple steps with the Social Login Plugin!</strong>
+Our users love it! Check out the <a href="http://wordpress.org/extend/plugins/oa-social-login/other_notes/">testimonials</a>!<br />
 
 The Social Login Plugin is maintained by <a href="http://www.oneall.com">OneAll</a>, a technology company offering a set of web-delivered
 tools and services for establishing and optimizing a site's connection with social networks and identity providers such as Facebook, Twitter, 
@@ -229,5 +230,5 @@ for putting together such a great product that so many users can implement with 
 authorization on multiple social media sites. I HAD NO QUESTIONS/STEPS THAT YOU HADN'T ALREADY ANTICIPATED. It saved me HOURS of work!</em>
 <strong>Kelly C.</strong>
 
-<em>I love your service the way it is, Its amazing how easy the logging-in-via-social-network is integrated into a wordpress website!</em>
+<em>I love your service the way it is, it's amazing how easy the logging-in-via-social-network is integrated into a wordpress website!</em>
 <strong>Martin S.</strong>
