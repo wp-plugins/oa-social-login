@@ -38,10 +38,8 @@ login and register with social networks like Twitter, Facebook, LinkedIn, Paypal
  <li>LiveJournal</li>
  <li>Wordpress.com</li>
  <li>Hyves</li>
- <li>Steam</li>
- <li>StackExchange</li>
  <li>VKontakte (Вконтакте)</li>
-  </ul>
+ </ul>
  
 
 <strong>Increase your wordpress user engagement in a few simple steps with the Social Login Plugin!</strong>

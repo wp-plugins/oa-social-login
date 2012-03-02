@@ -184,10 +184,13 @@ function oa_social_login_admin_js ($hook)
 			wp_register_script ('oa_social_login_admin_js', OA_SOCIAL_LOGIN_PLUGIN_URL . "/assets/js/admin.js");
 		}
 
+		$oa_social_login_ajax_nonce = wp_create_nonce ('oa_social_login_ajax_nonce');
+
 		wp_enqueue_script ('oa_social_login_admin_js');
 		wp_enqueue_script ('jquery');
 
 		wp_localize_script ('oa_social_login_admin_js', 'objectL10n', array (
+			'oa_social_login_ajax_nonce' => $oa_social_login_ajax_nonce,
 			'oa_admin_js_1' => __ ('Contacting API - please wait ...', 'oa_social_login'),
 			'oa_admin_js_101' => __ ('The settings are correct - do not forget to save your changes!', 'oa_social_login'),
 			'oa_admin_js_111' => __ ('Please fill out each of the fields above.', 'oa_social_login'),
@@ -198,11 +201,6 @@ function oa_social_login_admin_js ($hook)
 			'oa_admin_js_201' => __ ('Autodetected PHP CURL - do not forget to save your changes!', 'oa_social_login'),
 			'oa_admin_js_202' => __ ('Autodetected PHP FSOCKOPEN - do not forget to save your changes!', 'oa_social_login'),
 			'oa_admin_js_211' => sprintf(__ ('Autodetection Error - our <a href="%s" target="_blank">documentation</a> helps you fix this issue.', 'oa_social_login'), 'http://docs.oneall.com/plugins/guide/social-login-wordpress/#help')
-		));
-
-		$oa_social_login_ajax_nonce = wp_create_nonce ('oa_social_login_ajax_nonce');
-		wp_localize_script ('oa_social_login_admin_js', 'oa_social_login_ajax_nonce', array (
-			'value' => $oa_social_login_ajax_nonce
 		));
 	}
 }
