@@ -12,7 +12,7 @@ function oa_social_login_add_javascripts ()
 
 		if (!empty ($settings ['api_subdomain']))
 		{
-			//Include in header, without version appended
+			//Include in header, without having the version appended
 			wp_register_script ("oa_social_library", ((is_ssl () ? 'https' : 'http') . '://' . $settings ['api_subdomain'] . '.api.oneall.com/socialize/library.js'), array (), null, false);
 		}
 	}
@@ -33,16 +33,10 @@ add_shortcode ('oa_social_login', 'oa_social_login_shortcode_handler');
 
 
 /**
- * Hook to display custom avatars in comments
+ * Hook to display custom avatars
  */
-function oa_social_login_custom_avatar ()
+function oa_social_login_custom_avatar ($avatar, $mixed, $size, $default, $alt)
 {
-	//The current comment
-	global $comment;
-
-	//Arguments passed to this function
-	$args = func_get_args ();
-
 	//The social login settings
 	static $oa_social_login_settings = null;
 	if (is_null ($oa_social_login_settings))
@@ -51,26 +45,70 @@ function oa_social_login_custom_avatar ()
 	}
 
 	//Check if we are in a comment
-	if (!is_null ($comment) AND !empty ($comment->user_id) AND !empty ($args [0]))
+	if (isset ($oa_social_login_settings ['plugin_show_avatars_in_comments']) AND $oa_social_login_settings ['plugin_show_avatars_in_comments'] == '1')
 	{
-		if (isset ($oa_social_login_settings ['plugin_show_avatars_in_comments']) AND $oa_social_login_settings ['plugin_show_avatars_in_comments'] == '1')
+		//Chosen user
+		$user_id = null;
+
+		//Check if we have an user identifier
+		if (is_numeric($mixed))
+		{
+			if ($mixed > 0)
+			{
+	    	$user_id = $mixed;
+			}
+		}
+		//Check if we have an user object
+		else if(is_object($mixed))
+		{
+			if (property_exists ($mixed, 'user_id') AND is_numeric ($mixed->user_id))
+			{
+	  		$user_id = $mixed->user_id;
+			}
+		}
+
+		if ( ! empty ($user_id))
 		{
 			//Read Thumbnail
-			if (($user_thumbnail = get_user_meta ($comment->user_id, 'oa_social_login_user_thumbnail', true)) !== false)
+			if (($user_thumbnail = get_user_meta ($user_id, 'oa_social_login_user_thumbnail', true)) !== false)
 			{
 				if (strlen (trim ($user_thumbnail)) > 0)
 				{
-					$user_thumbnail = preg_replace ('#src=([\'"])([^\\1]+)\\1#Ui', "src=\\1" . $user_thumbnail . "\\1", $args [0]);
-					$user_thumbnail = preg_replace ('#height=([\'"])([^\\1]+)\\1#Ui', "", $user_thumbnail);
-					$user_thumbnail = preg_replace ('#width=([\'"])([^\\1]+)\\1#Ui', "", $user_thumbnail);
-					return $user_thumbnail;
+					return '<img alt="'. esc_attr($alt) .'" src="'.$user_thumbnail.'" class="avatar avatar-social-login avatar-'.$size.' photo" height="'.$size.'" width="'.$size.'" />';
 				}
 			}
 		}
 	}
-	return $args [0];
+
+		//Default
+		return $avatar;
 }
-add_filter ('get_avatar', 'oa_social_login_custom_avatar');
+add_filter ('get_avatar', 'oa_social_login_custom_avatar', 10, 5);
+
+
+/**
+ * Show Social Login below "you must be logged in ..."
+ */
+function oa_social_login_filter_comment_form_defaults($default_fields)
+{
+	//No need to go further if comments disabled or user loggedin
+	if (is_array ($default_fields) AND comments_open () AND !is_user_logged_in ())
+	{
+		//Read settings
+		$settings = get_option ('oa_social_login_settings');
+		if ( ! empty($settings['plugin_comment_show_if_members_only']))
+		{
+			if ( ! isset ($default_fields['must_log_in']))
+			{
+				$default_fields['must_log_in'] = '';
+			}
+			$default_fields['must_log_in'] .=  oa_social_login_render_login_form ('comments');
+		}
+	}
+	return $default_fields;
+}
+add_filter('comment_form_defaults', 'oa_social_login_filter_comment_form_defaults');
+
 
 
 /**
@@ -181,12 +219,12 @@ function oa_social_login_render_login_form ($source, $args = array())
 			}
 		}
 
-		//Get the current protocoll
-		$protocol = (is_ssl () ? 'https' : 'http');
+		//Themes are served from the CDN
+		$theme_uri_prefix = (is_ssl () ? 'https://secure.oneallcdn.com' : 'http://public.oneallcdn.com');
 
 		//Themes
-		$css_theme_uri_small = $protocol . '://oneallcdn.com/css/api/socialize/themes/wordpress/small.css';
-		$css_theme_uri_default = $protocol . '://oneallcdn.com/css/api/socialize/themes/wordpress/default.css';
+		$css_theme_uri_small = $theme_uri_prefix . './css/api/socialize/themes/wordpress/small.css';
+		$css_theme_uri_default = $theme_uri_prefix . '/css/api/socialize/themes/wordpress/default.css';
 
 		//Widget
 		if ($source == 'widget')
@@ -209,7 +247,6 @@ function oa_social_login_render_login_form ($source, $args = array())
 			//Buttons size
 			$css_theme_uri = (!empty ($settings ['plugin_use_small_buttons']) ? $css_theme_uri_small : $css_theme_uri_default);
 		}
-
 
 		//Providers selected?
 		if (count ($providers) > 0)
@@ -236,6 +273,7 @@ function oa_social_login_render_login_form ($source, $args = array())
 			$output [] = '   "css_theme_uri": "' . $css_theme_uri . '" ';
 			$output [] = '  });';
 			$output [] = ' </script>';
+			$output [] = ' <!-- oneall.com / Social Login for Wordpress / v2.5 -->';
 			$output [] = '</div>';
 
 			//Done

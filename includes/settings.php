@@ -34,6 +34,12 @@ $oa_social_login_providers = array (
 	'livejournal' => array (
 		'name' => 'LiveJournal'
 	),
+	'steam' => array (
+		'name' => 'Steam'
+	),
+	'stackexchange' => array (
+		'name' => 'StackExchange'
+	),
 	'vkontakte' => array (
 		'name' => 'VKontakte (Вконтакте)'
 	)

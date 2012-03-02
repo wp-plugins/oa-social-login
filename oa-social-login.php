@@ -3,7 +3,7 @@
 Plugin Name: Social Login
 Plugin URI: http://www.oneall.com/
 Description: Allow your visitors to <strong>comment, login and register with 20+ social networks</strong> like Twitter, Facebook, LinkedIn, Hyves, Вконтакте, Google or Yahoo.
-Version: 2.0
+Version: 2.5
 Author: Claude Schlesser
 Author URI: http://www.oneall.com/
 License: GPL2
@@ -13,8 +13,7 @@ define ('OA_SOCIAL_LOGIN_PLUGIN_URL', plugins_url () . '/' . basename (dirname (
 define ('OA_SOCIAL_LOGIN_BASE_PATH', dirname (plugin_basename (__FILE__)));
 
 /**
- * Check technical requirements before activating the plugin.
- * Wordpress 3.0 or newer + CURL required
+ * Check technical requirements before activating the plugin (Wordpress 3.0 or newer required)
  */
 function oa_social_login_activate ()
 {
@@ -22,12 +21,6 @@ function oa_social_login_activate ()
 	{
 		deactivate_plugins (basename (dirname (__FILE__)) . '/' . basename (__FILE__));
 		echo sprintf (__ ("This plugin requires WordPress %s or newer. Please update your WordPress installation to activate this plugin.", "3.0"));
-		exit;
-	}
-	elseif (!function_exists ('curl_version'))
-	{
-		deactivate_plugins (basename (dirname (__FILE__)) . '/' . basename (__FILE__));
-		echo sprintf (__ ("This plugin requires the PHP libcurl extension be installed. Please contact your web host and request libcurl be <a href='http://www.php.net/manual/en/intro.curl.php'>installed</a>."));
 		exit;
 	}
 	update_option ('oa_social_login_activation_message', 0);
@@ -71,6 +64,7 @@ if (!function_exists ('email_exists'))
  * Include required files
  */
 require_once(dirname (__FILE__) . '/includes/settings.php');
+require_once(dirname (__FILE__) . '/includes/communication.php');
 require_once(dirname (__FILE__) . '/includes/toolbox.php');
 require_once(dirname (__FILE__) . '/includes/admin.php');
 require_once(dirname (__FILE__) . '/includes/user_interface.php');
