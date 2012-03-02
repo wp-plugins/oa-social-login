@@ -2,15 +2,16 @@
 Contributors: ClaudeSchlesser
 Tags: social login, social connect, facebook login, linkedin, livejournal, google, yahoo, twitter login, openid, paypal, vkontakte, hyves, widget, plugin, social network login, comments
 Requires at least: 3.0
-Tested up to: 3.3
-Stable tag: 1.6.1
+Tested up to: 3.3.1
+Stable tag: 2.5
 
 Allow your visitors to comment and login with social networks like Twitter, Facebook, Paypal, LinkedIn, LiveJournal, OpenID, VKontakte, Google, Yahoo
 
 == Description ==
 
-The Social Login Plugin is a professional though free Wordpress plugin that allows your visitors to comment, 
-login and register with social networks like Twitter, Facebook, LinkedIn, Paypal, LiveJournal, Hyves, Вконтакте, Google or Yahoo. <br />
+The Social Login Plugin is a professional though free Wordpress (BuddyPress compatible) Plugin in English/German that allows your visitors to comment, 
+login and register with social networks like Twitter, Facebook, LinkedIn, Paypal, LiveJournal, Hyves, Вконтакте, Google or Yahoo. 
+<strong>Make your blog social!</strong><br />
 
 <strong>Choose where to add the Social Login Plugin:</strong>
 <ul>
@@ -39,13 +40,14 @@ login and register with social networks like Twitter, Facebook, LinkedIn, Paypal
  <li>Hyves</li>
  <li>VKontakte (Вконтакте)</li>
  </ul>
+ 
 
-<strong>Increase your wordpress user engagement in a few simple steps with this plugin.</strong><br />
+<strong>Increase your wordpress user engagement in a few simple steps with the Social Login Plugin!</strong>
+Our users love it! Check out the <a href="http://wordpress.org/extend/plugins/oa-social-login/other_notes/">testimonials</a>!<br />
 
 The Social Login Plugin is maintained by <a href="http://www.oneall.com">OneAll</a>, a technology company offering a set of web-delivered
 tools and services for establishing and optimizing a site's connection with social networks and identity providers such as Facebook, Twitter, 
 Google, Yahoo!, LinkedIn, Paypal, Hyves amongst others.
-
 
 == Installation ==
 
@@ -60,6 +62,11 @@ Google, Yahoo!, LinkedIn, Paypal, Hyves amongst others.
 You should not have to change your templates. 
 The Social Login seamlessly integrates into your blog by using predefined hooks.
 
+= Does Social Login can be embedded through a shortcode? =
+
+The Social Login shortcode `[oa_social_login]` can be used in any page or post within your blog.
+The shortcode will automatically be replaced by the icons of the chosen
+social network providers.
 
 = I have a custom template and the plugin is not displayed correctly =
 
@@ -98,29 +105,53 @@ http://docs.oneall.com/plugins/guide/social-login-wordpress/
 2. **Login** - Login formular (Social Network Buttons are included)
 3. **Plugin Settings** - Plugin Settings in the Wordpress Administration Area
 4. **Widget Settings** - Widget Settings in the Wordpress Administration Area
+5. **Login** - Login formular with small buttons (Social Network Buttons are included)
 
 == Changelog ==
 
-= 1.0 =
-* Initial release
+= 2.5 =
+* API Connection improved
+* API Connection function moved to separate file
+* Contact us link fixed
+* Social Network Avatars fixed
+* HTML for administration area fixed
+* FSOCKOPEN Handler Added
+* CURL/FSOCKOPEN selector added
+* Identity Provider "Steam Community" added
+* Identity Provider "StackExchange" added
+* CSS served from CDN
+* Optionally disable comment moderation
 
-= 1.0.1 =
-* Hook oa_social_login fixed
-* Plugin description changed
+= 2.0 =
+* WC3 Compliant callback uri
+* HTTP/HTTPS Check for CSS files
+* Shortcode handler fixed
+* Wordpress Cookie now set for 14 days
+* Wordpress display_name is now populated
+* Redirection improved
+* Now Buddypress compatible
+* Link to settings page after installation
+* Caching for socialize library improved
+* Small buttons added as option
+* Localization added
+* German translation
 
-= 1.0.2 = 
-* Version numbers fixed
+= 1.6.1 =
+* Provider unselect bug fixed
+* Sanitize user strict added
+* Custom namespace for add_settings_link
 
-= 1.3.2 =
-* Stable Version
+= 1.6 = 
+* LiveJournal added
+* PayPal added
+* Settings link added
+* API Communication Check added
+* Cyrillic character support
 
-= 1.3.4 =
-* Multisite issues with Widget fixed
-
-= 1.3.5 =
-* Administration area redirection fixed
-* Automatic email creation added
-* Email verification added
+= 1.5 =
+* Social Network Avatars fixed
+* Social Buttons no longer displayed for customs hooks if logged in
+* KISS for API Settings Setup 
 
 = 1.4 =
 * Social Network Avatars can be displayed in comments
@@ -130,22 +161,26 @@ http://docs.oneall.com/plugins/guide/social-login-wordpress/
 * Select redirection target after registration
 * Enable account linking
 
-= 1.5 =
-* Social Network Avatars fixed
-* Social Buttons no longer displayed for customs hooks if logged in
-* KISS for API Settings Setup 
+= 1.3.5 =
+* Administration area redirection fixed
+* Automatic email creation added
+* Email verification added
 
-= 1.6 = 
-* LiveJournal added
-* PayPal added
-* Settings link added
-* API Communication Check added
-* Cyrillic character support
+= 1.3.4 =
+* Multisite issues with Widget fixed
 
-= 1.6.1 =
-* Provider unselect bug fixed
-* Sanitize user strict added
-* Custom namespace for add_settings_link
+= 1.3.2 =
+* Stable Version
+
+= 1.0.2 = 
+* Version numbers fixed
+
+= 1.0.1 =
+* Hook oa_social_login fixed
+* Plugin description changed
+
+= 1.0 =
+* Initial release
 
 == Testimonials ==
 
@@ -198,5 +233,15 @@ was easy to follow and implement. I was struggling with a couple of other plugin
 <strong>Nicholas L.</strong>
 
 <em>I especially enjoy the step by step process that guides you through the Social website App creation process. In the end I would like to thank you 
-for putting together such a great product that so many can implement with ease.</em>
+for putting together such a great product that so many users can implement with ease.</em>
 <strong>Stefan C.</strong>
+
+<em>Thanks for a such a great plugin! I was really impressed with the simplicity of the installation directions and the clean design.</em>
+<strong>Janae S.</strong>
+
+<em>You have no idea how it THRILLED me to integrate oneall. It was SO amazingly easy, your team has simplified the whole process of signing up for 
+authorization on multiple social media sites. I HAD NO QUESTIONS/STEPS THAT YOU HADN'T ALREADY ANTICIPATED. It saved me HOURS of work!</em>
+<strong>Kelly C.</strong>
+
+<em>I love your service the way it is, it's amazing how easy the logging-in-via-social-network is integrated into a wordpress website!</em>
+<strong>Martin S.</strong>
