@@ -7,7 +7,7 @@ jQuery(document).ready(function($) {
 		var is_success;	
 		
 		var data = {
-				_ajax_nonce: oa_social_login_ajax_nonce.value,
+				_ajax_nonce: objectL10n.oa_social_login_ajax_nonce,
 				action: 'autodetect_api_connection_handler'
 			};
 		
@@ -74,7 +74,7 @@ jQuery(document).ready(function($) {
 		var handler = (radio_fsockopen_val == 'fsockopen' ? 'fsockopen' : 'curl');		
 				
 		var data = {
-			_ajax_nonce: oa_social_login_ajax_nonce.value,
+			_ajax_nonce: objectL10n.oa_social_login_ajax_nonce,
 			action: 'check_api_settings',
 			api_connection_handler: handler,
 			api_subdomain: subdomain,
