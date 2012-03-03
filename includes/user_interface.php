@@ -35,7 +35,7 @@ add_shortcode ('oa_social_login', 'oa_social_login_shortcode_handler');
 /**
  * Hook to display custom avatars
  */
-function oa_social_login_custom_avatar ($avatar, $mixed, $size, $default, $alt)
+function oa_social_login_custom_avatar ($avatar, $mixed, $size, $default, $alt = '')
 {
 	//The social login settings
 	static $oa_social_login_settings = null;
