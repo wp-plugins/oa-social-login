@@ -22,7 +22,7 @@ jQuery(document).ready(function($) {
 			var radio_fsockopen = jQuery("#oa_social_login_api_connection_handler_fsockopen");											
 			radio_curl.removeAttr("checked");
 			radio_fsockopen.removeAttr("checked");
-					
+				
 			/* CURL detected */
 			if (response == 'success_autodetect_api_curl')
 			{
@@ -86,8 +86,13 @@ jQuery(document).ready(function($) {
 		message_container.removeClass('success_message error_message').addClass('working_message');
 		message_container.html(objectL10n.oa_admin_js_1);
 		
-		jQuery.post(ajaxurl,data, function(response) {		
-			if (response == 'error_not_all_fields_filled_out'){
+		jQuery.post(ajaxurl,data, function(response) {
+			
+			if (response == 'error_selected_handler_faulty'){
+				is_success = false;
+				message_string = objectL10n.oa_admin_js_116;
+			}
+			else if (response == 'error_not_all_fields_filled_out'){
 				is_success = false;
 				message_string = objectL10n.oa_admin_js_111;
 			}
