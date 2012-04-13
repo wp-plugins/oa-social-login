@@ -3,7 +3,7 @@ Contributors: ClaudeSchlesser
 Tags: social login, social connect, facebook login, linkedin, livejournal, google, yahoo, twitter login, openid, paypal, vkontakte, hyves, widget, plugin, social network login, comments
 Requires at least: 3.0
 Tested up to: 3.3.1
-Stable tag: 2.5
+Stable tag: 3.0
 
 Allow your visitors to comment and login with social networks like Twitter, Facebook, Paypal, LinkedIn, LiveJournal, OpenID, VKontakte, Google, Yahoo
 
@@ -37,9 +37,12 @@ login and register with social networks like Twitter, Facebook, LinkedIn, Paypal
  <li>OpenID</li>
  <li>LiveJournal</li>
  <li>Wordpress.com</li>
+ <li>Windows Live</li>
+ <li>StackExchange</li>
  <li>Hyves</li>
+ <li>Mail.ru</li>
  <li>VKontakte (Вконтакте)</li>
- </ul>
+</ul>
  
 
 <strong>Increase your wordpress user engagement in a few simple steps with the Social Login Plugin!</strong>
@@ -108,6 +111,21 @@ http://docs.oneall.com/plugins/guide/social-login-wordpress/
 5. **Login** - Login formular with small buttons (Social Network Buttons are included)
 
 == Changelog ==
+
+= 3.0 =
+* SSL detection with nginx load-balancer fixed
+* CDN path bug fixed
+* Table width in administration area fixed
+* Administration split to two pages 
+* Optionally disable Social Login in comments
+* Optionally request email from user
+* Optionally show social networks in user list
+* Identity Provider "Windows Mail" added
+* Identity Provider "Mail.ru" added
+* Error message if no social networks selected
+* Class for Social Login label added
+* Small icons fixed
+* API settings verification fixed
 
 = 2.5 =
 * API Connection improved
