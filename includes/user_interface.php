@@ -33,6 +33,61 @@ add_shortcode ('oa_social_login', 'oa_social_login_shortcode_handler');
 
 
 /**
+ * Hook to display custom avatars (Buddypress specific)
+ */
+function oa_social_login_bp_custom_fetch_avatar($text, $args)
+{
+	//The social login settings
+	static $oa_social_login_settings = null;
+	if (is_null ($oa_social_login_settings))
+	{
+		$oa_social_login_settings = get_option ('oa_social_login_settings');
+	}
+
+	//Check if avatars are enabled
+	if (isset ($oa_social_login_settings ['plugin_show_avatars_in_comments']) AND $oa_social_login_settings ['plugin_show_avatars_in_comments'] == '1')
+	{
+		//Check arguments
+		if (is_array ($args))
+		{
+			//User Object
+			if (! empty ($args['object']) AND strtolower ($args['object']) == 'user')
+			{
+				//User Identifier
+				if (! empty ($args['item_id']) AND is_numeric ($args['item_id']))
+				{
+					//Retrieve user
+					if (($user_data = get_userdata( $args['item_id'] )) !== false)
+					{
+						//Retrieve Avatar
+						if (($user_thumbnail = get_user_meta ($args['item_id'], 'oa_social_login_user_thumbnail', true)) !== false)
+						{
+							//Thumbnail retrieved
+							if (strlen (trim ($user_thumbnail)) > 0)
+							{
+								//Build Image tags
+								$img_alt = (! empty ($args['alt']) ? 'alt="'.oa_social_login_esc_attr($args['alt']).'" ' : '');
+								$img_alt = sprintf($img_alt, htmlspecialchars($user_data->user_login));
+
+								$img_class = ('class="'.(! empty ($args['class']) ? ($args['class'].' ') : '').'avatar-social-login" ');
+								$img_width = (! empty ($args['width']) ? 'width="'.$args['width'].'" ' : '');
+								$img_height = (! empty ($args['height']) ? 'height="'.$args['height'].'" ' : '');
+
+								//Replace
+								$text = preg_replace('#<img[^>]+>#i', '<img src="'.$user_thumbnail.'" '.$img_alt.$img_class.$img_height.$img_width.'/>', $text);
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+	return $text;
+}
+add_filter('bp_core_fetch_avatar', 'oa_social_login_bp_custom_fetch_avatar', 10, 2);
+
+
+/**
  * Hook to display custom avatars
  */
 function oa_social_login_custom_avatar ($avatar, $mixed, $size, $default, $alt = '')

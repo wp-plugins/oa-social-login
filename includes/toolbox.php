@@ -37,22 +37,34 @@ function oa_social_login_add_site_css ()
 
 
 /**
- * Check if the current connection is over https
+ * Check if the current connection is being made over https
  */
 function oa_social_login_https_on()
 {
-	if ( ! empty ($_SERVER ['SERVER_PORT']) AND $_SERVER ['SERVER_PORT'] == '443')
+	if ( ! empty ($_SERVER ['SERVER_PORT']))
 	{
-		return true;
+		if (trim($_SERVER ['SERVER_PORT']) == '443')
+		{
+			return true;
+		}
 	}
-	elseif ( ! empty ($_SERVER ['HTTP_X_FORWARDED_PROTO']) AND strtolower($_SERVER ['HTTP_X_FORWARDED_PROTO']) == 'https')
+
+	if ( ! empty ($_SERVER ['HTTP_X_FORWARDED_PROTO']))
 	{
-		return true;
+		if (strtolower(trim($_SERVER ['HTTP_X_FORWARDED_PROTO'])) == 'https')
+		{
+			return true;
+		}
 	}
-	elseif ( ! empty ($_SERVER ['HTTPS']) AND strtolower($_SERVER ['HTTPS'])  == 'on')
+
+	if ( ! empty ($_SERVER ['HTTPS']))
 	{
-		return true;
+		if (strtolower(trim($_SERVER ['HTTPS'])) == 'on' OR trim($_SERVER ['HTTPS']) == '1')
+		{
+			return true;
+		}
 	}
+
 	return false;
 }
 
