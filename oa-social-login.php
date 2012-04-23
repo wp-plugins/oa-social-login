@@ -3,7 +3,7 @@
 Plugin Name: Social Login
 Plugin URI: http://www.oneall.com/
 Description: Allow your visitors to <strong>comment, login and register with 20+ social networks</strong> like Twitter, Facebook, LinkedIn, Hyves, Вконтакте, Google or Yahoo.
-Version: 2.5
+Version: 3.1
 Author: Claude Schlesser
 Author URI: http://www.oneall.com/
 License: GPL2
@@ -11,6 +11,7 @@ License: GPL2
 
 define ('OA_SOCIAL_LOGIN_PLUGIN_URL', plugins_url () . '/' . basename (dirname (__FILE__)));
 define ('OA_SOCIAL_LOGIN_BASE_PATH', dirname (plugin_basename (__FILE__)));
+
 
 /**
  * Check technical requirements before activating the plugin (Wordpress 3.0 or newer required)
@@ -42,7 +43,7 @@ function oa_social_login_add_settings_link ($links, $file)
 
 	if ($file == $oa_social_login_plugin)
 	{
-		$settings_link = '<a href="options-general.php?page=oa_social_login">' . __ ('Settings') . '</a>';
+		$settings_link = '<a href="admin.php?page=oa_social_login_setup">' . __ ('Settings') . '</a>';
 		array_unshift ($links, $settings_link);
 	}
 	return $links;

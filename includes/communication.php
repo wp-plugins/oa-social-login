@@ -143,9 +143,12 @@ function oa_social_login_callback ()
 								//Read existing user
 								if (($user_id_tmp = email_exists ($user_email)) !== false)
 								{
-									if (is_numeric ($user_id_tmp))
+									$user_data = get_userdata ($user_id_tmp);
+									if ($user_data !== false)
 									{
-										$user_id = $user_id_tmp;
+										$user_id = $user_data->ID;
+										$user_login = $user_data->user_login;
+
 										delete_metadata ('user', null, 'oa_social_login_user_token', $user_token, true);
 										update_user_meta ($user_id, 'oa_social_login_user_token', $user_token);
 										update_user_meta ($user_id, 'oa_social_login_identity_id', $user_identity_id);
@@ -155,6 +158,9 @@ function oa_social_login_callback ()
 										{
 											update_user_meta ($user_id, 'oa_social_login_user_thumbnail', $user_thumbnail);
 										}
+
+										wp_cache_delete($user_id, 'users');
+										wp_cache_delete($user_login, 'userlogins');
 									}
 								}
 							}
@@ -185,9 +191,11 @@ function oa_social_login_callback ()
 						}
 
 						//Email must be unique
+						$placeholder_email_used = false;
 						if (!isset ($user_email) OR !is_email ($user_email) OR email_exists ($user_email))
 						{
 							$user_email = oa_social_login_create_rand_email ();
+							$placeholder_email_used = true;
 						}
 
 						//Build user data
@@ -210,18 +218,36 @@ function oa_social_login_callback ()
 							update_user_meta ($user_id, 'oa_social_login_identity_id', $user_identity_id);
 							update_user_meta ($user_id, 'oa_social_login_identity_provider', $user_identity_provider);
 
+							//Store thumbnail
 							if (!empty ($user_thumbnail))
 							{
 								update_user_meta ($user_id, 'oa_social_login_user_thumbnail', $user_thumbnail);
 							}
+
+							//Email is required
+							if ( ! empty ($settings ['plugin_require_email']))
+							{
+								//We don't have the real email
+								if ($placeholder_email_used)
+								{
+									update_user_meta ($user_id, 'oa_social_login_request_email', 1);
+								}
+							}
+
+							wp_cache_delete($user_id, 'users');
+							wp_cache_delete($user_login, 'userlogins');
+							do_action('user_register', $user_id);
 						}
 					}
 
 					//Sucess
-					if (is_object (get_userdata ($user_id)))
+					$user_data = get_userdata ($user_id);
+					if ($user_data !== false)
 					{
 						//Setup Cookie
-						wp_set_auth_cookie ($user_id, true);
+						wp_clear_auth_cookie();
+						wp_set_auth_cookie ($user_data->ID, true);
+						do_action('wp_login', $user_data->user_login, $user_data);
 
 						//Where did the user come from?
 						$oa_social_login_source = (!empty ($_REQUEST ['oa_social_login_source']) ? strtolower (trim ($_REQUEST ['oa_social_login_source'])) : '');
@@ -234,7 +260,8 @@ function oa_social_login_callback ()
 						{
 							//*************** Registration ***************
 							case 'registration':
-							//Default redirection
+
+								//Default redirection
 								$redirect_to = admin_url ();
 
 								//Redirection customized
@@ -245,7 +272,7 @@ function oa_social_login_callback ()
 										//Homepage
 										case 'homepage':
 											$redirect_to = site_url ();
-											break;
+										break;
 
 										//Custom
 										case 'custom':
@@ -253,21 +280,21 @@ function oa_social_login_callback ()
 											{
 												$redirect_to = trim ($settings ['plugin_registration_form_redirect_custom_url']);
 											}
-											break;
+										break;
 
 										//Default/Dashboard
 										default:
 										case 'dashboard':
 											$redirect_to = admin_url ();
-											break;
+										break;
 									}
 								}
-								break;
+							break;
 
 
 							//*************** Login ***************
 							case 'login':
-							//Default redirection
+								//Default redirection
 								$redirect_to = site_url ();
 
 								//Redirection in URL
@@ -304,14 +331,14 @@ function oa_social_login_callback ()
 										}
 									}
 								}
-								break;
+							break;
 
 							// *************** Other ***************
 							default:
 								//Get request URI - Should work on Apache + IIS
 								$request_uri = ((!isset ($_SERVER ['REQUEST_URI'])) ? $_SERVER ['PHP_SELF'] : $_SERVER ['REQUEST_URI']);
 								$request_port = ((!empty ($_SERVER ['SERVER_PORT']) AND $_SERVER ['SERVER_PORT'] <> '80') ? (":" . $_SERVER ['SERVER_PORT']) : '');
-								$request_protocol = (is_ssl () ? 'https' : 'http') . "://";
+								$request_protocol = (oa_social_login_https_on () ? 'https' : 'http') . "://";
 								$redirect_to = $request_protocol . $_SERVER ['SERVER_NAME'] . $request_port . $request_uri;
 
 								//Remove the oa_social_login_source argument
@@ -406,7 +433,7 @@ function oa_social_login_check_fsockopen ()
  */
 function oa_social_login_check_curl ()
 {
-	if (in_array ('curl', get_loaded_extensions ()))
+	if (in_array ('curl', get_loaded_extensions ()) AND function_exists('curl_exec'))
 	{
 		$result = oa_social_login_curl_request ('https://www.oneall.com/ping.html');
 		if (is_object ($result) AND property_exists ($result, 'http_code') AND $result->http_code == 200)
