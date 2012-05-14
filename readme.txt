@@ -39,6 +39,7 @@ login and register with social networks like Twitter, Facebook, LinkedIn, Paypal
  <li>Wordpress.com</li>
  <li>Windows Live</li>
  <li>StackExchange</li>
+ <li>Steam</li>
  <li>Hyves</li>
  <li>Mail.ru</li>
  <li>VKontakte (Вконтакте)</li>
