@@ -115,7 +115,7 @@ http://docs.oneall.com/plugins/guide/social-login-wordpress/
 
 == Changelog ==
 
-= 3.1 = 
+= 3.2 = 
 * Identity Provider "Skyrock.com" added
 * Identity Provider "Github.com" added
 * German translations improved
