@@ -19,6 +19,12 @@ $oa_social_login_providers = array (
 		'yahoo' => array (
 				'name' => 'Yahoo'
 		),
+		'github' => array (
+				'name' => 'Github.com'
+		),
+		'skyrock' => array (
+				'name' => 'Skyrock.com'
+		),
 		'openid' => array (
 				'name' => 'OpenID'
 		),

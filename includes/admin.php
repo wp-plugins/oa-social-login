@@ -710,8 +710,8 @@ function oa_display_social_login_settings ()
 						</div>
 						<p>
 							<?php
-								_e ('Social Login is a plugin that allows your users to comment, login and register with their existing Social Network accounts. If a user is already logged in, the plugin will not be displayed. There no need to offer the user the possibilty to connect with a social network if he is already connected.'); ?>
-								<strong><?php _e ('You therefore have to logout to see the plugin in action.');?> </strong>
+								_e ('Social Login is a plugin that allows your users to comment, login and register with their existing Social Network accounts. If a user is already logged in, the plugin will not be displayed. There is no need to give the user the possibility to connect with a social network if he is already connected.', 'oa_social_login'); ?>
+								<strong><?php _e ('You therefore have to logout to see the plugin in action.', 'oa_social_login');?> </strong>
 						</p>
 					</div>
 					<?php
@@ -719,7 +719,7 @@ function oa_display_social_login_settings ()
 						{
 							?>
 								<div class="oa_social_login_box" id="oa_social_login_box_updated">
-									<?php _e('Your modifications have been saved successfully!'); ?>
+									<?php _e('Your modifications have been saved successfully!', 'oa_social_login'); ?>
 								</div>
 							<?php
 						}

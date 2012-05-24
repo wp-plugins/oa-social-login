@@ -329,7 +329,7 @@ function oa_social_login_render_login_form ($source, $args = array())
 		//No providers selected
 		if (count ($providers) == 0)
 		{
-			$output = '<div style="color:white;background-color:red;">[Social Login] '.__ ('Please enable at least one social network!').'</div>';
+			$output = '<div style="color:white;background-color:red;">[Social Login] '.__ ('Please enable at least one social network!', 'oa_social_login').'</div>';
 		}
 		//Providers selected
 		else
@@ -356,7 +356,7 @@ function oa_social_login_render_login_form ($source, $args = array())
 			$output [] = '   "css_theme_uri": "' . $css_theme_uri . '" ';
 			$output [] = '  });';
 			$output [] = ' </script>';
-			$output [] = ' <!-- oneall.com / Social Login for Wordpress / v3.0 -->';
+			$output [] = ' <!-- oneall.com / Social Login for Wordpress / v'.constant('OA_SOCIAL_LOGIN_VERSION').' -->';
 			$output [] = '</div>';
 
 			//Done
@@ -450,13 +450,13 @@ function oa_social_login_request_email()
 			 						if (strlen (trim ($caption)) > 0)
 			 						{
 			 							?>
-			 								<div class="oa_social_login_modal_notice"><?php printf ($caption, $oa_social_login_identity_provider); ?></div>
+			 								<div class="oa_social_login_modal_notice"><?php echo str_replace ('%s', $oa_social_login_identity_provider, $caption); ?></div>
 			 							<?php
 			 						}
 			 					?>
 			 					<div class="oa_social_login_modal_body">
 				 					<div class="oa_social_login_modal_subtitle">
-				 						Your email address:
+				 						<?php _e ('Your email address', 'oa_social_login'); ?>:
 				 					</div>
 									<form method="post" action="">
 										<fieldset>
@@ -468,7 +468,7 @@ function oa_social_login_request_email()
 												<?php  echo $message; ?>
 											</div>
 											<div class="oa_social_login_modal_button">
-												<input type="submit" value="Confirm my email address" class="inputbutton" />
+												<input type="submit" value="<?php _e ('Confirm my email address', 'oa_social_login'); ?>" class="inputbutton" />
 											</div>
 										</fieldset>
 									</form>
