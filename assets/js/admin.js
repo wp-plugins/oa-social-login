@@ -18,35 +18,56 @@ jQuery(document).ready(function($) {
 		jQuery.post(ajaxurl,data, function(response) {				
 			
 			/* CURL/FSOCKOPEN Radio Boxs */
-			var radio_curl = jQuery("#oa_social_login_api_connection_handler_curl");
-			var radio_fsockopen = jQuery("#oa_social_login_api_connection_handler_fsockopen");											
+			var radio_curl = jQuery("#oa_social_login_api_connection_handler_curl");			
+			var radio_fsockopen = jQuery("#oa_social_login_api_connection_handler_fsockopen");					
+			var radio_use_http_1 = jQuery("#oa_social_login_api_connection_handler_use_https_1");
+			var radio_use_http_0 = jQuery("#oa_social_login_api_connection_handler_use_https_0");
+						
 			radio_curl.removeAttr("checked");
 			radio_fsockopen.removeAttr("checked");
+			radio_use_http_1.removeAttr("checked");
+			radio_use_http_0.removeAttr("checked");
 				
-			/* CURL detected */
-			if (response == 'success_autodetect_api_curl')
+			/* CURL detected, HTTPS */
+			if (response == 'success_autodetect_api_curl_https')
 			{
 				is_success = true;
-				radio_curl.attr("checked", "checked");				
-				message_string = objectL10n.oa_admin_js_201;
+				radio_curl.attr("checked", "checked");			
+				radio_use_http_1.attr("checked", "checked");					
+				message_string = objectL10n.oa_admin_js_201a;
+			}		
+			/* CURL detected, HTTP */
+			else if (response == 'success_autodetect_api_curl_http')
+			{
+				is_success = true;
+				radio_curl.attr("checked", "checked");			
+				radio_use_http_0.attr("checked", "checked");					
+				message_string = objectL10n.oa_admin_js_201b;
+			}				
+			/* FSOCKOPEN detected, HTTPS */
+			else if (response == 'success_autodetect_api_fsockopen_https')
+			{
+				is_success = true;
+				radio_fsockopen.attr("checked", "checked");
+				radio_use_http_1.attr("checked", "checked");	
+				message_string = objectL10n.oa_admin_js_202a;
+			}
+			/* FSOCKOPEN detected, HTTP */
+			else if (response == 'success_autodetect_api_fsockopen_http')
+			{
+				is_success = true;
+				radio_fsockopen.attr("checked", "checked");
+				radio_use_http_0.attr("checked", "checked");	
+				message_string = objectL10n.oa_admin_js_202b;
 			}			
+			/* No handler detected */
 			else
 			{
-				/* FSOCKOPEN detected */
-				if (response == 'success_autodetect_api_fsockopen')
-				{
-					is_success = true;
-					radio_fsockopen.attr("checked", "checked");					
-					message_string = objectL10n.oa_admin_js_202;
-				}
-				/* No handler detected */
-				else
-				{
-					is_success = false;
-					radio_curl.attr("checked", "checked");					
-					message_string = objectL10n.oa_admin_js_211;
-				}
-			}		
+				is_success = false;
+				radio_curl.attr("checked", "checked");					
+				message_string = objectL10n.oa_admin_js_211;
+			}					
+			
 			message_container.removeClass('working_message');
 			message_container.html(message_string);
 			
@@ -65,18 +86,20 @@ jQuery(document).ready(function($) {
 		var message_container;
 		var is_success;	
 	
-		var radio_curl_val = jQuery("#oa_social_login_api_connection_handler_curl:checked").val();
 		var radio_fsockopen_val = jQuery("#oa_social_login_api_connection_handler_fsockopen:checked").val();	
-		
+		var radio_use_http_0 = jQuery("#oa_social_login_api_connection_handler_use_https_0:checked").val();
+				
 		var subdomain = jQuery('#oa_social_login_settings_api_subdomain').val();
 		var key = jQuery('#oa_social_login_settings_api_key').val();
 		var secret = jQuery('#oa_social_login_settings_api_secret').val();	
 		var handler = (radio_fsockopen_val == 'fsockopen' ? 'fsockopen' : 'curl');		
-				
+		var use_https = (radio_use_http_0 == '0' ? '0' : '1');	
+	
 		var data = {
 			_ajax_nonce: objectL10n.oa_social_login_ajax_nonce,
 			action: 'check_api_settings',
 			api_connection_handler: handler,
+			api_connection_use_https: use_https,
 			api_subdomain: subdomain,
 			api_key: key,
 			api_secret: secret
