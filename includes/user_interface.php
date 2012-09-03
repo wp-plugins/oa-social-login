@@ -180,7 +180,6 @@ function oa_social_login_filter_comment_form_defaults($default_fields)
 add_filter('comment_form_defaults', 'oa_social_login_filter_comment_form_defaults');
 
 
-
 /**
  * Display the provider grid for comments
  */
@@ -200,6 +199,9 @@ function oa_social_login_render_login_form_comments ()
 	}
 }
 add_action ('comment_form_top', 'oa_social_login_render_login_form_comments');
+
+//Hook for the Thesis Theme
+add_action ('thesis_hook_comment_form_top', 'oa_social_login_render_login_form_comments');
 
 
 /**
@@ -239,6 +241,10 @@ function oa_social_login_render_login_form_login ()
 }
 add_action ('login_form', 'oa_social_login_render_login_form_login');
 
+//WordPress Profile Builder
+add_action ('wppb_before_login', 'oa_social_login_render_login_form_login');
+//add_action ('wppb_after_login', 'oa_social_login_render_login_form_comments');
+
 
 /**
  * Display a custom grid for login
@@ -262,6 +268,22 @@ function oa_social_login_filter_login_form_custom ($value = 'custom')
 	return (is_user_logged_in () ? '' : oa_social_login_render_login_form ($value));
 }
 add_filter ('oa_social_login_custom', 'oa_social_login_filter_login_form_custom');
+
+
+/**
+ * Example for using your own CSS
+ */
+
+/*
+
+ function oa_social_login_set_custom_css() {
+	return 'http://public.oneallcdn.com/css/api/socialize/themes/buildin/connect/large-v1.css';
+ }
+
+ add_filter('oa_social_login_default_css', 'oa_social_login_set_custom_css');
+ add_filter('oa_social_login_widget_css', 'oa_social_login_set_custom_css');
+
+*/
 
 
 /**
@@ -315,6 +337,9 @@ function oa_social_login_render_login_form ($source, $args = array())
 
 			//Buttons size
 			$css_theme_uri = ((array_key_exists ('widget_use_small_buttons', $widget_settings) AND !empty ($widget_settings ['widget_use_small_buttons'])) ? $css_theme_uri_small : $css_theme_uri_default);
+
+			//Custom CSS
+			$css_theme_uri = apply_filters('oa_social_login_widget_css', $css_theme_uri);
 		}
 		//Other places
 		else
@@ -324,12 +349,16 @@ function oa_social_login_render_login_form ($source, $args = array())
 
 			//Buttons size
 			$css_theme_uri = (!empty ($settings ['plugin_use_small_buttons']) ? $css_theme_uri_small : $css_theme_uri_default);
+
+			//Custom CSS
+			$css_theme_uri = apply_filters('oa_social_login_default_css', $css_theme_uri);
 		}
+
 
 		//No providers selected
 		if (count ($providers) == 0)
 		{
-			$output = '<div style="color:white;background-color:red;">[Social Login] '.__ ('Please enable at least one social network!').'</div>';
+			$output = '<div style="color:white;background-color:red;">[Social Login] '.__ ('Please enable at least one social network!', 'oa_social_login').'</div>';
 		}
 		//Providers selected
 		else
@@ -356,7 +385,7 @@ function oa_social_login_render_login_form ($source, $args = array())
 			$output [] = '   "css_theme_uri": "' . $css_theme_uri . '" ';
 			$output [] = '  });';
 			$output [] = ' </script>';
-			$output [] = ' <!-- oneall.com / Social Login for Wordpress / v3.0 -->';
+			$output [] = ' <!-- oneall.com / Social Login for Wordpress / v'.constant('OA_SOCIAL_LOGIN_VERSION').' -->';
 			$output [] = '</div>';
 
 			//Done
@@ -450,13 +479,13 @@ function oa_social_login_request_email()
 			 						if (strlen (trim ($caption)) > 0)
 			 						{
 			 							?>
-			 								<div class="oa_social_login_modal_notice"><?php printf ($caption, $oa_social_login_identity_provider); ?></div>
+			 								<div class="oa_social_login_modal_notice"><?php echo str_replace ('%s', $oa_social_login_identity_provider, $caption); ?></div>
 			 							<?php
 			 						}
 			 					?>
 			 					<div class="oa_social_login_modal_body">
 				 					<div class="oa_social_login_modal_subtitle">
-				 						Your email address:
+				 						<?php _e ('Your email address', 'oa_social_login'); ?>:
 				 					</div>
 									<form method="post" action="">
 										<fieldset>
@@ -468,7 +497,7 @@ function oa_social_login_request_email()
 												<?php  echo $message; ?>
 											</div>
 											<div class="oa_social_login_modal_button">
-												<input type="submit" value="Confirm my email address" class="inputbutton" />
+												<input type="submit" value="<?php _e ('Confirm my email address', 'oa_social_login'); ?>" class="inputbutton" />
 											</div>
 										</fieldset>
 									</form>

@@ -1,11 +1,9 @@
 /* ********************* Page Wrapper */
-
 #oa_social_login_page {
   width: 700px;
 }
 
 /* ********************* Boxes */
-
 .oa_social_login_box {
   border: 1px solid #CCCCCC;
   margin-bottom: 10px;
@@ -52,7 +50,6 @@
 }
 
 /* ********************* Tables */
-
 .oa_social_login_table {
   background-color: #efefef;
   border: 1px solid #ccc;
@@ -84,14 +81,14 @@
 .oa_social_login_table tr.row_odd,
 .oa_social_login_table tr.row_odd td {
   color: #222;
-  background-color: #eee;
+  background-color: #ddd;
   border-bottom: 1px dotted #BBBBBB;
 }
 
 .oa_social_login_table tr.row_even,
 .oa_social_login_table tr.row_even td {
-  color: #333; 
-  background-color : #fff;
+  color: #333;
+  background-color: #fff;
   border-bottom: 1px dotted #bbb;
 }
 
@@ -179,6 +176,10 @@
   background-position: -224px -1px;
 }
 
+.oa_social_login_provider.oa_social_login_provider_windowslive {
+  background-position: -261px -1px;
+}
+
 .oa_social_login_provider.oa_social_login_provider_livejournal {
   background-position: -298px -1px;
 }
@@ -219,10 +220,14 @@
   background-position: -816px -1px;
 }
 
-.oa_social_login_provider.oa_social_login_provider_windowslive {
-  background-position: -261px -1px;
-}
-
 .oa_social_login_provider.oa_social_login_provider_mailru {
   background-position: -853px -1px;
+}
+
+.oa_social_login_provider.oa_social_login_provider_skyrock {
+  background-position: -890px -1px;
+}
+
+.oa_social_login_provider.oa_social_login_provider_github {
+  background-position: -927px -1px;
 }

@@ -19,6 +19,12 @@ $oa_social_login_providers = array (
 		'yahoo' => array (
 				'name' => 'Yahoo'
 		),
+		'github' => array (
+				'name' => 'Github.com'
+		),
+		'skyrock' => array (
+				'name' => 'Skyrock.com'
+		),
 		'openid' => array (
 				'name' => 'OpenID'
 		),
@@ -30,6 +36,9 @@ $oa_social_login_providers = array (
 		),
 		'paypal' => array (
 				'name' => 'PayPal'
+		),
+		'foursquare' => array (
+				'name' => 'Foursquare'
 		),
 		'livejournal' => array (
 				'name' => 'LiveJournal'
