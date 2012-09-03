@@ -191,7 +191,6 @@ function oa_social_login_render_login_form_comments ()
 		//Read settings
 		$settings = get_option ('oa_social_login_settings');
 
-		print_r($settings);
 		//Display buttons if option not set or not disabled
 		if (!isset ($settings ['plugin_comment_show']) OR ! empty ($settings ['plugin_comment_show']))
 		{
