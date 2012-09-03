@@ -11,7 +11,7 @@ License: GPL2
 
 define ('OA_SOCIAL_LOGIN_PLUGIN_URL', plugins_url () . '/' . basename (dirname (__FILE__)));
 define ('OA_SOCIAL_LOGIN_BASE_PATH', dirname (plugin_basename (__FILE__)));
-define ('OA_SOCIAL_LOGIN_VERSION', '3.5');
+define ('OA_SOCIAL_LOGIN_VERSION', '3.6');
 
 /**
  * Check technical requirements before activating the plugin (Wordpress 3.0 or newer required)
