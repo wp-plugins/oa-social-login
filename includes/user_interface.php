@@ -180,7 +180,6 @@ function oa_social_login_filter_comment_form_defaults($default_fields)
 add_filter('comment_form_defaults', 'oa_social_login_filter_comment_form_defaults');
 
 
-
 /**
  * Display the provider grid for comments
  */
@@ -192,6 +191,7 @@ function oa_social_login_render_login_form_comments ()
 		//Read settings
 		$settings = get_option ('oa_social_login_settings');
 
+		print_r($settings);
 		//Display buttons if option not set or not disabled
 		if (!isset ($settings ['plugin_comment_show']) OR ! empty ($settings ['plugin_comment_show']))
 		{
@@ -200,6 +200,9 @@ function oa_social_login_render_login_form_comments ()
 	}
 }
 add_action ('comment_form_top', 'oa_social_login_render_login_form_comments');
+
+//Hook for the Thesis Theme
+add_action ('thesis_hook_comment_form_top', 'oa_social_login_render_login_form_comments');
 
 
 /**
@@ -239,6 +242,10 @@ function oa_social_login_render_login_form_login ()
 }
 add_action ('login_form', 'oa_social_login_render_login_form_login');
 
+//WordPress Profile Builder
+add_action ('wppb_before_login', 'oa_social_login_render_login_form_login');
+//add_action ('wppb_after_login', 'oa_social_login_render_login_form_comments');
+
 
 /**
  * Display a custom grid for login
@@ -262,6 +269,22 @@ function oa_social_login_filter_login_form_custom ($value = 'custom')
 	return (is_user_logged_in () ? '' : oa_social_login_render_login_form ($value));
 }
 add_filter ('oa_social_login_custom', 'oa_social_login_filter_login_form_custom');
+
+
+/**
+ * Example for using your own CSS
+ */
+
+/*
+
+ function oa_social_login_set_custom_css() {
+	return 'http://public.oneallcdn.com/css/api/socialize/themes/buildin/connect/large-v1.css';
+ }
+
+ add_filter('oa_social_login_default_css', 'oa_social_login_set_custom_css');
+ add_filter('oa_social_login_widget_css', 'oa_social_login_set_custom_css');
+
+*/
 
 
 /**
@@ -315,6 +338,9 @@ function oa_social_login_render_login_form ($source, $args = array())
 
 			//Buttons size
 			$css_theme_uri = ((array_key_exists ('widget_use_small_buttons', $widget_settings) AND !empty ($widget_settings ['widget_use_small_buttons'])) ? $css_theme_uri_small : $css_theme_uri_default);
+
+			//Custom CSS
+			$css_theme_uri = apply_filters('oa_social_login_widget_css', $css_theme_uri);
 		}
 		//Other places
 		else
@@ -324,7 +350,11 @@ function oa_social_login_render_login_form ($source, $args = array())
 
 			//Buttons size
 			$css_theme_uri = (!empty ($settings ['plugin_use_small_buttons']) ? $css_theme_uri_small : $css_theme_uri_default);
+
+			//Custom CSS
+			$css_theme_uri = apply_filters('oa_social_login_default_css', $css_theme_uri);
 		}
+
 
 		//No providers selected
 		if (count ($providers) == 0)

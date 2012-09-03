@@ -37,6 +37,9 @@ $oa_social_login_providers = array (
 		'paypal' => array (
 				'name' => 'PayPal'
 		),
+		'foursquare' => array (
+				'name' => 'Foursquare'
+		),
 		'livejournal' => array (
 				'name' => 'LiveJournal'
 		),
