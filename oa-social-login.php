@@ -75,4 +75,4 @@ require_once(dirname (__FILE__) . '/includes/widget.php');
 /**
  * Initialise
  */
-add_action ('init', 'oa_social_login_init', 2000);
+add_action ('init', 'oa_social_login_init', 9);
