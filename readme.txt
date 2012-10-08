@@ -230,6 +230,10 @@ http://docs.oneall.com/plugins/guide/social-login-wordpress/
 
 <strong>Used by thousands of users around the world!</strong>
 
+<em>You have no idea how it THRILLED me to integrate oneall. It was SO amazingly easy, your team has simplified the whole process of signing up for 
+authorization on multiple social media sites. I HAD NO QUESTIONS/STEPS THAT YOU HADN'T ALREADY ANTICIPATED. It saved me HOURS of work!</em>
+<strong>Kelly C.</strong>
+ 
 <em>This is cool. Nice work. I'm *VERY* impressed. You've made this about as painless as it gets and the value it adds is incredible.</em>
 <strong>Jason M.</strong>
 
@@ -285,10 +289,6 @@ for putting together such a great product that so many users can implement with 
 
 <em>Thanks for a such a great plugin! I was really impressed with the simplicity of the installation directions and the clean design.</em>
 <strong>Janae S.</strong>
-
-<em>You have no idea how it THRILLED me to integrate oneall. It was SO amazingly easy, your team has simplified the whole process of signing up for 
-authorization on multiple social media sites. I HAD NO QUESTIONS/STEPS THAT YOU HADN'T ALREADY ANTICIPATED. It saved me HOURS of work!</em>
-<strong>Kelly C.</strong>
 
 <em>I love your service the way it is, it's amazing how easy the logging-in-via-social-network is integrated into a wordpress website!</em>
 <strong>Martin S.</strong>
