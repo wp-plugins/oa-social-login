@@ -81,11 +81,11 @@ function oa_social_login_user_notification ($user_id, $user_identity_provider)
 	// in sanitize_option we want to reverse this for the plain text arena of emails.
 	$blogname = wp_specialchars_decode(get_option('blogname'), ENT_QUOTES);
 
-	$message  = sprintf(__('New user registration on your site %s:'), $blogname) . "\r\n\r\n";
-	$message .= sprintf(__('Username: %s'), $user_login) . "\r\n\r\n";
-	$message .= sprintf(__('Social Network: %s'), $user_identity_provider) . "\r\n";
+	$message  = sprintf(__('New user registration on your site %s:', 'oa_social_login'), $blogname) . "\r\n\r\n";
+	$message .= sprintf(__('Username: %s', 'oa_social_login'), $user_login) . "\r\n\r\n";
+	$message .= sprintf(__('Social Network: %s', 'oa_social_login'), $user_identity_provider) . "\r\n";
 
-	@wp_mail(get_option('admin_email'), '[Social Login] '.sprintf(__('[%s] New User Registration'), $blogname), $message);
+	@wp_mail(get_option('admin_email'), '[Social Login] '.sprintf(__('[%s] New User Registration', 'oa_social_login'), $blogname), $message);
 }
 
 

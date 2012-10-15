@@ -551,8 +551,8 @@ function oa_display_social_login_setup ()
 					{
 						?>
 							<p>
-								<?php _e ('Allow your visitors to comment, login and register with social networks like Twitter, Facebook, LinkedIn, Hyves, VKontakte, Google or Yahoo.', 'oa_social_login'); ?>
-								<strong><?php _e ('Draw a larger audience and increase user engagement in a  few simple steps.', 'oa_social_login'); ?> </strong>
+								<?php _e ('Allow your visitors to comment, login and register with 20+ Social Networks like for example Twitter, Facebook, LinkedIn, Hyves, VKontakte, Google or Yahoo.', 'oa_social_login'); ?>
+								<strong><?php _e ('Draw a larger audience and increase your user engagement in a  few simple steps.', 'oa_social_login'); ?> </strong>
 							</p>
 							<div class="oa_social_login_box" id="oa_social_login_box_status">
 								<div class="oa_social_login_box_title">
@@ -561,13 +561,13 @@ function oa_display_social_login_setup ()
 								<p>
 									<?php printf (__ ('To be able to use this plugin you first of all need to create a free account at %s and setup a Site.', 'oa_social_login'), '<a href="https://app.oneall.com/signup/" target="_blank">http://www.oneall.com</a>'); ?>
 									<?php _e ('After having created your account and setup your Site, please enter the Site settings in the form below.', 'oa_social_login'); ?>
-									<?php _e ("Don't worry the setup only takes a couple of minutes! Let's get started!", 'oa_social_login'); ?>
+									<?php _e ("Don't worry the setup takes only a couple of minutes!", 'oa_social_login'); ?>
 								</p>
 								<p>
 									<a class="button-secondary" href="https://app.oneall.com/signup/" target="_blank"><strong><?php _e ('Click here to setup your free account', 'oa_social_login'); ?></strong></a>
 								</p>
 								<h3>
-									<?php printf (__ ('You are in good company! This plugin is used on more than %s websites!', 'oa_social_login'), '50000'); ?>
+									<?php printf (__ ('You are in good company! This plugin is used on more than %s websites!', 'oa_social_login'), '50,000'); ?>
 								</h3>
 							</div>
 						<?php
@@ -598,7 +598,7 @@ function oa_display_social_login_setup ()
 						<li><?php printf (__ ('<a target="_blank" href="%s">Follow us on Twitter</a> to stay informed about updates', 'oa_social_login'), 'http://www.twitter.com/oneall'); ?>;</li>
 						<li><?php printf (__ ('<a target="_blank" href="%s">Read the online documentation</a> for more information about this plugin', 'oa_social_login'), 'http://docs.oneall.com/plugins/guide/social-login-wordpress/'); ?>;</li>
 						<li><?php printf (__ ('<a target="_blank" href="%s">Contact us</a> if you have feedback or need assistance', 'oa_social_login'), 'http://www.oneall.com/company/contact-us/'); ?>.
-						<li><?php printf (__ ('We also have plugins for <a target="_blank" href="%s">Drupal and Joomla</a> amongst others', 'oa_social_login'), 'http://docs.oneall.com/plugins/'); ?>.
+						<li><?php printf (__ ('We also have turnkey plugins for <a target="_blank" href="%s">Drupal, phpBB and Joomla</a> amongst others', 'oa_social_login'), 'http://docs.oneall.com/plugins/'); ?>.
 						</li>
 					</ul>
 				</div>
@@ -832,14 +832,14 @@ function oa_display_social_login_settings ()
 						</tr>
 						<tr class="row_odd">
 							<td>
-								<strong><?php _e ('Do you want to receive an email when a new user registers with Social Login ?', 'oa_social_login'); ?></strong>
+								<strong><?php _e ('Do you want to receive an email whenever a new user registers with Social Login ?', 'oa_social_login'); ?></strong>
 							</td>
 						</tr>
 						<tr class="row_even">
 							<td>
 								<?php $plugin_notify_admin = (!isset ($settings['plugin_notify_admin']) OR $settings['plugin_notify_admin'] == '1'); ?>
-								<input type="radio" name="oa_social_login_settings[plugin_notify_admin]" value="1" <?php echo ($plugin_notify_admin ? 'checked="checked"' : ''); ?> /> <?php _e ('Yes, send me an email when a new user registers with Social Login', 'oa_social_login'); ?> <strong>(<?php _e ('Default', 'oa_social_login') ?>)</strong><br />
-								<input type="radio" name="oa_social_login_settings[plugin_notify_admin]" value="0" <?php echo (!$plugin_notify_admin ? 'checked="checked"' : ''); ?> /> <?php _e ('No, do not send me an email', 'oa_social_login'); ?>
+								<input type="radio" name="oa_social_login_settings[plugin_notify_admin]" value="1" <?php echo ($plugin_notify_admin ? 'checked="checked"' : ''); ?> /> <?php _e ('Yes, send me an email whenever a new user registers with Social Login', 'oa_social_login'); ?> <strong>(<?php _e ('Default', 'oa_social_login') ?>)</strong><br />
+								<input type="radio" name="oa_social_login_settings[plugin_notify_admin]" value="0" <?php echo (!$plugin_notify_admin ? 'checked="checked"' : ''); ?> /> <?php _e ('No, do not send me any emails', 'oa_social_login'); ?>
 							</td>
 						</tr>
 					</table>

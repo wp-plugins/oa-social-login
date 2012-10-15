@@ -68,7 +68,7 @@ class oa_social_login_widget extends WP_Widget
 
 		foreach ($instance as $key => $value)
 		{
-			$instance [$key] = esc_attr ($value);
+			$instance [$key] = oa_social_login_esc_attr ($value);
 		}
 
 		$instance = wp_parse_args ((array) $instance, $default_settings);

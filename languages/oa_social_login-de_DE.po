@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Social Login\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-09-03 11:00+0100\n"
-"PO-Revision-Date: 2012-09-03 11:00+0100\n"
+"POT-Creation-Date: 2012-10-15 14:52+0100\n"
+"PO-Revision-Date: 2012-10-15 14:53+0100\n"
 "Last-Translator: Claude Schlesser <cschlesser@oneall.com>\n"
 "Language-Team: \n"
 "Language: \n"
@@ -26,6 +26,10 @@ msgstr "Dieses Plugin benötigt Wordpress %s oder höher. Bitte aktualisieren Si
 #: includes/admin.php:765
 msgid "Settings"
 msgstr "Einstellungen"
+
+#: includes/communication.php:209
+msgid "This Social Network account may not be used to register"
+msgstr "Dieses Konto kann nicht zur Anmeldung genutzt werden"
 
 #: includes/admin.php:14
 msgid "Registration"
@@ -104,11 +108,11 @@ msgid "Autodetection Error - our <a href=\"%s\" target=\"_blank\">documentation<
 msgstr "Verbindungsfehler - in unserer <a href=\"%s\" target=\"_blank\">Dokumentation</a> finden Sie die Lösung."
 
 #: includes/admin.php:554
-msgid "Allow your visitors to comment, login and register with social networks like Twitter, Facebook, LinkedIn, Hyves, VKontakte, Google or Yahoo."
-msgstr "Erlauben Sie Ihren Besuchern, sich mit sozialen Netzwerk wie z.B. Twitter, Facebook, LinkedIn, Hyves, VKontakte, Google oder Yahoo anzumelden, und Kommentare zu hinterlassen."
+msgid "Allow your visitors to comment, login and register with 20+ Social Networks like for example Twitter, Facebook, LinkedIn, Hyves, VKontakte, Google or Yahoo."
+msgstr "Erlauben Sie Ihren Besuchern, sich mit 20+ Sozialen Netzwerk wie z.B. Twitter, Facebook, LinkedIn, Hyves, VKontakte, Google oder Yahoo anzumelden, und Kommentare zu hinterlassen."
 
 #: includes/admin.php:555
-msgid "Draw a larger audience and increase user engagement in a  few simple steps."
+msgid "Draw a larger audience and increase your user engagement in a  few simple steps."
 msgstr "Steigern Sie die Beteilung Ihrer Nutzer auf einfachste Art und Weise."
 
 #: includes/admin.php:559
@@ -125,7 +129,7 @@ msgid "After having created your account and setup your Site, please enter the S
 msgstr "Nachdem Sie Ihr Konto angemeldet haben, müssen Sie die API-Daten in nachfolgendes Formular eintragen."
 
 #: includes/admin.php:564
-msgid "Don't worry the setup only takes a couple of minutes! Let's get started!"
+msgid "Don't worry the setup takes only a couple of minutes!"
 msgstr "Keine Sorge! Die Einrichtung dauert nur wenige Minuten."
 
 #: includes/admin.php:567
@@ -174,8 +178,8 @@ msgstr "<a target=\"_blank\" href=\"%s\">Schreiben Sie uns</a>, falls Sie Hilfe 
 
 #: includes/admin.php:601
 #, php-format
-msgid "We also have plugins for <a target=\"_blank\" href=\"%s\">Drupal and Joomla</a> amongst others"
-msgstr "Wir bieten auch Module für <a target=\"_blank\" href=\"%s\">Drupal und Joomla</a> an"
+msgid "We also have turnkey plugins for <a target=\"_blank\" href=\"%s\">Drupal, phpBB and Joomla</a> amongst others"
+msgstr "Wir bieten auch Module für <a target=\"_blank\" href=\"%s\">Drupal, phpBB und Joomla</a> an"
 
 #: includes/admin.php:610
 #: includes/admin.php:788
@@ -336,16 +340,16 @@ msgid "No, no not display the social networks in the user list"
 msgstr "Nein, soziale Netzwerke nicht anzeigen"
 
 #: includes/admin.php:835
-msgid "Do you want to receive an email when a new user registers with Social Login ?"
-msgstr "Wollen Sie per Email benachrichtigt werden, fall ein Benutzer sich mit Social Login anmeldet?"
+msgid "Do you want to receive an email whenever a new user registers with Social Login ?"
+msgstr "Wollen Sie per Email benachrichtigt werden, sobald ein Benutzer sich mit Social Login anmeldet?"
 
 #: includes/admin.php:841
-msgid "Yes, send me an email when a new user registers with Social Login"
-msgstr "Ja, ich möchte eine Email erhalten wenn jemand sich micht Social Login anmeldet"
+msgid "Yes, send me an email whenever a new user registers with Social Login"
+msgstr "Ja, ich möchte eine Email erhalten, wenn jemand sich mit Social Login anmeldet"
 
 #: includes/admin.php:842
-msgid "No, do not send me an email"
-msgstr "Nein, keine Benachrichtigung per Email"
+msgid "No, do not send me any emails"
+msgstr "Nein, keine Benachrichtigung per Email versenden"
 
 #: includes/admin.php:849
 msgid "User Settings"
@@ -364,7 +368,7 @@ msgid "Yes, require the user to enter his email address manually and display thi
 msgstr "Ja, Benutzer mit folgendem Text auffordern, ihre Email-Adresse einzugeben:"
 
 #: includes/admin.php:862
-#: includes/user_interface.php:441
+#: includes/user_interface.php:467
 #, php-format
 msgid "<strong>We unfortunately could not retrieve your email address from %s.</strong> Please enter your email address in the form below in order to continue."
 msgstr "<strong>Wir konnten Ihre E-Mail-Adresse leider nicht über Ihr %s Konto ermitteln.</strong> Bitte geben Sie Ihre Email-Adresse nachfolgend an."
@@ -514,32 +518,32 @@ msgstr "Weiterleitung zurück zur aktuellen Seite"
 msgid "Redirect users to this page after they have registered with Social Login embedded by Widget/Shortcode:"
 msgstr "Benutzer zu dieser Seite weiterleiten nachdem sie über das Social Login Widget/Shortcode registriert haben:"
 
-#: includes/user_interface.php:338
+#: includes/user_interface.php:363
 msgid "Please enable at least one social network!"
 msgstr "Bitte aktivieren Sie mindestens ein soziales Netzwerk!"
 
-#: includes/user_interface.php:409
+#: includes/user_interface.php:435
 msgid "Please enter your email address"
 msgstr "Bitte geben Sie Ihre E-Mail-Adresse ein"
 
-#: includes/user_interface.php:415
+#: includes/user_interface.php:441
 msgid "This email is not valid"
 msgstr "Diese E-Mail-Adresse ist ungültig"
 
-#: includes/user_interface.php:420
+#: includes/user_interface.php:446
 msgid "This email is already used by another account"
 msgstr "Diese E-Mail-Adresse wird bereits verwendet"
 
-#: includes/user_interface.php:453
+#: includes/user_interface.php:479
 #, php-format
 msgid "You have successfully connected with %s!"
 msgstr "Sie haben Sich erfolgreicht mit %s angemeldet!"
 
-#: includes/user_interface.php:465
+#: includes/user_interface.php:491
 msgid "Your email address"
 msgstr "Ihre E-Mail-Adresse"
 
-#: includes/user_interface.php:477
+#: includes/user_interface.php:503
 msgid "Confirm my email address"
 msgstr "Bitte bestätigen Sie Ihre E-Mail-Adresse"
 

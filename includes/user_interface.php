@@ -74,7 +74,7 @@ function oa_social_login_bp_custom_fetch_avatar($text, $args)
 								$img_height = (! empty ($args['height']) ? 'height="'.$args['height'].'" ' : '');
 
 								//Replace
-								$text = preg_replace('#<img[^>]+>#i', '<img src="'.$user_thumbnail.'" '.$img_alt.$img_class.$img_height.$img_width.'/>', $text);
+								$text = preg_replace('#<img[^>]+>#i', '<img data-social-login="bp-d1" src="'.$user_thumbnail.'" '.$img_alt.$img_class.$img_height.$img_width.'/>', $text);
 							}
 						}
 					}
@@ -108,9 +108,13 @@ function oa_social_login_custom_avatar ($avatar, $mixed, $size, $default, $alt =
 		//Chosen user
 		$user_id = null;
 
+		//Detection
+		$detection = 0;
+
 		//Check if we are in a comment
 		if (is_object ($comment) AND property_exists ($comment, 'user_id') AND !empty ($comment->user_id))
 		{
+			$detection = 1;
 			$user_id = $comment->user_id;
 		}
 		//Check if we have an user identifier
@@ -118,12 +122,14 @@ function oa_social_login_custom_avatar ($avatar, $mixed, $size, $default, $alt =
 		{
 			if ($mixed > 0)
 			{
+				$detection = 2;
 				$user_id = $mixed;
 			}
 		}
 		//Check if we have an email
 		elseif (is_string($mixed) && ($user = get_user_by( 'email', $mixed)))
 		{
+			$detection = 3;
 			$user_id = $user->ID;
 		}
 		//Check if we have an user object
@@ -131,6 +137,7 @@ function oa_social_login_custom_avatar ($avatar, $mixed, $size, $default, $alt =
 		{
 			if (property_exists ($mixed, 'user_id') AND is_numeric ($mixed->user_id))
 			{
+				$detection = 4;
 				$user_id = $mixed->user_id;
 			}
 		}
@@ -142,7 +149,7 @@ function oa_social_login_custom_avatar ($avatar, $mixed, $size, $default, $alt =
 			{
 				if (strlen (trim ($user_thumbnail)) > 0)
 				{
-					return '<img alt="'. oa_social_login_esc_attr($alt) .'" src="'.$user_thumbnail.'" class="avatar avatar-social-login avatar-'.$size.' photo" height="'.$size.'" width="'.$size.'" />';
+					return '<img alt="'. oa_social_login_esc_attr($alt) .'" src="'.$user_thumbnail.'" data-social-login="wp-d'.$detection.'" class="avatar avatar-social-login avatar-'.$size.' photo" height="'.$size.'" width="'.$size.'" />';
 				}
 			}
 		}
@@ -198,9 +205,10 @@ function oa_social_login_render_login_form_comments ()
 		}
 	}
 }
+//WordPress Comments
 add_action ('comment_form_top', 'oa_social_login_render_login_form_comments');
 
-//Hook for the Thesis Theme
+//Appthemes Thesis Theme Comments
 add_action ('thesis_hook_comment_form_top', 'oa_social_login_render_login_form_comments');
 
 
@@ -222,7 +230,11 @@ function oa_social_login_render_login_form_registration ()
 		}
 	}
 }
+//WordPress Registration
 add_action ('register_form', 'oa_social_login_render_login_form_registration');
+
+//BuddyPress Registration
+add_action ('bp_before_account_details_fields', 'oa_social_login_render_login_form_registration');
 
 
 /**
@@ -233,17 +245,23 @@ function oa_social_login_render_login_form_login ()
 	//Read settings
 	$settings = get_option ('oa_social_login_settings');
 
-	//Display buttons if option not set or enabled
+	//Display buttons only if option not set or enabled
 	if (!isset ($settings ['plugin_display_in_login_form']) OR $settings ['plugin_display_in_login_form'] == '1')
 	{
 		echo oa_social_login_render_login_form ('login');
 	}
 }
+//WordPress Registration
 add_action ('login_form', 'oa_social_login_render_login_form_login');
 
 //WordPress Profile Builder
 add_action ('wppb_before_login', 'oa_social_login_render_login_form_login');
-//add_action ('wppb_after_login', 'oa_social_login_render_login_form_comments');
+
+//BuddyPress Sidebar
+add_action ('bp_before_sidebar_login_form', 'oa_social_login_render_login_form_login');
+
+//Appthemes Vantage Theme
+add_action ('va_after_admin_bar_login_form', 'oa_social_login_render_login_form_login');
 
 
 /**
@@ -268,22 +286,6 @@ function oa_social_login_filter_login_form_custom ($value = 'custom')
 	return (is_user_logged_in () ? '' : oa_social_login_render_login_form ($value));
 }
 add_filter ('oa_social_login_custom', 'oa_social_login_filter_login_form_custom');
-
-
-/**
- * Example for using your own CSS
- */
-
-/*
-
- function oa_social_login_set_custom_css() {
-	return 'http://public.oneallcdn.com/css/api/socialize/themes/buildin/connect/large-v1.css';
- }
-
- add_filter('oa_social_login_default_css', 'oa_social_login_set_custom_css');
- add_filter('oa_social_login_widget_css', 'oa_social_login_set_custom_css');
-
-*/
 
 
 /**
@@ -332,7 +334,7 @@ function oa_social_login_render_login_form ($source, $args = array())
 			//Read widget settings
 			$widget_settings = (is_array ($args) ? $args : array ());
 
-			//Dont show the title - this is handled insided the widget
+			//Don't show the title - this is handled insided the widget
 			$plugin_caption = '';
 
 			//Buttons size
@@ -381,11 +383,12 @@ function oa_social_login_render_login_form ($source, $args = array())
 			$output [] = ' <script type="text/javascript">';
 			$output [] = '  oneall.api.plugins.social_login.build("oneall_social_login_providers_' . $rand . '", {';
 			$output [] = '   "providers": ["' . implode ('","', $providers) . '"], ';
+			//$output [] = '   "same_window": true, ';
 			$output [] = '   "callback_uri": (window.location.href + ((window.location.href.split(\'?\')[1] ? \'&amp;\':\'?\') + "oa_social_login_source=' . $source . '")), ';
 			$output [] = '   "css_theme_uri": "' . $css_theme_uri . '" ';
 			$output [] = '  });';
 			$output [] = ' </script>';
-			$output [] = ' <!-- oneall.com / Social Login for Wordpress / v'.constant('OA_SOCIAL_LOGIN_VERSION').' -->';
+			$output [] = ' <!-- OneAll.com / Social Login for WordPress / v'.constant('OA_SOCIAL_LOGIN_VERSION').' -->';
 			$output [] = '</div>';
 
 			//Done
