@@ -68,6 +68,57 @@ function oa_social_login_https_on()
 	return false;
 }
 
+/**
+ * Send a notification to the administrator
+ */
+function oa_social_login_user_notification ($user_id, $user_identity_provider)
+{
+	//Get the user details
+	$user = new WP_User($user_id);
+	$user_login = stripslashes($user->user_login);
+
+	// The blogname option is escaped with esc_html on the way into the database
+	// in sanitize_option we want to reverse this for the plain text arena of emails.
+	$blogname = wp_specialchars_decode(get_option('blogname'), ENT_QUOTES);
+
+	$message  = sprintf(__('New user registration on your site %s:', 'oa_social_login'), $blogname) . "\r\n\r\n";
+	$message .= sprintf(__('Username: %s', 'oa_social_login'), $user_login) . "\r\n\r\n";
+	$message .= sprintf(__('Social Network: %s', 'oa_social_login'), $user_identity_provider) . "\r\n";
+
+	@wp_mail(get_option('admin_email'), '[Social Login] '.sprintf(__('[%s] New User Registration', 'oa_social_login'), $blogname), $message);
+}
+
+
+/**
+ * Return the current url
+ */
+function oa_social_login_get_current_url ()
+{
+	//Get request URI - Should work on Apache + IIS
+	$request_uri = ((!isset ($_SERVER['REQUEST_URI'])) ? $_SERVER['PHP_SELF'] : $_SERVER['REQUEST_URI']);
+	$request_port = ((!empty ($_SERVER['SERVER_PORT']) AND $_SERVER['SERVER_PORT'] <> '80') ? (":" . $_SERVER['SERVER_PORT']) : '');
+	$request_protocol = (oa_social_login_https_on () ? 'https' : 'http') . "://";
+	$redirect_to = $request_protocol . $_SERVER['SERVER_NAME'] . $request_port . $request_uri;
+
+	//Remove the oa_social_login_source argument
+	if (strpos ($redirect_to, 'oa_social_login_source') !== false)
+	{
+		//Break up url
+		list($url_part, $query_part) = array_pad (explode ('?', $redirect_to), 2, '');
+		parse_str ($query_part, $query_vars);
+
+		//Remove oa_social_login_source argument
+		if (is_array ($query_vars) AND isset ($query_vars['oa_social_login_source']))
+		{
+			unset ($query_vars['oa_social_login_source']);
+		}
+
+		//Build new url
+		$redirect_to = $url_part . ((is_array ($query_vars) AND count ($query_vars) > 0) ? ('?' . http_build_query ($query_vars)) : '');
+	}
+
+	return $redirect_to;
+}
 
 /**
  * Escape an attribute

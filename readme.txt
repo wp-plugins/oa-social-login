@@ -2,8 +2,8 @@
 Contributors: ClaudeSchlesser
 Tags: social login, social connect, facebook login, linkedin, livejournal, google, yahoo, twitter login, openid, paypal, vkontakte, hyves, widget, plugin, social network login, comments
 Requires at least: 3.0
-Tested up to: 3.3.2
-Stable tag: 3.1
+Tested up to: 3.4.2
+Stable tag: 3.7
 
 Allow your visitors to comment and login with social networks like Twitter, Facebook, Paypal, LinkedIn, LiveJournal, OpenID, VKontakte, Google, Yahoo
 
@@ -23,8 +23,8 @@ login and register with social networks like Twitter, Facebook, LinkedIn, Paypal
 
 <strong>Optionally add the Social Login widget:</strong>
 <ul>
- 	<li>A login widget that you can easily attach to your sidebar is provided</li>
- </ul>
+ <li>A login widget that you can easily attach to your sidebar is provided</li>
+</ul>
 
 <strong>Select the Social Networks/Providers:</strong>
 <ul>
@@ -34,6 +34,9 @@ login and register with social networks like Twitter, Facebook, LinkedIn, Paypal
  <li>LinkedIn</li>
  <li>Paypal</li>
  <li>Yahoo</li>
+ <li>Github.com</li>
+ <li>Foursquare</li>
+ <li>Skyrock.com</li>
  <li>OpenID</li>
  <li>LiveJournal</li>
  <li>Wordpress.com</li>
@@ -46,7 +49,7 @@ login and register with social networks like Twitter, Facebook, LinkedIn, Paypal
 </ul>
  
 
-<strong>Increase your wordpress user engagement in a few simple steps with the Social Login Plugin!</strong>
+<strong>Increase your wordpress/buddypress user engagement in a few simple steps with the Social Login Plugin!</strong>
 Our users love it! Check out the <a href="http://wordpress.org/extend/plugins/oa-social-login/other_notes/">testimonials</a>!<br />
 
 The Social Login Plugin is maintained by <a href="http://www.oneall.com">OneAll</a>, a technology company offering a set of web-delivered
@@ -112,6 +115,32 @@ http://docs.oneall.com/plugins/guide/social-login-wordpress/
 5. **Login** - Login formular with small buttons (Social Network Buttons are included)
 
 == Changelog ==
+
+= 3.7 =
+* Hook for BuddyPress Registration added
+* Hook for BuddyPress Sidebar added
+* Hook for Appthemes Vantage Theme added
+* Filter for email addresses of new users added
+* Admin page width fixed
+* Minor text changes
+
+= 3.6 =
+* Debug Output Removed
+ 
+= 3.5 = 
+* Identity Provider "Foursquare.com" added
+* Github 16x16px icon fixed
+* Optionally get an email when a users registers with Social Login
+* Redirection settings improved
+* Hook for Thesis Theme added
+* Hook for WordPress Profile Builder added
+* Select to use Port 80 or 443
+* Custom CSS filter added
+
+= 3.2 = 
+* Identity Provider "Skyrock.com" added
+* Identity Provider "Github.com" added
+* German translations improved
 
 = 3.1 = 
 * SSL detection improved
@@ -209,6 +238,13 @@ http://docs.oneall.com/plugins/guide/social-login-wordpress/
 
 <strong>Used by thousands of users around the world!</strong>
 
+<em>You have no idea how it THRILLED me to integrate oneall. It was SO amazingly easy, your team has simplified the whole process of signing up for 
+authorization on multiple social media sites. I HAD NO QUESTIONS/STEPS THAT YOU HADN'T ALREADY ANTICIPATED. It saved me HOURS of work!</em>
+<strong>Kelly C.</strong>
+ 
+<em>This is cool. Nice work. I'm *VERY* impressed. You've made this about as painless as it gets and the value it adds is incredible.</em>
+<strong>Jason M.</strong>
+
 <em>This service is simply remarkable, I've tried integrating logins before and it has never been this easy!</em>
 <strong>Andrew C.</strong>
 
@@ -261,10 +297,6 @@ for putting together such a great product that so many users can implement with 
 
 <em>Thanks for a such a great plugin! I was really impressed with the simplicity of the installation directions and the clean design.</em>
 <strong>Janae S.</strong>
-
-<em>You have no idea how it THRILLED me to integrate oneall. It was SO amazingly easy, your team has simplified the whole process of signing up for 
-authorization on multiple social media sites. I HAD NO QUESTIONS/STEPS THAT YOU HADN'T ALREADY ANTICIPATED. It saved me HOURS of work!</em>
-<strong>Kelly C.</strong>
 
 <em>I love your service the way it is, it's amazing how easy the logging-in-via-social-network is integrated into a wordpress website!</em>
 <strong>Martin S.</strong>
