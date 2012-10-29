@@ -42,6 +42,8 @@ login and register with social networks like Twitter, Facebook, LinkedIn, Paypal
  <li>Wordpress.com</li>
  <li>Windows Live</li>
  <li>StackExchange</li>
+ <li>Blogger</li>
+ <li>Disqus</li>
  <li>Steam</li>
  <li>Hyves</li>
  <li>Mail.ru</li>
@@ -123,6 +125,8 @@ http://docs.oneall.com/plugins/guide/social-login-wordpress/
 * Filter for email addresses of new users added
 * Admin page width fixed
 * Minor text changes
+* Identity Provider "Blogger" added
+* Identity Provider "Disqus" added
 
 = 3.6 =
 * Debug Output Removed

@@ -49,6 +49,12 @@ $oa_social_login_providers = array (
 	'windowslive' => array (
 		'name' => 'Windows Live'
 	),
+	'blogger' => array (
+		'name' => 'Blogger'
+	),
+	'disqus' => array (
+		'name' => 'Disqus'
+	),
 	'stackexchange' => array (
 		'name' => 'StackExchange'
 	),
