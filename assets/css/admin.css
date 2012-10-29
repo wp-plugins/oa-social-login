@@ -56,8 +56,7 @@
   margin: 0 0 25px;
 }
 
-.oa_social_login_table textarea,
-.oa_social_login_table input {
+.oa_social_login_table textarea,.oa_social_login_table input {
   border-color: #aaa;
 }
 
@@ -78,15 +77,13 @@
   text-decoration: none;
 }
 
-.oa_social_login_table tr.row_odd,
-.oa_social_login_table tr.row_odd td {
+.oa_social_login_table tr.row_odd,.oa_social_login_table tr.row_odd td {
   color: #222;
   background-color: #ddd;
   border-bottom: 1px dotted #BBBBBB;
 }
 
-.oa_social_login_table tr.row_even,
-.oa_social_login_table tr.row_even td {
+.oa_social_login_table tr.row_even,.oa_social_login_table tr.row_even td {
   color: #333;
   background-color: #fff;
   border-bottom: 1px dotted #bbb;
@@ -107,8 +104,7 @@
   font-weight: bold;
 }
 
-.oa_social_login_table tr.row_foot .error_message,
-.oa_social_login_table tr.row_foot .error_message a {
+.oa_social_login_table tr.row_foot .error_message,.oa_social_login_table tr.row_foot .error_message a {
   color: red;
   font-weight: bold;
 }
@@ -230,4 +226,8 @@
 
 .oa_social_login_provider.oa_social_login_provider_github {
   background-position: -927px -1px;
+}
+
+.oa_social_login_provider.oa_social_login_provider_disqus {
+  background-position: -964px -1px;
 }
