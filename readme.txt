@@ -121,8 +121,9 @@ http://docs.oneall.com/plugins/guide/social-login-wordpress/
 == Changelog ==
 
 = 4.0 =
-* Social Link added
-* Meta "oa_social_login_identity_id" no longer used
+* Social Link Service added
+* Optimized for WordPress 3.5
+* Meta "oa_social_login_identity_id" no longer used and removed
 * German translations improved
 * Social Network "YouTube" added
 * Social Network "Odnoklassniki.ru" added
