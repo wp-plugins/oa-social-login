@@ -127,6 +127,7 @@ http://docs.oneall.com/plugins/guide/social-login-wordpress/
 * German translations improved
 * Social Network "YouTube" added
 * Social Network "Odnoklassniki.ru" added
+* Hook "after_signup_form" added
 
 = 3.7 =
 * Hook for BuddyPress Registration added
