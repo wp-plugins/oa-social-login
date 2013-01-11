@@ -532,8 +532,11 @@ function oa_social_login_render_login_form_registration ()
 		}
 	}
 }
-//WordPress Registration
+//WordPress Registration Form
 add_action ('register_form', 'oa_social_login_render_login_form_registration');
+
+//WordPress Signup Form
+add_action( 'after_signup_form', 'oa_social_login_render_login_form_registration');
 
 //BuddyPress Registration
 add_action ('bp_before_account_details_fields', 'oa_social_login_render_login_form_registration');
