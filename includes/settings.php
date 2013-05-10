@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Providers that are currently enabled
+ * Available Providers
  */
 $oa_social_login_providers = array (
 	'facebook' => array (
