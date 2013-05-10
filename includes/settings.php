@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Providers that are currently enabled
+ * Available Providers
  */
 $oa_social_login_providers = array (
 	'facebook' => array (
@@ -25,6 +25,9 @@ $oa_social_login_providers = array (
 	'foursquare' => array (
 		'name' => 'Foursquare'
 	),
+	'youtube' => array (
+		'name' => 'YouTube'
+	),
 	'skyrock' => array (
 		'name' => 'Skyrock.com'
 	),
@@ -44,10 +47,16 @@ $oa_social_login_providers = array (
 		'name' => 'LiveJournal'
 	),
 	'steam' => array (
-		'name' => 'Steam'
+		'name' => 'Steam Community'
 	),
 	'windowslive' => array (
 		'name' => 'Windows Live'
+	),
+	'blogger' => array (
+		'name' => 'Blogger'
+	),
+	'disqus' => array (
+		'name' => 'Disqus'
 	),
 	'stackexchange' => array (
 		'name' => 'StackExchange'
@@ -55,8 +64,10 @@ $oa_social_login_providers = array (
 	'vkontakte' => array (
 		'name' => 'VKontakte (Вконтакте)'
 	),
+	'odnoklassniki' => array (
+		'name' => 'Odnoklassniki.ru'
+	),
 	'mailru' => array (
 		'name' => 'Mail.ru'
 	)
 );
-

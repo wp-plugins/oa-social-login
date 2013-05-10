@@ -2,8 +2,8 @@
 Contributors: ClaudeSchlesser
 Tags: social login, social connect, facebook login, linkedin, livejournal, google, yahoo, twitter login, openid, paypal, vkontakte, hyves, widget, plugin, social network login, comments
 Requires at least: 3.0
-Tested up to: 3.4.2
-Stable tag: 3.7
+Tested up to: 3.5.1
+Stable tag: 4.3
 
 Allow your visitors to comment and login with social networks like Twitter, Facebook, Paypal, LinkedIn, LiveJournal, OpenID, VKontakte, Google, Yahoo
 
@@ -42,9 +42,13 @@ login and register with social networks like Twitter, Facebook, LinkedIn, Paypal
  <li>Wordpress.com</li>
  <li>Windows Live</li>
  <li>StackExchange</li>
+ <li>Blogger</li>
+ <li>Disqus</li>
  <li>Steam</li>
+ <li>YouTube</li>
  <li>Hyves</li>
  <li>Mail.ru</li>
+ <li>Odnoklassniki.ru</li>
  <li>VKontakte (Вконтакте)</li>
 </ul>
  
@@ -116,6 +120,24 @@ http://docs.oneall.com/plugins/guide/social-login-wordpress/
 
 == Changelog ==
 
+= 4.3 =
+* Social Network Avatars improved
+* Social Link shortcode/hook/action added
+* Administration: Tabs for Social Login added
+* Administration: Column Registration in the user list fixed
+* Redirection filters added
+* Settings sanitation improved
+* Button to cancel email confirmation added
+
+= 4.0 =
+* Social Link Service added
+* Optimized for WordPress 3.5
+* Meta "oa_social_login_identity_id" no longer used and removed
+* German translations improved
+* Social Network "YouTube" added
+* Social Network "Odnoklassniki.ru" added
+* Hook "after_signup_form" added
+
 = 3.7 =
 * Hook for BuddyPress Registration added
 * Hook for BuddyPress Sidebar added
@@ -123,12 +145,14 @@ http://docs.oneall.com/plugins/guide/social-login-wordpress/
 * Filter for email addresses of new users added
 * Admin page width fixed
 * Minor text changes
+* Social Network "Blogger" added
+* Social Network "Disqus" added
 
 = 3.6 =
 * Debug Output Removed
  
 = 3.5 = 
-* Identity Provider "Foursquare.com" added
+* Social Network "Foursquare.com" added
 * Github 16x16px icon fixed
 * Optionally get an email when a users registers with Social Login
 * Redirection settings improved
@@ -138,8 +162,8 @@ http://docs.oneall.com/plugins/guide/social-login-wordpress/
 * Custom CSS filter added
 
 = 3.2 = 
-* Identity Provider "Skyrock.com" added
-* Identity Provider "Github.com" added
+* Social Network "Skyrock.com" added
+* Social Network "Github.com" added
 * German translations improved
 
 = 3.1 = 
@@ -154,8 +178,8 @@ http://docs.oneall.com/plugins/guide/social-login-wordpress/
 * Optionally disable Social Login in comments
 * Optionally request email from user
 * Optionally show social networks in user list
-* Identity Provider "Windows Mail" added
-* Identity Provider "Mail.ru" added
+* Social Network "Windows Mail" added
+* Social Network "Mail.ru" added
 * Error message if no social networks selected
 * Class for Social Login label added
 * Small icons fixed
@@ -169,8 +193,8 @@ http://docs.oneall.com/plugins/guide/social-login-wordpress/
 * HTML for administration area fixed
 * FSOCKOPEN Handler Added
 * CURL/FSOCKOPEN selector added
-* Identity Provider "Steam Community" added
-* Identity Provider "StackExchange" added
+* Social Network "Steam Community" added
+* Social Network "StackExchange" added
 * CSS served from CDN
 * Optionally disable comment moderation
 
@@ -238,11 +262,14 @@ http://docs.oneall.com/plugins/guide/social-login-wordpress/
 
 <strong>Used by thousands of users around the world!</strong>
 
+<em>Loving the service, seen a massive increase in painless signups to my blog. Thanks!</em>
+<strong>Richard B.</strong>
+
 <em>You have no idea how it THRILLED me to integrate oneall. It was SO amazingly easy, your team has simplified the whole process of signing up for 
 authorization on multiple social media sites. I HAD NO QUESTIONS/STEPS THAT YOU HADN'T ALREADY ANTICIPATED. It saved me HOURS of work!</em>
 <strong>Kelly C.</strong>
  
-<em>This is cool. Nice work. I'm *VERY* impressed. You've made this about as painless as it gets and the value it adds is incredible.</em>
+<em>This is cool. Nice work. I'm VERY impressed. You've made this about as painless as it gets and the value it adds is incredible.</em>
 <strong>Jason M.</strong>
 
 <em>This service is simply remarkable, I've tried integrating logins before and it has never been this easy!</em>
@@ -300,3 +327,9 @@ for putting together such a great product that so many users can implement with 
 
 <em>I love your service the way it is, it's amazing how easy the logging-in-via-social-network is integrated into a wordpress website!</em>
 <strong>Martin S.</strong>
+
+<em>The site and the plugin are working magnificently. Thank you one million times for making your products/services available in the manner that you have.</em>
+<strong>Herman G.</strong>
+
+<em>Very user friendly, there are guides and screenshot on how to set things up. Thank you so much for this awesome plugin!</em>
+<strong>Cebututs</strong> 
