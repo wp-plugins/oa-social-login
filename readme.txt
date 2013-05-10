@@ -126,7 +126,7 @@ http://docs.oneall.com/plugins/guide/social-login-wordpress/
 * Administration: Tabs for Social Login added
 * Administration: Column Registration in the user list fixed
 * Redirection filters added
-* Settings sanitation improved
+* Settings security improved
 * Button to cancel email confirmation added
 
 = 4.0 =
