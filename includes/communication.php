@@ -9,45 +9,54 @@ function oa_social_login_callback ()
 	//Callback Handler
 	if (isset ($_POST) AND !empty ($_POST ['oa_action']) AND $_POST ['oa_action'] == 'social_login' AND !empty ($_POST ['connection_token']))
 	{
+		//OneAll Connection token
+		$connection_token = trim ($_POST ['connection_token']);
+
 		//Read settings
 		$settings = get_option ('oa_social_login_settings');
 
 		//API Settings
 		$api_connection_handler = ((!empty ($settings ['api_connection_handler']) AND $settings ['api_connection_handler'] == 'fsockopen') ? 'fsockopen' : 'curl');
 		$api_connection_use_https = ((!isset ($settings ['api_connection_use_https']) OR $settings ['api_connection_use_https'] == '1') ? true : false);
+		$api_subdomain = (!empty ($settings ['api_subdomain']) ? trim ($settings ['api_subdomain']) : '');
 
-		$api_subdomain = (!empty ($settings ['api_subdomain']) ? $settings ['api_subdomain'] : '');
-		$api_key = (!empty ($settings ['api_key']) ? $settings ['api_key'] : '');
-		$api_secret = (!empty ($settings ['api_secret']) ? $settings ['api_secret'] : '');
-
-		$api_resource_url = ($api_connection_use_https ? 'https' : 'http') . '://' . $api_subdomain . '.api.oneall.com/connections/' . $_POST ['connection_token'] . '.json';
-
-		//Get connection details
-		$result = oa_social_login_do_api_request ($api_connection_handler, $api_resource_url, array ('api_key' => $api_key, 'api_secret' => $api_secret));
-
-		//Parse result
-		if (is_object ($result) AND property_exists ($result, 'http_code') AND $result->http_code == 200)
+		//We cannot make a connection without a subdomain
+		if (!empty ($api_subdomain))
 		{
-			if (property_exists ($result, 'http_data'))
+			//See: http://docs.oneall.com/api/resources/connections/read-connection-details/
+			$api_resource_url = ($api_connection_use_https ? 'https' : 'http') . '://' . $api_subdomain . '.api.oneall.com/connections/' . $connection_token . '.json';
+
+			//API Credentials
+			$api_credentials = array (
+				'api_key' => (!empty ($settings ['api_key']) ? $settings ['api_key'] : ''),
+				'api_secret' => (!empty ($settings ['api_secret']) ? $settings ['api_secret'] : '')
+			);
+
+			//Get connection details
+			$result = oa_social_login_do_api_request ($api_connection_handler, $api_resource_url, $api_credentials);
+			if (is_object ($result) AND property_exists ($result, 'http_code') AND $result->http_code == 200 AND property_exists ($result, 'http_data'))
 			{
-				//Decode
-				$social_data = json_decode ($result->http_data);
-
-				//User Data
-				if (is_object ($social_data))
+				//Decode result
+				$decoded_result = @json_decode ($result->http_data);
+				if (is_object ($decoded_result) AND isset ($decoded_result->response->result->data->user))
 				{
-					$identity = $social_data->response->result->data->user->identity;
-					$user_token = $social_data->response->result->data->user->user_token;
+					//User data
+					$user_data = $decoded_result->response->result->data->user;
 
-					//Identity
-					$user_identity_id = $identity->id;
+					//Social network profile data
+					$identity = $user_data->identity;
+
+					//Unique user token provided by OneAll
+					$user_token = $user_data->user_token;
+
+					//Identity Provider
 					$user_identity_provider = $identity->source->name;
 
 					//Thumbnail
-					$user_thumbnail = (!empty ($identity->thumbnailUrl)? trim ($identity->thumbnailUrl) : '');
+					$user_thumbnail = (!empty ($identity->thumbnailUrl) ? trim ($identity->thumbnailUrl) : '');
 
 					//Picture
-					$user_picture = (!empty ($identity->pictureUrl) ? trim ($identity->pictureUrl): '');
+					$user_picture = (!empty ($identity->pictureUrl) ? trim ($identity->pictureUrl) : '');
 
 					//Firstname
 					$user_first_name = (!empty ($identity->name->givenName) ? $identity->name->givenName : '');
@@ -74,7 +83,7 @@ function oa_social_login_callback ()
 					if (property_exists ($identity, 'emails') AND is_array ($identity->emails))
 					{
 						$user_email_is_verified = false;
-						while ($user_email_is_verified !== true AND (list (,$email) = each ($identity->emails)))
+						while ($user_email_is_verified !== true AND (list(, $email) = each ($identity->emails)))
 						{
 							$user_email = $email->value;
 							$user_email_is_verified = ($email->is_verified == '1');
@@ -113,7 +122,7 @@ function oa_social_login_callback ()
 					$new_registration = false;
 
 					//Sanitize Login
-					$user_login = str_replace('.','-', $user_login);
+					$user_login = str_replace ('.', '-', $user_login);
 					$user_login = sanitize_user ($user_login, true);
 
 					// Get user by token
@@ -421,6 +430,7 @@ function oa_social_login_callback ()
 						exit ();
 					}
 				}
+
 			}
 		}
 	}

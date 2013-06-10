@@ -31,9 +31,9 @@
   margin-bottom: 35px;
 }
 
-#oa_social_login_box_help ul{
-  padding-left:20px;
-  list-style-type: disc;  
+#oa_social_login_box_help ul {
+  padding-left: 20px;
+  list-style-type: disc;
 }
 
 #oa_social_login_box_help .oa_social_login_box_title {
@@ -137,14 +137,13 @@
   line-height: 35px;
 }
 
-.oa_social_login_table tr.row_provider td.cell_provider_icon{
-  width:50px;  
-  text-align:center !important;
+.oa_social_login_table tr.row_provider td.cell_provider_icon {
+  width: 50px;
+  text-align: center !important;
 }
 
-
-.oa_social_login_table tr.row_provider td.cell_provider_label{
-  text-align:left !important;
+.oa_social_login_table tr.row_provider td.cell_provider_label {
+  text-align: left !important;
 }
 
 .oa_social_login_provider {
@@ -249,4 +248,8 @@
 
 .oa_social_login_provider_odnoklassniki {
   background-position: -1038px -1px;
+}
+
+.oa_social_login_provider_xing {
+  background-position: -1075px -1px;
 }

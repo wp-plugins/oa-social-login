@@ -149,6 +149,17 @@ function oa_social_login_esc_attr ($string)
 function oa_social_login_get_userid_by_token ($token)
 {
 	global $wpdb;
+
+	// Sanitize token.
+	$token = trim (strval ($token));
+
+	// The token is required.
+	if (strlen ($token) == 0)
+	{
+		return false;
+	}
+
+	// Read user for this token.
 	$sql = "SELECT u.ID FROM " . $wpdb->usermeta . " AS um	INNER JOIN " . $wpdb->users . " AS u ON (um.user_id=u.ID)	WHERE um.meta_key = 'oa_social_login_user_token' AND um.meta_value=%s";
 	return $wpdb->get_var ($wpdb->prepare ($sql, $token));
 }
