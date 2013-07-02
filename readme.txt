@@ -1,6 +1,6 @@
 === Social Login ===
 Contributors: ClaudeSchlesser
-Tags: social login, social connect, facebook login, linkedin, livejournal, google, yahoo, twitter login, xing, openid, paypal, google, hyves, widget, plugin, social network login, comments
+Tags: social login, social connect, facebook, linkedin, livejournal, google, yahoo, twitter, xing, openid, paypal, google, hyves, widget, plugin, social network login, comments
 Requires at least: 3.0
 Tested up to: 3.5.1
 Stable tag: 4.4
