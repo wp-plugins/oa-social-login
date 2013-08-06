@@ -2,7 +2,7 @@
 Contributors: ClaudeSchlesser
 Tags: social login, social connect, facebook, linkedin, livejournal, google, yahoo, twitter, xing, openid, paypal, google, hyves, widget, plugin, social network login, comments
 Requires at least: 3.0
-Tested up to: 3.5.1
+Tested up to: 3.6
 Stable tag: 4.4
 
 Allow your visitors to comment and login with social networks like Twitter, Facebook, Paypal, LinkedIn, LiveJournal, OpenID, VKontakte, Google, Yahoo
@@ -33,7 +33,6 @@ login and register with 20+ Social Networks like for example Facebook, Twitter, 
  <li>Twitter</li>
  <li>Google</li>
  <li>LinkedIn</li>
- <li>Xing</li>
  <li>PayPal</li>
  <li>Yahoo</li>
  <li>Github.com</li>
