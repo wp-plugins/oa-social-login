@@ -10,7 +10,7 @@ Allow your visitors to comment and login with social networks like Twitter, Face
 == Description ==
 
 Social Login is a professionally developed and free Wordpress (BuddyPress compatible) plugin that allows your visitors to comment, 
-login and register with 20+ Social Networks like for example Facebook, Twitter, Google, LinkedIn, Xing, PayPal, LiveJournal, Hyves, Вконтакте and Yahoo.<br /><br />
+login and register with 20+ Social Networks like for example Facebook, Twitter, Google, LinkedIn, PayPal, LiveJournal, Hyves, Вконтакте and Yahoo.<br /><br />
 <strong>Make your blog social!</strong><br />
 
 <strong>Choose where to add the Social Login Plugin:</strong>
