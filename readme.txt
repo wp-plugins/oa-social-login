@@ -1,6 +1,6 @@
 === Social Login ===
 Contributors: ClaudeSchlesser
-Tags: social login, social connect, facebook, linkedin, livejournal, google, yahoo, twitter, xing, openid, paypal, google, hyves, widget, plugin, social network login, comments
+Tags: social login, social connect, facebook, linkedin, livejournal, google, yahoo, twitter, openid, paypal, google, hyves, widget, plugin, social network login, comments
 Requires at least: 3.0
 Tested up to: 3.6
 Stable tag: 4.4
@@ -63,9 +63,19 @@ Google, Yahoo!, LinkedIn, Paypal, Hyves amongst others.
 
 == Installation ==
 
+= Plugin Installation =
 1. Upload the plugin folder to the "/wp-content/plugins/" directory of your WordPress site,
 2. Activate the plugin through the 'Plugins' menu in WordPress,
 3. Visit the "Settings\Social Login" administration page to setup the plugin. 
+
+= API Connection =
+The social network APIs are constantly changing and being updated. We monitor these changes and automatically 
+update our APIs, so that you can be sure that Social Login will always run smoothly and with the most up-to-date 
+API calls. 
+
+In order to enable the plugin your therefore have to connect with the OneAll API and you need to create a free 
+account at https://app.oneall.com
+
 
 == Frequently Asked Questions ==
 
