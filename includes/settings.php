@@ -16,9 +16,6 @@ $oa_social_login_providers = array (
 	'linkedin' => array (
 		'name' => 'LinkedIn'
 	),
-	'xing' => array (
-		'name' => 'Xing'
-	),
 	'yahoo' => array (
 		'name' => 'Yahoo'
 	),
@@ -51,6 +48,9 @@ $oa_social_login_providers = array (
 	),
 	'steam' => array (
 		'name' => 'Steam Community'
+	),
+	'twitch' => array (
+		'name' => 'Twitch.tv'
 	),
 	'windowslive' => array (
 		'name' => 'Windows Live'
