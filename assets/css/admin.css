@@ -71,6 +71,7 @@
   background-color: #3E687B;
   color: #fff;
   text-shadow: 0 1px 0 #333;
+  padding-left: 10px;
 }
 
 .oa_social_login_table tr.row_head th a {
@@ -250,6 +251,10 @@
   background-position: -1038px -1px;
 }
 
-.oa_social_login_provider_xing {
+.oa_social_login_provider_deviantart {
   background-position: -1075px -1px;
+}
+
+.oa_social_login_provider_twitch {
+  background-position: -1112px -1px;
 }
