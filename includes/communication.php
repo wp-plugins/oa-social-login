@@ -1,5 +1,6 @@
 <?php
 
+
 /**
  * Handle the callback
  */
@@ -8,62 +9,67 @@ function oa_social_login_callback ()
 	//Callback Handler
 	if (isset ($_POST) AND !empty ($_POST ['oa_action']) AND $_POST ['oa_action'] == 'social_login' AND !empty ($_POST ['connection_token']))
 	{
+		//OneAll Connection token
+		$connection_token = trim ($_POST ['connection_token']);
+
 		//Read settings
 		$settings = get_option ('oa_social_login_settings');
 
 		//API Settings
 		$api_connection_handler = ((!empty ($settings ['api_connection_handler']) AND $settings ['api_connection_handler'] == 'fsockopen') ? 'fsockopen' : 'curl');
 		$api_connection_use_https = ((!isset ($settings ['api_connection_use_https']) OR $settings ['api_connection_use_https'] == '1') ? true : false);
+		$api_subdomain = (!empty ($settings ['api_subdomain']) ? trim ($settings ['api_subdomain']) : '');
 
-		$api_subdomain = (!empty ($settings ['api_subdomain']) ? $settings ['api_subdomain'] : '');
-		$api_key = (!empty ($settings ['api_key']) ? $settings ['api_key'] : '');
-		$api_secret = (!empty ($settings ['api_secret']) ? $settings ['api_secret'] : '');
-
-		$api_resource_url = ($api_connection_use_https ? 'https' : 'http') . '://' . $api_subdomain . '.api.oneall.com/connections/' . $_POST ['connection_token'] . '.json';
-
-		//Get connection details
-		$result = oa_social_login_do_api_request ($api_connection_handler, $api_resource_url, array ('api_key' => $api_key, 'api_secret' => $api_secret), 15);
-
-		//Parse result
-		if (is_object ($result) AND property_exists ($result, 'http_code') AND $result->http_code == 200)
+		//We cannot make a connection without a subdomain
+		if (!empty ($api_subdomain))
 		{
-			if (property_exists ($result, 'http_data'))
+			//See: http://docs.oneall.com/api/resources/connections/read-connection-details/
+			$api_resource_url = ($api_connection_use_https ? 'https' : 'http') . '://' . $api_subdomain . '.api.oneall.com/connections/' . $connection_token . '.json';
+
+			//API Credentials
+			$api_credentials = array ();
+			$api_credentials['api_key'] = (!empty ($settings ['api_key']) ? $settings ['api_key'] : '');
+			$api_credentials['api_secret'] = (!empty ($settings ['api_secret']) ? $settings ['api_secret'] : '');
+
+			//Retrieve connection details
+			$result = oa_social_login_do_api_request ($api_connection_handler, $api_resource_url, $api_credentials);
+
+			//Check result
+			if (is_object ($result) AND property_exists ($result, 'http_code') AND $result->http_code == 200 AND property_exists ($result, 'http_data'))
 			{
-				//Decode
-				$social_data = json_decode ($result->http_data);
-
-				//User Data
-				if (is_object ($social_data))
+				//Decode result
+				$decoded_result = @json_decode ($result->http_data);
+				if (is_object ($decoded_result) AND isset ($decoded_result->response->result->data->user))
 				{
-					$identity = $social_data->response->result->data->user->identity;
-					$user_token = $social_data->response->result->data->user->user_token;
+					//User data
+					$user_data = $decoded_result->response->result->data->user;
 
-					//Identity
-					$user_identity_id = $identity->id;
+					//Social network profile data
+					$identity = $user_data->identity;
+
+					//Unique user token provided by OneAll
+					$user_token = $user_data->user_token;
+
+					//Identity Provider
 					$user_identity_provider = $identity->source->name;
 
+					//Thumbnail
+					$user_thumbnail = (!empty ($identity->thumbnailUrl) ? trim ($identity->thumbnailUrl) : '');
+
+					//Picture
+					$user_picture = (!empty ($identity->pictureUrl) ? trim ($identity->pictureUrl) : '');
+
+					//About Me
+					$user_about_me = (!empty ($identity->aboutMe) ? trim ($identity->aboutMe) : '');
+
+					//Note
+					$user_note = (!empty ($identity->note) ? trim ($identity->note) : '');
+
 					//Firstname
-					if (!empty ($identity->name->givenName))
-					{
-						$user_first_name = $identity->name->givenName;
-					}
-					else
-					{
-						$user_first_name = '';
-					}
+					$user_first_name = (!empty ($identity->name->givenName) ? $identity->name->givenName : '');
 
 					//Lastname
-					if (!empty ($identity->name->familyName))
-					{
-						$user_last_name = $identity->name->familyName;
-					}
-					else
-					{
-						$user_last_name = '';
-					}
-
-					//Construct a full name from first and last names
-					$user_constructed_name = trim ($user_first_name . ' ' . $user_last_name);
+					$user_last_name = (!empty ($identity->name->familyName) ? $identity->name->familyName : '');
 
 					//Fullname
 					if (!empty ($identity->name->formatted))
@@ -76,28 +82,19 @@ function oa_social_login_callback ()
 					}
 					else
 					{
-						$user_full_name = $user_constructed_name;
+						$user_full_name = trim ($user_first_name . ' ' . $user_last_name);
 					}
 
-					//Email
+					// Email Address.
 					$user_email = '';
 					if (property_exists ($identity, 'emails') AND is_array ($identity->emails))
 					{
-						foreach ($identity->emails AS $email)
+						$user_email_is_verified = false;
+						while ($user_email_is_verified !== true AND (list(, $email) = each ($identity->emails)))
 						{
 							$user_email = $email->value;
 							$user_email_is_verified = ($email->is_verified == '1');
 						}
-					}
-
-					//Thumbnail
-					if (!empty ($identity->thumbnailUrl))
-					{
-						$user_thumbnail = trim ($identity->thumbnailUrl);
-					}
-					else
-					{
-						$user_thumbnail = '';
 					}
 
 					//User Website
@@ -132,10 +129,11 @@ function oa_social_login_callback ()
 					$new_registration = false;
 
 					//Sanitize Login
+					$user_login = str_replace ('.', '-', $user_login);
 					$user_login = sanitize_user ($user_login, true);
 
 					// Get user by token
-					$user_id = oa_social_login_get_user_by_token ($user_token);
+					$user_id = oa_social_login_get_userid_by_token ($user_token);
 
 					//Try to link to existing account
 					if (!is_numeric ($user_id))
@@ -143,7 +141,7 @@ function oa_social_login_callback ()
 						//This is a new user
 						$new_registration = true;
 
-						//Linked enabled?
+						//Linking enabled?
 						if (!isset ($settings ['plugin_link_verified_accounts']) OR $settings ['plugin_link_verified_accounts'] == '1')
 						{
 							//Only if email is verified
@@ -158,16 +156,12 @@ function oa_social_login_callback ()
 										$user_id = $user_data->ID;
 										$user_login = $user_data->user_login;
 
+										//Refresh the meta data
 										delete_metadata ('user', null, 'oa_social_login_user_token', $user_token, true);
 										update_user_meta ($user_id, 'oa_social_login_user_token', $user_token);
-										update_user_meta ($user_id, 'oa_social_login_identity_id', $user_identity_id);
 										update_user_meta ($user_id, 'oa_social_login_identity_provider', $user_identity_provider);
 
-										if (!empty ($user_thumbnail))
-										{
-											update_user_meta ($user_id, 'oa_social_login_user_thumbnail', $user_thumbnail);
-										}
-
+										//Refresh the cache
 										wp_cache_delete ($user_id, 'users');
 										wp_cache_delete ($user_login, 'userlogins');
 									}
@@ -186,6 +180,12 @@ function oa_social_login_callback ()
 							$user_login = $user_identity_provider . 'User';
 						}
 
+						// BuddyPress : See bp_core_strip_username_spaces()
+						if (function_exists ('bp_core_strip_username_spaces'))
+						{
+							$user_login = str_replace (' ', '-', $user_login);
+						}
+
 						//Username must be unique
 						if (username_exists ($user_login))
 						{
@@ -199,12 +199,8 @@ function oa_social_login_callback ()
 							$user_login = $user_login_tmp;
 						}
 
-						//Email Restriction
+						//Email Filter
 						$user_email = apply_filters ('oa_social_login_filter_new_user_email', $user_email);
-						if ($user_email === 'disallowed')
-						{
-							trigger_error (__('This Social Network account may not be used to register', 'oa_social_login'), E_USER_ERROR);
-						}
 
 						//Email must be unique
 						$placeholder_email_used = false;
@@ -214,30 +210,48 @@ function oa_social_login_callback ()
 							$placeholder_email_used = true;
 						}
 
+						//Setup the user's password
+						$user_password = wp_generate_password ();
+						$user_password = apply_filters ('oa_social_login_filter_new_user_password', $user_password);
+
+						//Setup the user's role
+						$user_role = get_option ('default_role');
+						$user_role = apply_filters ('oa_social_login_filter_new_user_role', $user_role);
+
 						//Build user data
-						$user_data = array (
+						$user_fields = array (
 							'user_login' => $user_login,
 							'display_name' => (!empty ($user_full_name) ? $user_full_name : $user_login),
 							'user_email' => $user_email,
 							'first_name' => $user_first_name,
 							'last_name' => $user_last_name,
 							'user_url' => $user_website,
-							'user_pass' => wp_generate_password ()
+							'user_pass' => $user_password,
+							'role' => $user_role
 						);
 
+						//Filter for user_data
+						$user_fields = apply_filters ('oa_social_login_filter_new_user_fields', $user_fields);
+
+						//Hook before adding the user
+						do_action ('oa_social_login_action_before_user_insert', $user_fields);
+
 						// Create a new user
-						$user_id = wp_insert_user ($user_data);
-						if (is_numeric ($user_id))
+						$user_id = wp_insert_user ($user_fields);
+						if (is_numeric ($user_id) AND ($user_data = get_userdata ($user_id) !== false))
 						{
+							//Refresh the meta data
 							delete_metadata ('user', null, 'oa_social_login_user_token', $user_token, true);
+
+							//Save OneAll user meta-data
 							update_user_meta ($user_id, 'oa_social_login_user_token', $user_token);
-							update_user_meta ($user_id, 'oa_social_login_identity_id', $user_identity_id);
 							update_user_meta ($user_id, 'oa_social_login_identity_provider', $user_identity_provider);
 
-							//Store thumbnail
-							if (!empty ($user_thumbnail))
+							//Save WordPress user meta-data
+							if ( ! empty ($user_about_me) OR ! empty ($user_note))
 							{
-								update_user_meta ($user_id, 'oa_social_login_user_thumbnail', $user_thumbnail);
+								$user_description = (! empty ($user_about_me) ? $user_about_me : $user_note);
+								update_user_meta ($user_id, 'description', $user_description);
 							}
 
 							//Email is required
@@ -256,9 +270,15 @@ function oa_social_login_callback ()
 								oa_social_login_user_notification ($user_id, $user_identity_provider);
 							}
 
+							//Refresh the cache
 							wp_cache_delete ($user_id, 'users');
 							wp_cache_delete ($user_login, 'userlogins');
+
+							//WordPress hook
 							do_action ('user_register', $user_id);
+
+							//Social Login Hook
+							do_action ('oa_social_login_action_after_user_insert', $user_id, $user_data);
 						}
 					}
 
@@ -266,10 +286,32 @@ function oa_social_login_callback ()
 					$user_data = get_userdata ($user_id);
 					if ($user_data !== false)
 					{
-						//Setup Cookie
+						//Hooks to be used by third parties
+						do_action ('oa_social_login_action_before_user_login', $user_id, $user_data, $new_registration);
+
+						//Update user thumbnail
+						if (!empty ($user_thumbnail))
+						{
+							update_user_meta ($user_id, 'oa_social_login_user_thumbnail', $user_thumbnail);
+						}
+
+						//Update user picture
+						if (!empty ($user_picture))
+						{
+							update_user_meta ($user_id, 'oa_social_login_user_picture', $user_picture);
+						}
+
+						//Clear Cookie
 						wp_clear_auth_cookie ();
-						wp_set_auth_cookie ($user_data->ID, true);
-						do_action ('wp_login', $user_data->user_login, $user_data);
+
+						//Check if we can authenticate the user
+						$user_data = apply_filters('wp_authenticate_user', $user_data);
+						if (! is_wp_error($user_data) )
+						{
+							//Set the cookie and login
+							wp_set_auth_cookie ($user_data->ID, true);
+							do_action ('wp_login', $user_data->user_login, $user_data);
+						}
 
 						//Where did the user come from?
 						$oa_social_login_source = (!empty ($_REQUEST ['oa_social_login_source']) ? strtolower (trim ($_REQUEST ['oa_social_login_source'])) : '');
@@ -285,29 +327,43 @@ function oa_social_login_callback ()
 							//Default redirection
 								$redirect_to = admin_url ();
 
-								//Redirection customized
-								if (isset ($settings ['plugin_registration_form_redirect']))
+								//Redirection in URL
+								if (!empty ($_GET ['redirect_to']))
 								{
-									switch (strtolower ($settings ['plugin_registration_form_redirect']))
+									$redirect_to = $_GET ['redirect_to'];
+									$redirect_to_safe = true;
+								}
+								else
+								{
+									//Redirection customized
+									if (isset ($settings ['plugin_registration_form_redirect']))
 									{
-										//Homepage
-										case 'homepage':
-											$redirect_to = home_url ();
-											break;
+										switch (strtolower ($settings ['plugin_registration_form_redirect']))
+										{
+											//Current
+											case 'current':
+												$redirect_to = oa_social_login_get_current_url ();
+												break;
 
-										//Custom
-										case 'custom':
-											if (isset ($settings ['plugin_registration_form_redirect_custom_url']) AND strlen (trim ($settings ['plugin_registration_form_redirect_custom_url'])) > 0)
-											{
-												$redirect_to = trim ($settings ['plugin_registration_form_redirect_custom_url']);
-											}
-											break;
+											//Homepage
+											case 'homepage':
+												$redirect_to = home_url ();
+												break;
 
-										//Default/Dashboard
-										default:
-										case 'dashboard':
-											$redirect_to = admin_url ();
-											break;
+											//Custom
+											case 'custom':
+												if (isset ($settings ['plugin_registration_form_redirect_custom_url']) AND strlen (trim ($settings ['plugin_registration_form_redirect_custom_url'])) > 0)
+												{
+													$redirect_to = trim ($settings ['plugin_registration_form_redirect_custom_url']);
+												}
+												break;
+
+											//Default/Dashboard
+											default:
+											case 'dashboard':
+												$redirect_to = admin_url ();
+												break;
+										}
 									}
 								}
 								break;
@@ -331,6 +387,23 @@ function oa_social_login_callback ()
 									{
 										switch (strtolower ($settings ['plugin_login_form_redirect']))
 										{
+											//Current
+											case 'current':
+
+												global $pagenow;
+
+												//Do not redirect to the login page as this would logout the user.
+												if (empty ($pagenow) OR $pagenow <> 'wp-login.php')
+												{
+													$redirect_to = oa_social_login_get_current_url ();
+												}
+												//In this case just go to the home page
+												else
+												{
+													$redirect_to = home_url ();
+												}
+												break;
+
 											//Dashboard
 											case 'dashboard':
 												$redirect_to = admin_url ();
@@ -407,6 +480,19 @@ function oa_social_login_callback ()
 							$redirect_to = home_url ();
 						}
 
+						//Filter for redirection urls
+						if ($new_registration === true)
+						{
+							$redirect_to = apply_filters ('oa_social_login_filter_registration_redirect_url', $redirect_to, $user_data);
+						}
+						else
+						{
+							$redirect_to = apply_filters ('oa_social_login_filter_login_redirect_url', $redirect_to, $user_data);
+						}
+
+						//Hooks for other plugins
+						do_action('oa_social_login_action_before_user_redirect', $user_data->ID, $user_data);
+
 						//Use safe redirection
 						if ($redirect_to_safe === true)
 						{
@@ -424,10 +510,11 @@ function oa_social_login_callback ()
 	}
 }
 
+
 /**
  * Send an API request by using the given handler
  */
-function oa_social_login_do_api_request ($handler, $url, $options = array (), $timeout = 15)
+function oa_social_login_do_api_request ($handler, $url, $options = array (), $timeout = 25)
 {
 	//FSOCKOPEN
 	if ($handler == 'fsockopen')
@@ -441,20 +528,51 @@ function oa_social_login_do_api_request ($handler, $url, $options = array (), $t
 	}
 }
 
+/**
+ * **************************************************************************************************************
+ * ************************************************* FSOCKOPEN **************************************************
+ * **************************************************************************************************************
+ */
 
 /**
- * Check if fsockopen can be used
+ * Check if fsockopen is available.
+ */
+function oa_social_login_check_fsockopen_available ()
+{
+	//Make sure fsockopen has been loaded
+	if (function_exists ('fsockopen') AND function_exists ('fwrite'))
+	{
+		$disabled_functions = oa_social_login_get_disabled_functions ();
+
+		//Make sure fsockopen has not been disabled
+		if (!in_array ('fsockopen', $disabled_functions) AND !in_array ('fwrite', $disabled_functions))
+		{
+			//Loaded and enabled
+			return true;
+		}
+	}
+
+	//Not loaded or disabled
+	return false;
+}
+
+
+/**
+ * Check if fsockopen is enabled and can be used to connect to OneAll.
  */
 function oa_social_login_check_fsockopen ($secure = true)
 {
-	$result = oa_social_login_fsockopen_request (($secure ? 'https' : 'http') . '://www.oneall.com/ping.html');
-	if (is_object ($result) AND property_exists ($result, 'http_code') AND $result->http_code == 200)
+	if (oa_social_login_check_fsockopen_available ())
 	{
-		if (property_exists ($result, 'http_data'))
+		$result = oa_social_login_fsockopen_request (($secure ? 'https' : 'http') . '://www.oneall.com/ping.html');
+		if (is_object ($result) AND property_exists ($result, 'http_code') AND $result->http_code == 200)
 		{
-			if (strtolower ($result->http_data) == 'ok')
+			if (property_exists ($result, 'http_data'))
 			{
-				return true;
+				if (strtolower ($result->http_data) == 'ok')
+				{
+					return true;
+				}
 			}
 		}
 	}
@@ -463,11 +581,139 @@ function oa_social_login_check_fsockopen ($secure = true)
 
 
 /**
- * Check if CURL can be used
+ * Send an fsockopen request.
+ */
+function oa_social_login_fsockopen_request ($url, $options = array (), $timeout = 15)
+{
+	//Store the result
+	$result = new stdClass ();
+
+	//Make sure that this is a valid URL
+	if (($uri = parse_url ($url)) == false)
+	{
+		$result->http_code = -1;
+		$result->http_data = null;
+		$result->http_error = 'invalid_uri';
+		return $result;
+	}
+
+	//Make sure that we can handle the scheme
+	switch ($uri ['scheme'])
+	{
+		case 'http':
+			$port = (isset ($uri ['port']) ? $uri ['port'] : 80);
+			$host = ($uri ['host'] . ($port != 80 ? ':' . $port : ''));
+			$fp = @fsockopen ($uri ['host'], $port, $errno, $errstr, $timeout);
+			break;
+
+		case 'https':
+			$port = (isset ($uri ['port']) ? $uri ['port'] : 443);
+			$host = ($uri ['host'] . ($port != 443 ? ':' . $port : ''));
+			$fp = @fsockopen ('ssl://' . $uri ['host'], $port, $errno, $errstr, $timeout);
+			break;
+
+		default:
+			$result->http_code = -1;
+			$result->http_data = null;
+			$result->http_error = 'invalid_schema';
+			return $result;
+			break;
+	}
+
+	//Make sure that the socket has been opened properly
+	if (!$fp)
+	{
+		$result->http_code = -$errno;
+		$result->http_data = null;
+		$result->http_error = trim ($errstr);
+		return $result;
+	}
+
+	//Construct the path to act on
+	$path = (isset ($uri ['path']) ? $uri ['path'] : '/');
+	if (isset ($uri ['query']))
+	{
+		$path .= '?' . $uri ['query'];
+	}
+
+	//Create HTTP request
+	$defaults = array (
+		'Host' => "Host: $host",
+		'User-Agent' => 'User-Agent: SocialLogin ' . OA_SOCIAL_LOGIN_VERSION . 'WP (+http://www.oneall.com/)'
+	);
+
+	//Enable basic authentication
+	if (isset ($options ['api_key']) AND isset ($options ['api_secret']))
+	{
+		$defaults ['Authorization'] = 'Authorization: Basic ' . base64_encode ($options ['api_key'] . ":" . $options ['api_secret']);
+	}
+
+	//Build and send request
+	$request = 'GET ' . $path . " HTTP/1.0\r\n";
+	$request .= implode ("\r\n", $defaults);
+	$request .= "\r\n\r\n";
+	fwrite ($fp, $request);
+
+	//Fetch response
+	$response = '';
+	while (!feof ($fp))
+	{
+		$response .= fread ($fp, 1024);
+	}
+
+	//Close connection
+	fclose ($fp);
+
+	//Parse response
+	list($response_header, $response_body) = explode ("\r\n\r\n", $response, 2);
+
+	//Parse header
+	$response_header = preg_split ("/\r\n|\n|\r/", $response_header);
+	list($header_protocol, $header_code, $header_status_message) = explode (' ', trim (array_shift ($response_header)), 3);
+
+	//Build result
+	$result->http_code = $header_code;
+	$result->http_data = $response_body;
+
+	//Done
+	return $result;
+}
+
+/**
+ * **************************************************************************************************************
+ ** *************************************************** CURL ****************************************************
+ * **************************************************************************************************************
+ */
+
+/**
+ * Check if cURL has been loaded and is enabled.
+ */
+function oa_social_login_check_curl_available ()
+{
+	//Make sure cURL has been loaded
+	if (in_array ('curl', get_loaded_extensions ()) AND function_exists ('curl_init') AND function_exists ('curl_exec'))
+	{
+		$disabled_functions = oa_social_login_get_disabled_functions ();
+
+		//Make sure cURL not been disabled
+		if (!in_array ('curl_init', $disabled_functions) AND !in_array ('curl_exec', $disabled_functions))
+		{
+			//Loaded and enabled
+			return true;
+		}
+	}
+
+	//Not loaded or disabled
+	return false;
+}
+
+
+/**
+ * Check if CURL is available and can be used to connect to OneAll
  */
 function oa_social_login_check_curl ($secure = true)
 {
-	if (in_array ('curl', get_loaded_extensions ()) AND function_exists ('curl_exec'))
+	if (oa_social_login_check_curl_available ())
 	{
 		$result = oa_social_login_curl_request (($secure ? 'https' : 'http') . '://www.oneall.com/ping.html');
 		if (is_object ($result) AND property_exists ($result, 'http_code') AND $result->http_code == 200)
@@ -486,9 +732,9 @@ function oa_social_login_check_curl ($secure = true)
 
 
 /**
- * Sends a CURL request
+ * Send a CURL request.
  */
-function oa_social_login_curl_request ($url, $options = array (), $timeout = 10)
+function oa_social_login_curl_request ($url, $options = array (), $timeout = 15)
 {
 	//Store the result
 	$result = new stdClass ();
@@ -527,104 +773,3 @@ function oa_social_login_curl_request ($url, $options = array (), $timeout = 10)
 	//Done
 	return $result;
 }
-
-
-/**
- * Sends an fsockopen request
- */
-function oa_social_login_fsockopen_request ($url, $options = array (), $timeout = 15)
-{
-	//Store the result
-	$result = new stdClass ();
-
-	//Make that this is a valid URL
-	if (($uri = parse_url ($url)) == false)
-	{
-		$result->http_code = -1;
-		$result->http_data = null;
-		$result->http_error = 'invalid_uri';
-		return $result;
-	}
-
-	//Make sure we can handle the schema
-	switch ($uri ['scheme'])
-	{
-		case 'http':
-			$port = (isset ($uri ['port']) ? $uri ['port'] : 80);
-			$host = ($uri ['host'] . ($port != 80 ? ':' . $port : ''));
-			$fp = @fsockopen ($uri ['host'], $port, $errno, $errstr, $timeout);
-			break;
-
-		case 'https':
-			$port = (isset ($uri ['port']) ? $uri ['port'] : 443);
-			$host = ($uri ['host'] . ($port != 443 ? ':' . $port : ''));
-			$fp = @fsockopen ('ssl://' . $uri ['host'], $port, $errno, $errstr, $timeout);
-			break;
-
-		default:
-			$result->http_code = -1;
-			$result->http_data = null;
-			$result->http_error = 'invalid_schema';
-			return $result;
-			break;
-	}
-
-	//Make sure the socket opened properly
-	if (!$fp)
-	{
-		$result->http_code = -$errno;
-		$result->http_data = null;
-		$result->http_error = trim ($errstr);
-		return $result;
-	}
-
-	//Construct the path to act on
-	$path = (isset ($uri ['path']) ? $uri ['path'] : '/');
-	if (isset ($uri ['query']))
-	{
-		$path .= '?' . $uri ['query'];
-	}
-
-	//Create HTTP request
-	$defaults = array (
-		'Host' => "Host: $host",
-		'User-Agent' => 'User-Agent: SocialLogin ' . OA_SOCIAL_LOGIN_VERSION . 'WP (+http://www.oneall.com/)'
-	);
-
-	// BASIC AUTH?
-	if (isset ($options ['api_key']) AND isset ($options ['api_secret']))
-	{
-		$defaults ['Authorization'] = 'Authorization: Basic ' . base64_encode ($options ['api_key'] . ":" . $options ['api_secret']);
-	}
-
-	//Build and send request
-	$request = 'GET ' . $path . " HTTP/1.0\r\n";
-	$request .= implode ("\r\n", $defaults);
-	$request .= "\r\n\r\n";
-	fwrite ($fp, $request);
-
-	//Fetch response
-	$response = '';
-	while (!feof ($fp))
-	{
-		$response .= fread ($fp, 1024);
-	}
-
-	//Close connection
-	fclose ($fp);
-
-	//Parse response
-	list($response_header, $response_body) = explode ("\r\n\r\n", $response, 2);
-
-	//Parse header
-	$response_header = preg_split ("/\r\n|\n|\r/", $response_header);
-	list($header_protocol, $header_code, $header_status_message) = explode (' ', trim (array_shift ($response_header)), 3);
-
-	//Build result
-	$result->http_code = $header_code;
-	$result->http_data = $response_body;
-
-	//Done
-	return $result;
-}
-
