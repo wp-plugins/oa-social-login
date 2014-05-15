@@ -301,17 +301,10 @@ function oa_social_login_callback ()
 							update_user_meta ($user_id, 'oa_social_login_user_picture', $user_picture);
 						}
 
-						//Clear Cookie
+						//Set the cookie and login
 						wp_clear_auth_cookie ();
-
-						//Check if we can authenticate the user
-						$user_data = apply_filters('wp_authenticate_user', $user_data);
-						if (! is_wp_error($user_data) )
-						{
-							//Set the cookie and login
-							wp_set_auth_cookie ($user_data->ID, true);
-							do_action ('wp_login', $user_data->user_login, $user_data);
-						}
+						wp_set_auth_cookie ($user_data->ID, true);
+						do_action ('wp_login', $user_data->user_login, $user_data);
 
 						//Where did the user come from?
 						$oa_social_login_source = (!empty ($_REQUEST ['oa_social_login_source']) ? strtolower (trim ($_REQUEST ['oa_social_login_source'])) : '');
