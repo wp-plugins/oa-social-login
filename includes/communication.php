@@ -234,11 +234,11 @@ function oa_social_login_callback ()
 						$user_fields = apply_filters ('oa_social_login_filter_new_user_fields', $user_fields);
 
 						//Hook before adding the user
-						do_action ('oa_social_login_action_before_user_insert', $user_fields);
+						do_action ('oa_social_login_action_before_user_insert', $user_fields, $identity);
 
 						// Create a new user
 						$user_id = wp_insert_user ($user_fields);
-						if (is_numeric ($user_id) AND ($user_data = get_userdata ($user_id) !== false))
+						if (is_numeric ($user_id) AND ($user_data = get_userdata ($user_id)) !== false)
 						{
 							//Refresh the meta data
 							delete_metadata ('user', null, 'oa_social_login_user_token', $user_token, true);
@@ -278,7 +278,7 @@ function oa_social_login_callback ()
 							do_action ('user_register', $user_id);
 
 							//Social Login Hook
-							do_action ('oa_social_login_action_after_user_insert', $user_id, $user_data);
+							do_action ('oa_social_login_action_after_user_insert', $user_data, $identity);
 						}
 					}
 
@@ -287,7 +287,7 @@ function oa_social_login_callback ()
 					if ($user_data !== false)
 					{
 						//Hooks to be used by third parties
-						do_action ('oa_social_login_action_before_user_login', $user_id, $user_data, $new_registration);
+						do_action ('oa_social_login_action_before_user_login', $user_data, $identity, $new_registration);
 
 						//Update user thumbnail
 						if (!empty ($user_thumbnail))
@@ -484,7 +484,7 @@ function oa_social_login_callback ()
 						}
 
 						//Hooks for other plugins
-						do_action('oa_social_login_action_before_user_redirect', $user_data->ID, $user_data);
+						do_action('oa_social_login_action_before_user_redirect', $user_data, $identity, $redirect_to);
 
 						//Use safe redirection
 						if ($redirect_to_safe === true)
