@@ -6,6 +6,7 @@ You can find this file in your WordPress administration area:
 	Appearance \ Editor \ Theme Functions (functions.php)
 
 
+
 //*******************************************************************************
 // Social Login: Use your own CSS to customize the icons
 //*******************************************************************************
@@ -39,6 +40,7 @@ function oa_social_login_filter_new_user_email ($user_email)
 add_filter('oa_social_login_filter_new_user_email', 'oa_social_login_filter_new_user_email');
 
 
+
 //*******************************************************************************
 // Social Login: Change the default password for users created by Social Login
 //*******************************************************************************
@@ -56,6 +58,7 @@ function oa_social_login_set_new_user_password ($user_password)
 add_filter('oa_social_login_filter_new_user_password', 'oa_social_login_set_new_user_password');
 
 
+
 //*******************************************************************************
 // Social Login: Change the default role for new users
 //*******************************************************************************
@@ -71,6 +74,7 @@ function oa_social_login_set_new_user_role ($user_role)
 	return $user_role;
 }
 add_filter('oa_social_login_filter_new_user_role', 'oa_social_login_set_new_user_role');
+	
 	
 	
 //*******************************************************************************
@@ -116,6 +120,7 @@ function oa_social_login_do_before_user_insert ($user_data, $identity)
 	print_r($identity);
 }
 add_action ('oa_social_login_action_before_user_insert', 'oa_social_login_do_before_user_insert', 10, 2);
+	
 	
 	
 //*******************************************************************************
