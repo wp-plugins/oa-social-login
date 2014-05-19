@@ -6,6 +6,7 @@ You can find this file in your WordPress administration area:
 	Appearance \ Editor \ Theme Functions (functions.php)
 
 
+
 //*******************************************************************************
 // Social Login: Use your own CSS to customize the icons
 //*******************************************************************************
@@ -39,6 +40,7 @@ function oa_social_login_filter_new_user_email ($user_email)
 add_filter('oa_social_login_filter_new_user_email', 'oa_social_login_filter_new_user_email');
 
 
+
 //*******************************************************************************
 // Social Login: Change the default password for users created by Social Login
 //*******************************************************************************
@@ -56,6 +58,7 @@ function oa_social_login_set_new_user_password ($user_password)
 add_filter('oa_social_login_filter_new_user_password', 'oa_social_login_set_new_user_password');
 
 
+
 //*******************************************************************************
 // Social Login: Change the default role for new users
 //*******************************************************************************
@@ -71,8 +74,7 @@ function oa_social_login_set_new_user_role ($user_role)
 	return $user_role;
 }
 add_filter('oa_social_login_filter_new_user_role', 'oa_social_login_set_new_user_role');
-
-
+	
 	
 	
 //*******************************************************************************
@@ -103,3 +105,84 @@ function oa_social_login_set_redirect_url_existing_users ($url, $user_data)
 add_filter('oa_social_login_filter_login_redirect_url', 'oa_social_login_set_redirect_url_existing_users', 10, 2);
 
 
+
+//*******************************************************************************
+// Social Login: Action called before adding a new user
+//*******************************************************************************
+
+//This function will be called before Social Login adds a new user
+function oa_social_login_do_before_user_insert ($user_data, $identity)
+{
+	//These are the fields for the WordPress database
+	print_r($user_data);
+	
+	//This is the full social network profile of this user
+	print_r($identity);
+}
+add_action ('oa_social_login_action_before_user_insert', 'oa_social_login_do_before_user_insert', 10, 2);
+	
+	
+	
+//*******************************************************************************
+// Social Login: Action called after having added a new user
+//*******************************************************************************
+
+//This function will be called after Social Login has added a new user
+function oa_social_login_do_after_user_insert ($user_data, $identity)
+{
+	//These are the fields from the WordPress database
+	print_r($user_data);
+	
+	//This is the full social network profile of this user
+	print_r($identity);
+}
+add_action ('oa_social_login_action_after_user_insert', 'oa_social_login_do_after_user_insert', 10, 2);
+	
+	
+	
+//*******************************************************************************
+// Social Login: Action called before logging in the user
+//*******************************************************************************
+
+//This function will be called before Social Login logs the the user in
+function oa_social_login_do_before_user_login ($user_data, $identity, $new_registration)
+{
+	//true for new and false for returning users
+	if ($new_registration)
+	{
+		echo "I am a new user";
+	}
+	else
+	{
+		echo "I am a returning user";
+	}
+
+	//These are the fields from the WordPress database
+	print_r($user_data);
+	
+	//This is the full social network profile of this user
+	print_r($identity);
+}
+add_action ('oa_social_login_action_before_user_login', 'oa_social_login_do_before_user_login', 10, 3);
+	
+	
+	
+//*******************************************************************************
+// Social Login: Action called before redirecting the user
+//*******************************************************************************
+
+//This function will be called before Social Login redirects the user
+function oa_social_login_do_before_user_redirect ($user_data, $identity, $redirect_to)
+{
+	echo "User will be redirected to ".$redirect_to;
+
+	//These are the fields from the WordPress database
+	print_r($user_data);
+	
+	//This is the full social network profile of this user
+	print_r($identity);
+}
+add_action ('oa_social_login_action_before_user_redirect', 'oa_social_login_do_before_user_redirect', 10, 3);
+	
+	
+	
