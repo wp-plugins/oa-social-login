@@ -588,7 +588,7 @@ function oa_display_social_login_setup ()
 	?>
 		<div class="wrap">
 			<div id="oa_social_login_page" class="oa_social_login_setup">
-				<h2>OneAll Social Login</h2>
+				<h2>OneAll Social Login <?php echo (defined ('OA_SOCIAL_LOGIN_VERSION') ? OA_SOCIAL_LOGIN_VERSION : ''); ?></h2>
 				<h2 class="nav-tab-wrapper">
           <a class="nav-tab nav-tab-active" href="admin.php?page=oa_social_login_setup"><?php _e ('Setup', 'oa_social_login'); ?></a>
           <a class="nav-tab" href="admin.php?page=oa_social_login_settings"><?php _e ('Settings', 'oa_social_login'); ?></a>
@@ -861,7 +861,7 @@ function oa_display_social_login_settings ()
 	?>
 		<div class="wrap">
 			<div id="oa_social_login_page" class="oa_social_login_settings">
-				<h2>OneAll Social Login</h2>
+				<h2>OneAll Social Login <?php echo (defined ('OA_SOCIAL_LOGIN_VERSION') ? OA_SOCIAL_LOGIN_VERSION : ''); ?></h2>
 				<h2 class="nav-tab-wrapper">
           <a class="nav-tab" href="admin.php?page=oa_social_login_setup"><?php _e ('Setup', 'oa_social_login'); ?></a>
           <a class="nav-tab nav-tab-active" href="admin.php?page=oa_social_login_settings"><?php _e ('Settings', 'oa_social_login'); ?></a>
