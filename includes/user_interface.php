@@ -501,11 +501,13 @@ function oa_social_login_bp_custom_fetch_avatar ($text, $args)
 					//Retrieve user
 					if (($user_data = get_userdata ($args ['item_id'])) !== false)
 					{
-						//Fetch BuddyPress avatar for this user
-						$bp_user_avatar = strval (bp_core_fetch_avatar (array( 'item_id' => $args ['item_id'], 'no_grav' => true,'html'=> false)));
-						$bp_default_avatar = strval (bp_core_avatar_default());
+						//Fetch the BuddyPress avatar for this user
+						$bp_user_avatar =  strtolower (trim (strval (bp_core_fetch_avatar (array('item_id' => $args ['item_id'], 'no_grav' => true,'html'=> false)))));
 
-						//Only replace if it's the default one (this will keep uploaded avatars)
+						//Fetch the default BuddyPress avatar
+						$bp_default_avatar = strtolower (trim (strval (bp_core_avatar_default('local'))));
+
+						//Only replace if the user has the default avatar (this will keep uploaded avatars)
 						if (empty ($bp_user_avatar) OR empty ($bp_default_avatar) OR ($bp_user_avatar == $bp_default_avatar))
 						{
 							//Read the avatar
