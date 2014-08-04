@@ -274,9 +274,6 @@ function oa_social_login_callback ()
 							wp_cache_delete ($user_id, 'users');
 							wp_cache_delete ($user_login, 'userlogins');
 
-							//WordPress hook
-							do_action ('user_register', $user_id);
-
 							//Social Login Hook
 							do_action ('oa_social_login_action_after_user_insert', $user_data, $identity);
 						}
