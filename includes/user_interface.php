@@ -35,7 +35,7 @@ function oa_social_login_add_javascripts ()
 			$output [] = '<script type="text/javascript">';
 			$output [] = " (function() {";
 			$output [] = "  var oa = document.createElement('script'); oa.type = 'text/javascript';";
-			$output [] = "  oa.async = true; oa.src = '" . $oneall_js_library . "'";
+			$output [] = "  oa.async = true; oa.src = '" . $oneall_js_library . "';";
 			$output [] = "  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(oa, s);";
 			$output [] = " })();";
 			$output [] = "</script>";
