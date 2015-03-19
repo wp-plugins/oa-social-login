@@ -77,9 +77,7 @@ The social network APIs are constantly changing and being updated. We monitor th
 update our APIs, so that you can be sure that Social Login will always run smoothly and with the most up-to-date 
 API calls. 
 
-In order to enable the plugin your therefore have to connect with the OneAll API and you need to create a free 
-account at https://app.oneall.com
-
+In order to enable the plugin you must connect with the OneAll API and create a free account at https://app.oneall.com
 
 == Frequently Asked Questions ==
 
