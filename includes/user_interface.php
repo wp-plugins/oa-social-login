@@ -766,8 +766,14 @@ function oa_social_login_render_login_form_wp_login ()
 
 			//Add our query argument
 			$args ['callback_uri'] = add_query_arg (array ('oa_social_login_source' => 'login'), $args ['callback_uri']);
+			
+			//Add redirect_to
+			if ( ! empty ($_REQUEST['redirect_to']))
+			{
+				$args ['callback_uri'] = add_query_arg (array ('redirect_to' => $_REQUEST['redirect_to']), $args ['callback_uri']);
+            }
 
-			//Allow others to customize the callback uri
+			//Hook to customize the callback uri
 			$args ['callback_uri'] = apply_filters ('oa_social_login_filter_wp_login_callback_uri', $args ['callback_uri']);
 		}
 
@@ -805,7 +811,13 @@ function oa_social_login_render_login_form_wp_registration ()
 				//Add our query argument
 				$args ['callback_uri'] = add_query_arg (array ('oa_social_login_source' => 'registration'), $args ['callback_uri']);
 
-				//Others may use this hook
+				//Add redirect_to
+				if ( ! empty ($_REQUEST['redirect_to']))
+				{
+					$args ['callback_uri'] = add_query_arg (array ('redirect_to' => $_REQUEST['redirect_to']), $args ['callback_uri']);
+				}
+				
+				//Hook to customize the callback uri
 				$args ['callback_uri'] = apply_filters ('oa_social_login_filter_wp_registration_callback_uri', $args ['callback_uri']);
 			}
 
