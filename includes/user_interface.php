@@ -788,7 +788,7 @@ function oa_social_login_render_login_form_wp_login ()
 			//Add redirect_to
 			if ( ! empty ($_REQUEST['redirect_to']))
 			{
-				$args ['callback_uri'] = add_query_arg (array ('redirect_to' => $_REQUEST['redirect_to']), $args ['callback_uri']);
+				$args ['callback_uri'] = add_query_arg (array ('redirect_to' => urlencode ($_REQUEST['redirect_to'])), $args ['callback_uri']);
             }
 
 			//Hook to customize the callback uri
@@ -832,7 +832,7 @@ function oa_social_login_render_login_form_wp_registration ()
 				//Add redirect_to
 				if ( ! empty ($_REQUEST['redirect_to']))
 				{
-					$args ['callback_uri'] = add_query_arg (array ('redirect_to' => $_REQUEST['redirect_to']), $args ['callback_uri']);
+					$args ['callback_uri'] = add_query_arg (array ('redirect_to' => urlencode ($_REQUEST['redirect_to'])), $args ['callback_uri']);
 				}
 				
 				//Hook to customize the callback uri
