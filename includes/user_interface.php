@@ -32,7 +32,7 @@ function oa_social_login_add_javascripts ()
 			$output = array ();
 			$output [] = '';
 			$output [] = " <!-- OneAll.com / Social Login for WordPress / v" . constant ('OA_SOCIAL_LOGIN_VERSION') . " -->";
-			$output [] = '<script type="text/javascript">';
+			$output [] = '<script data-cfasync="false" type="text/javascript">';
 			$output [] = " (function() {";
 			$output [] = "  var oa = document.createElement('script'); oa.type = 'text/javascript';";
 			$output [] = "  oa.async = true; oa.src = '" . $oneall_js_library . "';";
