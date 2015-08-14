@@ -34,7 +34,7 @@
 
 .oa_social_login_modal_inner {
   overflow: auto;
-  background: #ffffff;
+  background: #fff;
   margin: 5px;
   padding: 0;
   z-index: 999997;
@@ -43,6 +43,7 @@
 .oa_social_login_modal_inner input.oa_social_login_confirm_text {
   margin: 0;
   width: 96%;
+  color: #000;
 }
 
 .oa_social_login_buttons {
@@ -61,6 +62,7 @@
   width: 20%;
   float: right;
   font-size: 13px;
+  color: #000;
 }
 
 .oa_social_login_modal_notice {
