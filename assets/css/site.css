@@ -74,6 +74,12 @@
 	padding: 10px 20px;
 }
 
+.oa_social_login_modal_body fieldset {
+	border:0 none;
+	margin:0 ;
+	padding: 0;
+}
+
 .oa_social_login_modal_title {
 	color: #222;
 	background-color: #eee;
