@@ -1137,7 +1137,7 @@ function oa_social_login_request_email ()
 				 					</div>
 									<form method="post" action="">
 										<fieldset>
-											<div>
+											<div class="oa_social_login_input">
 												<input type="text" name="oa_social_login_email" class="oa_social_login_confirm_text" value="<?php echo (!empty ($_POST ['oa_social_login_email']) ? oa_social_login_esc_attr ($_POST ['oa_social_login_email']) : ''); ?>" />
 												<input type="hidden" name="oa_social_login_action" value="confirm_email" size="30" />
 											</div>
@@ -1145,8 +1145,8 @@ function oa_social_login_request_email ()
 												<?php echo $message; ?>
 											</div>
 											<div class="oa_social_login_buttons">
-												<input class="oa_social_login_button_confirm" type="submit" value="<?php _e ('Confirm', 'oa_social_login'); ?>" />
-												<input class="oa_social_login_button_cancel" type="button" value="<?php _e ('Cancel', 'oa_social_login'); ?>" onclick="window.location.href='<?php echo esc_url (wp_logout_url (oa_social_login_get_current_url ())); ?>'" />
+												<input class="oa_social_login_button" id="oa_social_login_button_confirm" type="submit" value="<?php _e ('Confirm', 'oa_social_login'); ?>" />
+												<input class="oa_social_login_button" id="oa_social_login_button_cancel" type="button" value="<?php _e ('Cancel', 'oa_social_login'); ?>" onclick="window.location.href='<?php echo esc_url (wp_logout_url (oa_social_login_get_current_url ())); ?>'" />
 											</div>
 										</fieldset>
 									</form>
