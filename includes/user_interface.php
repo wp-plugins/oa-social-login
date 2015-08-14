@@ -306,10 +306,10 @@ function oa_social_login_render_link_form ($source, $user)
 						//Callback URI
 						$callback_uri = oa_social_login_get_current_url ();
 						$callback_uri .= (strlen (parse_url ($callback_uri, PHP_URL_QUERY)) == 0 ? '?' : '&') . 'oa_social_login_source=' . $source . '#oa_social_link';
-
+						$callback_uri = wp_nonce_url ($callback_uri);
+						
 						//Setup Social Container
 						$containerid = 'oneall_social_login_providers_' . mt_rand (99999, 9999999);
-
 
 						//Setup Social Link
 						$social_link = array ();
