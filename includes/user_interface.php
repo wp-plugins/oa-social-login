@@ -715,6 +715,9 @@ add_action ('after_signup_form', 'oa_social_login_render_login_form_registration
 //BuddyPress Registration
 add_action ('bp_before_account_details_fields', 'oa_social_login_render_login_form_registration');
 
+//WooCommerce Registration
+add_action ('woocommerce_register_form_end', 'oa_social_login_render_login_form_registration');
+
 
 /**
  * Display the provider grid for login
@@ -742,6 +745,9 @@ add_action ('va_after_admin_bar_login_form', 'oa_social_login_render_login_form_
 
 //Sidebar Login
 add_action ('sidebar_login_widget_logged_out_content_end', 'oa_social_login_render_login_form_login');
+
+//WooCommerce Login
+add_action ('woocommerce_login_form_end', 'oa_social_login_render_login_form_login');
 
 
 /**
