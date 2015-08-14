@@ -134,6 +134,14 @@ http://docs.oneall.com/plugins/guide/social-login-wordpress/
 
 == Changelog ==
 
+= 5.0 =
+* Social Network "Battle.net" added
+* Social Link Hooks/Nonce added
+* WooCommerce Actions added
+* Login/Registration URL filters added
+* Cache bug fixed
+* Some minor bugs fixed
+
 = 4.6 =
 * Asynchronous JavaScript
 * Social Network "Instagram" added
