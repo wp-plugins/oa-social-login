@@ -2,7 +2,7 @@
 Contributors: ClaudeSchlesser
 Tags: social login, social connect, facebook, linkedin, livejournal, google, yahoo, twitter, openid, paypal, google, instagram, widget, plugin, social network login, comments
 Requires at least: 3.0
-Tested up to: 4.2
+Tested up to: 4.2.4
 Stable tag: 4.6
 
 Allow your visitors to comment and login with social networks like Twitter, Facebook, Paypal, LinkedIn, Instagram, OpenID, VKontakte, Google, Yahoo
@@ -63,7 +63,7 @@ Our users love it! Check out the <a href="http://wordpress.org/extend/plugins/oa
 
 The Social Login Plugin is maintained by <a href="http://www.oneall.com">OneAll</a>, a technology company offering a set of web-delivered
 tools and services for establishing and optimizing a site's connection with social networks and identity providers such as Facebook, Twitter, 
-Google, Yahoo!, LinkedIn, Paypal, Hyves amongst others.
+Google, Yahoo!, LinkedIn, Paypal, Instagram amongst others.
 
 == Installation ==
 
