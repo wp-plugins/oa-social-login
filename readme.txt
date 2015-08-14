@@ -30,6 +30,7 @@ login and register with 25+ Social Networks like for example Facebook, Twitter, 
 <strong>Select the Social Networks/Providers:</strong>
 <ul>
  <li>Amazon</li>
+ <li>Battle.net</li>
  <li>Blogger</li>
  <li>Disqus</li>
  <li>Facebook</li>
