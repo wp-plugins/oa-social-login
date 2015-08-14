@@ -151,6 +151,9 @@ function oa_social_login_render_link_form ($source, $user)
 										//Link identity
 										if ($data->plugin->data->action == 'link_identity')
 										{
+											//Hook for other plugins
+											do_action ('oa_social_login_action_before_user_link', $user->data, $data->user->identity, $userid_by_token);
+											
 											// The user already has a user_token
 											if (is_numeric ($userid_by_token))
 											{
@@ -196,7 +199,7 @@ function oa_social_login_render_link_form ($source, $user)
 											else
 											{
 												$success_message = sprintf (__ ('You have successfully linked your %s account.', 'oa_social_login'), $data->user->identity->source->name);
-
+												
 												//Clean Cache
 												wp_cache_delete ($userid, 'users');
 
@@ -210,10 +213,16 @@ function oa_social_login_render_link_form ($source, $user)
 													update_user_meta ($userid, 'oa_social_login_user_thumbnail', $data->user->identity->thumbnailUrl);
 												}
 											}
+											
+											//Hook for other plugins
+											do_action ('oa_social_login_action_after_user_link', $user->data, $data->user->identity, $userid_by_token);
 										}
 										//UnLink identity
 										elseif ($data->plugin->data->action == 'unlink_identity')
 										{
+											//Hook for other plugins
+											do_action ('oa_social_login_action_before_user_unlink', $user->data, $data->user->identity, $userid_by_token);
+											
 											// The user already has a user_token
 											if (is_numeric ($userid_by_token))
 											{
@@ -288,6 +297,9 @@ function oa_social_login_render_link_form ($source, $user)
 											{
 												//Nothing to do
 											}
+											
+											//Hook for other plugins
+											do_action ('oa_social_login_action_after_user_unlink', $user->data, $data->user->identity, $userid_by_token);
 										}
 									}
 								}
